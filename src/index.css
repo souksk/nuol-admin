@@ -1,0 +1,16 @@
+body {
+  background-color: #eee;
+  margin: 0;
+  font-family: 'Noto Sans Lao UI', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+@font-face {
+  font-family: "NotoSansLao";
+  src: url(/assets/font/NotoSansLao-hinted/NotoSansLao-Light.ttf);
+}
+
+* {
+  font-family: 'NotoSansLao';
+}
