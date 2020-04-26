@@ -42,6 +42,17 @@ import ProfileEdit from '../pages/profile/ProfileEdit'
 import DocumentList from '../pages/documentList/DocumentList'
 import DocumentDetail from '../pages/documentDetail/DocumentDetail'
 
+// Faculty
+import FacultyList from '../pages/facultyList/FacultyList'
+
+// Department
+import DepartmentList from '../pages/departmentList/DepartmentList'
+
+// Calenda
+import CalendaList from '../pages/calendaList/CalendaList'
+import CalendaDetail from '../pages/calendaDetail/CalendaDetail'
+import CalendaAdd from '../pages/calendaAdd/CalendaAdd'
+
 
 const Main = styled.main`
   /* position: relative; */
@@ -162,6 +173,32 @@ function Routes() {
                     path='/profile-edit'
                     component={props => <ProfileEdit />}
                   />
+
+                  <PrivateRoute
+                    path='/faculty-list'
+                    component={props => <FacultyList />}
+                  />
+
+                  <PrivateRoute
+                    path='/department-list'
+                    component={props => <DepartmentList />}
+                  />
+
+                  <PrivateRoute
+                    path='/calenda-list'
+                    component={props => <CalendaList />}
+                  />
+
+                  <PrivateRoute
+                    path='/calenda-detail'
+                    component={props => <CalendaDetail />}
+                  />
+
+                  <PrivateRoute
+                    path='/calenda-add'
+                    component={props => <CalendaAdd />}
+                  />
+
                 </div>
               </Main>
             </React.Fragment>}

@@ -140,7 +140,7 @@ function StudentList() {
 						color: Consts.FONT_COLOR_SECONDARY
 					}}
 				>
-					ທັງຫມົດ {studentData && studentData.users.length} ຄົນ
+					ທັງຫມົດ {studentData && studentData.users && studentData.users.length} ຄົນ
 				</div>
 
 				{/* Table list */}

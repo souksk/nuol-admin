@@ -25,6 +25,9 @@ export const COURSES = gql`
       department {
         name
       }
+      faculty {
+        name
+      }
       dayTimeIndexes {
         dayInt
         dayString

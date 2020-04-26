@@ -190,65 +190,6 @@ function CourseDetail() {
             </div>
           </div>
 
-          {/* -------- ປີຮຽນແລະພາກຮຽນ -------- */}
-          <div style={{ padding: 20, paddingBottom: 0 }}>
-            <div style={{ fontWeight: "bold" }} ><FontAwesomeIcon icon='caret-down' style={{ marginRight: 16, marginLeft: -24, fontSize: 24, color: Consts.PRIMARY_COLOR }} />ປີຮຽນແລະພາກຮຽນ</div>
-            <div style={{ paddingLeft: 20, fontSize: 14 }}>
-              <Row>
-                <Col>ປີຮຽນ</Col>
-                <Col>{courseData && courseData.yearLevel}</Col>
-              </Row>
-              <Row>
-                <Col>ພາກຮຽນ</Col>
-                <Col>{courseData && courseData.semester}</Col>
-              </Row>
-            </div>
-          </div>
-
-          {/* -------- ຕາຕະລາງມື້ສອນ -------- */}
-          <div style={{ padding: 20, paddingBottom: 0 }}>
-            <div style={{ fontWeight: "bold" }} ><FontAwesomeIcon icon='caret-down' style={{ marginRight: 16, marginLeft: -24, fontSize: 24, color: Consts.PRIMARY_COLOR }} />ຕາຕະລາງມື້ສອນ</div>
-            <div style={{ paddingLeft: 20, fontSize: 14 }}>
-              <Row>
-                <Col>ວັນ</Col>
-                <Col>{courseData && (courseData.dayTimeIndexes.length > 0) && (courseData.dayTimeIndexes[0].dayString ? courseData.dayTimeIndexes[0].dayString : '-')}</Col>
-              </Row>
-              <Row>
-                <Col>ຊົ່ວໂມງ</Col>
-                <Col>{courseData &&
-                  (courseData.dayTimeIndexes.length > 0) &&
-                  courseData.dayTimeIndexes[0].timeIndexes ?
-                  (courseData.dayTimeIndexes[0].timeIndexes.map((time, index) => (
-                    <span key={index}>{(time + 1) + ((courseData.dayTimeIndexes[0].timeIndexes.length != index + 1) ? '-' : '')}</span>
-                  ))) : '-'
-                }
-                </Col>
-              </Row>
-            </div>
-          </div>
-
-          {/* -------- ອາຈານສິດສອນ -------- */}
-          <div style={{ padding: 20, paddingBottom: 0 }}>
-            <div style={{ fontWeight: "bold" }} ><FontAwesomeIcon icon='caret-down' style={{ marginRight: 16, marginLeft: -24, fontSize: 24, color: Consts.PRIMARY_COLOR }} />ອາຈານສິດສອນ</div>
-            <div style={{ paddingLeft: 20, fontSize: 14 }}>
-              <Row>
-                <Col>ຊື່ອາຈານ</Col>
-                <Col>{courseData && (courseData.teacher ? (courseData.teacher.firstname) + ' ' + (courseData.teacher.lastname ? courseData.teacher.lastname : '') : '')}</Col>
-              </Row>
-            </div>
-          </div>
-
-          {/* -------- ຄໍາອະທິບາຍ -------- */}
-          <div style={{ padding: 20, paddingBottom: 0 }}>
-            <div style={{ fontWeight: "bold" }} ><FontAwesomeIcon icon='caret-down' style={{ marginRight: 16, marginLeft: -24, fontSize: 24, color: Consts.PRIMARY_COLOR }} />ຄໍາອະທິບາຍ</div>
-            <div style={{ paddingLeft: 20, fontSize: 14 }}>
-              <Row>
-                <Col>ເນື້ອໃນຂອງວິຊາ</Col>
-                <Col>{courseData && courseData.description}</Col>
-              </Row>
-            </div>
-          </div>
-
           {/* -------- ອັບໂຫລດ Syllabus -------- */}
           <div style={{ padding: 20, paddingBottom: 0 }}>
             <div style={{ fontWeight: "bold" }} ><FontAwesomeIcon icon='caret-down' style={{ marginRight: 16, marginLeft: -24, fontSize: 24, color: Consts.PRIMARY_COLOR }} />ອັບໂຫລດ Syllabus</div>

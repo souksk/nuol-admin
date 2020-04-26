@@ -36,13 +36,6 @@ function CourseEditConfirm({
 
 
   const _confirmCourseEdit = () => {
-    ////console.log(param)
-    if(param.data.semester == 0){
-      delete param.data.semester
-    }
-    if(param.data.yearLevel == 0){
-      delete param.data.yearLevel
-    }
     if(param.data.unit == 0){
       delete param.data.unit
     }
@@ -144,53 +137,6 @@ function CourseEditConfirm({
                 </Form.Group>
               </div>
 
-              {/* ---------- ປີຮຽນແລະພາກຮຽນ --------- */}
-              <div style={{ marginBottom: 10 }}>
-                <div>
-                  <i
-                    className='fa fa-caret-down'
-                    aria-hidden='true'
-                    style={{ marginRight: 5, color: Consts.SECONDARY_COLOR }}
-                  />
-                  ປີຮຽນແລະພາກຮຽນ
-              </div>
-                {/* ປີຮຽນ */}
-                <Form.Group
-                  as={Row}
-                  style={{
-                    margin: 0,
-                    marginBottom: 10,
-                    paddingLeft: 20,
-                    fontSize: 16
-                  }}
-                >
-                  <Form.Label column sm='4' className='text-left'>
-                    ປີຮຽນ
-                </Form.Label>
-                  <Col sm='8' style={{marginTop:8}}>
-                    <span>{param.data && (param.data.yearLevel != 0 ? param.data.yearLevel : '')}</span>
-                  </Col>
-                </Form.Group>
-
-                {/* ພາກຮຽນ */}
-                <Form.Group
-                  as={Row}
-                  style={{
-                    margin: 0,
-                    marginBottom: 10,
-                    paddingLeft: 20,
-                    fontSize: 16
-                  }}
-                >
-                  <Form.Label column sm='4' className='text-left'>
-                    ພາກຮຽນ
-                </Form.Label>
-                  <Col sm='8' style={{marginTop:8}}>
-                    <span>{param.data && (param.data.semester != 0 ? param.data.semester : '')}</span>
-                  </Col>
-                </Form.Group>
-              </div>
-
               {/* ---------- ຂໍ້ມູນວິຊາ --------- */}
               <div style={{ marginBottom: 10 }}>
                 <div>
@@ -252,84 +198,6 @@ function CourseEditConfirm({
                 </Form.Label>
                   <Col sm='8' style={{marginTop:8}}>
                     <span>{param.data && (param.data.unit != 0 ? param.data.unit : '')}</span>
-                  </Col>
-                </Form.Group>
-              </div>
-
-              {/* ---------- ຕາຕະລາງມື້ສອນ --------- */}
-              <div style={{ marginBottom: 10 }}>
-                <div>
-                  <i
-                    className='fa fa-caret-down'
-                    aria-hidden='true'
-                    style={{ marginRight: 5, color: Consts.SECONDARY_COLOR }}
-                  />
-                  ຕາຕະລາງມື້ສອນ
-              </div>
-                {/* ວັນ */}
-                <Form.Group
-                  as={Row}
-                  style={{
-                    margin: 0,
-                    marginBottom: 10,
-                    paddingLeft: 20,
-                    fontSize: 16
-                  }}
-                >
-                  <Form.Label column sm='4' className='text-left'>
-                    ວັນ
-                </Form.Label>
-                  <Col sm='8' style={{marginTop:8}}>
-                    <span>{param.data && param.data.dayTimeIndexes && param.data.dayTimeIndexes.updateMany.data.dayString}</span>
-                  </Col>
-                </Form.Group>
-
-                {/* ຊົ່ວໂມງ */}
-                <Form.Group
-                  as={Row}
-                  style={{
-                    margin: 0,
-                    marginBottom: 10,
-                    paddingLeft: 20,
-                    fontSize: 16
-                  }}
-                >
-                  <Form.Label column sm='4' className='text-left'>
-                    ຊົ່ວໂມງ
-                </Form.Label>
-                  <Col sm='8' style={{marginTop:8}}>
-                    {param.data && param.data.dayTimeIndexes && param.data.dayTimeIndexes.updateMany.data.timeIndexes.set.map((x, index) =>
-                      <span key={"time" + x}>{(x + 1) + ((index + 1 >= param.data.dayTimeIndexes.updateMany.data.timeIndexes.set.length) ? '' : '-')}</span>
-                    )}
-                  </Col>
-                </Form.Group>
-              </div>
-
-              {/* ---------- ອາຈານສິດສອນ --------- */}
-              <div style={{ marginBottom: 10 }}>
-                <div>
-                  <i
-                    className='fa fa-caret-down'
-                    aria-hidden='true'
-                    style={{ marginRight: 5, color: Consts.SECONDARY_COLOR }}
-                  />
-                  ອາຈານສິດສອນ
-              </div>
-                {/* ຊື່ອາຈານ */}
-                <Form.Group
-                  as={Row}
-                  style={{
-                    margin: 0,
-                    marginBottom: 10,
-                    paddingLeft: 20,
-                    fontSize: 16
-                  }}
-                >
-                  <Form.Label column sm='4' className='text-left'>
-                    ລະຫັດອາຈານ
-                </Form.Label>
-                  <Col sm='8' style={{marginTop:8}}>
-                    <span>{param.data && param.data.teacher && param.data.teacher.connect.userId}</span>
                   </Col>
                 </Form.Group>
               </div>

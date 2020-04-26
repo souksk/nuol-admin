@@ -42,7 +42,7 @@ function Login() {
 							const user = response.data.loginUser;
 							localStorage.setItem(USER_KEY, JSON.stringify(user));
 
-							history.push('/course-list');
+							history.push('/calenda-list');
 						}
 					} catch (err) {
 						setLoginStatus(false);

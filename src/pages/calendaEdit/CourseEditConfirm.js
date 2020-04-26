@@ -16,39 +16,47 @@ import {
   Toast
 } from 'react-bootstrap'
 import Consts from '../../consts'
-
-import { useQuery, useMutation } from '@apollo/react-hooks';
-import { CREATE_COURSE } from '../../apollo/course'
 import * as _ from 'lodash';
 
-function CourseAddConfirm({
-  showAddConfirmModal,
-  _handleShowAddConfirmModalClose,
+import { useQuery, useMutation } from '@apollo/react-hooks';
+import { UPDATE_COURSE } from '../../apollo/course'
+
+function CourseEditConfirm({
+  showEditConfirmModal,
+  _handleShowEditConfirmModalClose,
   param,
   FACULTY
 }) {
   const { history, location, match } = useReactRouter()
-  const [createCourse, { data }] = useMutation(CREATE_COURSE);
+  const [updateCourse, { data }] = useMutation(UPDATE_COURSE);
 
   ////console.log(param)
   //Set State
   const [showToast, setShowToast] = useState(false);
 
 
-  const _confirmCourseAdd = () => {
+  const _confirmCourseEdit = () => {
+    ////console.log(param)
+    if(param.data.semester == 0){
+      delete param.data.semester
+    }
+    if(param.data.yearLevel == 0){
+      delete param.data.yearLevel
+    }
     if(param.data.unit == 0){
       delete param.data.unit
     }
     
-    const aaa = createCourse({ variables: param }).then(async (x) => {
-      await history.push("/course-list")
+    const aaa = updateCourse({ variables: param }).then((x) => {
+      ////console.log("res: ", x)
+      history.push("/course-list")
       window.location.reload(true)
     }).catch((err) => {
-      //console.log(err)
-      _handleShowAddConfirmModalClose()
+      ////console.log(err)
+      _handleShowEditConfirmModalClose()
       setShowToast(true)
     });
-    // //console.log(aaa)
+    ////console.log(aaa)
   }
 
   const _renderFaculty = (id) => {
@@ -65,8 +73,8 @@ function CourseAddConfirm({
   return (
     <div>
       <Modal
-        show={showAddConfirmModal}
-        onHide={_handleShowAddConfirmModalClose}
+        show={showEditConfirmModal}
+        onHide={_handleShowEditConfirmModalClose}
         size='lg'
       >
         <Modal.Title style={{ textAlign: 'center', paddingTop: 20 }}>
@@ -75,7 +83,7 @@ function CourseAddConfirm({
         <Modal.Body
           style={{
             marginLeft: 50,
-            marginRight: 50,
+            marginRight: 5, color: Consts.SECONDARY_COLOR0,
             padding: 50,
             paddingTop: 0
           }}
@@ -95,7 +103,7 @@ function CourseAddConfirm({
                   <i
                     className='fa fa-caret-down'
                     aria-hidden='true'
-                    style={{ marginRight: 5 }}
+                    style={{ marginRight: 5, color: Consts.SECONDARY_COLOR }}
                   />
                   ຄະນະແລະພາກວິຊາ
               </div>
@@ -112,7 +120,7 @@ function CourseAddConfirm({
                   <Form.Label column sm='4' className='text-left'>
                     ຄະນະ
                 </Form.Label>
-                  <Col sm='8'>
+                  <Col sm='8' style={{marginTop:8}}>
                     <span>{param.data && _renderFaculty(param.data.faculty.connect.id)}</span>
                   </Col>
                 </Form.Group>
@@ -130,8 +138,55 @@ function CourseAddConfirm({
                   <Form.Label column sm='4' className='text-left'>
                     ພາກວິຊາ
                 </Form.Label>
-                  <Col sm='8'>
+                  <Col sm='8' style={{marginTop:8}}>
                     <span>{param.data && _renderDepartment(param.data.faculty.connect.id, param.data.department.connect.id)}</span>
+                  </Col>
+                </Form.Group>
+              </div>
+
+              {/* ---------- ປີຮຽນແລະພາກຮຽນ --------- */}
+              <div style={{ marginBottom: 10 }}>
+                <div>
+                  <i
+                    className='fa fa-caret-down'
+                    aria-hidden='true'
+                    style={{ marginRight: 5, color: Consts.SECONDARY_COLOR }}
+                  />
+                  ປີຮຽນແລະພາກຮຽນ
+              </div>
+                {/* ປີຮຽນ */}
+                <Form.Group
+                  as={Row}
+                  style={{
+                    margin: 0,
+                    marginBottom: 10,
+                    paddingLeft: 20,
+                    fontSize: 16
+                  }}
+                >
+                  <Form.Label column sm='4' className='text-left'>
+                    ປີຮຽນ
+                </Form.Label>
+                  <Col sm='8' style={{marginTop:8}}>
+                    <span>{param.data && (param.data.yearLevel != 0 ? param.data.yearLevel : '')}</span>
+                  </Col>
+                </Form.Group>
+
+                {/* ພາກຮຽນ */}
+                <Form.Group
+                  as={Row}
+                  style={{
+                    margin: 0,
+                    marginBottom: 10,
+                    paddingLeft: 20,
+                    fontSize: 16
+                  }}
+                >
+                  <Form.Label column sm='4' className='text-left'>
+                    ພາກຮຽນ
+                </Form.Label>
+                  <Col sm='8' style={{marginTop:8}}>
+                    <span>{param.data && (param.data.semester != 0 ? param.data.semester : '')}</span>
                   </Col>
                 </Form.Group>
               </div>
@@ -142,7 +197,7 @@ function CourseAddConfirm({
                   <i
                     className='fa fa-caret-down'
                     aria-hidden='true'
-                    style={{ marginRight: 5 }}
+                    style={{ marginRight: 5, color: Consts.SECONDARY_COLOR }}
                   />
                   ຂໍ້ມູນວິຊາ
               </div>
@@ -159,8 +214,8 @@ function CourseAddConfirm({
                   <Form.Label column sm='4' className='text-left'>
                     ຊື່ວິຊາ
                 </Form.Label>
-                  <Col sm='8'>
-                    <span>{param.data && (param.data.title ? param.data.title : '')}</span>
+                  <Col sm='8' style={{marginTop:8}}>
+                    <span>{param.data && param.data.title}</span>
                   </Col>
                 </Form.Group>
 
@@ -177,8 +232,8 @@ function CourseAddConfirm({
                   <Form.Label column sm='4' className='text-left'>
                     ລະຫັດວິຊາ
                 </Form.Label>
-                  <Col sm='8'>
-                    <span>{param.data && (param.data.courseCode ? param.data.courseCode : '')}</span>
+                  <Col sm='8' style={{marginTop:8}}>
+                    <span>{param.data && param.data.courseCode}</span>
                   </Col>
                 </Form.Group>
 
@@ -195,8 +250,86 @@ function CourseAddConfirm({
                   <Form.Label column sm='4' className='text-left'>
                     ຈໍານວນຫນ່ວຍກິດ
                 </Form.Label>
-                  <Col sm='8'>
-                    <span>{param.data && ((param.data.unit != 0) ? param.data.unit : '')}</span>
+                  <Col sm='8' style={{marginTop:8}}>
+                    <span>{param.data && (param.data.unit != 0 ? param.data.unit : '')}</span>
+                  </Col>
+                </Form.Group>
+              </div>
+
+              {/* ---------- ຕາຕະລາງມື້ສອນ --------- */}
+              <div style={{ marginBottom: 10 }}>
+                <div>
+                  <i
+                    className='fa fa-caret-down'
+                    aria-hidden='true'
+                    style={{ marginRight: 5, color: Consts.SECONDARY_COLOR }}
+                  />
+                  ຕາຕະລາງມື້ສອນ
+              </div>
+                {/* ວັນ */}
+                <Form.Group
+                  as={Row}
+                  style={{
+                    margin: 0,
+                    marginBottom: 10,
+                    paddingLeft: 20,
+                    fontSize: 16
+                  }}
+                >
+                  <Form.Label column sm='4' className='text-left'>
+                    ວັນ
+                </Form.Label>
+                  <Col sm='8' style={{marginTop:8}}>
+                    <span>{param.data && param.data.dayTimeIndexes && param.data.dayTimeIndexes.updateMany.data.dayString}</span>
+                  </Col>
+                </Form.Group>
+
+                {/* ຊົ່ວໂມງ */}
+                <Form.Group
+                  as={Row}
+                  style={{
+                    margin: 0,
+                    marginBottom: 10,
+                    paddingLeft: 20,
+                    fontSize: 16
+                  }}
+                >
+                  <Form.Label column sm='4' className='text-left'>
+                    ຊົ່ວໂມງ
+                </Form.Label>
+                  <Col sm='8' style={{marginTop:8}}>
+                    {param.data && param.data.dayTimeIndexes && param.data.dayTimeIndexes.updateMany.data.timeIndexes.set.map((x, index) =>
+                      <span key={"time" + x}>{(x + 1) + ((index + 1 >= param.data.dayTimeIndexes.updateMany.data.timeIndexes.set.length) ? '' : '-')}</span>
+                    )}
+                  </Col>
+                </Form.Group>
+              </div>
+
+              {/* ---------- ອາຈານສິດສອນ --------- */}
+              <div style={{ marginBottom: 10 }}>
+                <div>
+                  <i
+                    className='fa fa-caret-down'
+                    aria-hidden='true'
+                    style={{ marginRight: 5, color: Consts.SECONDARY_COLOR }}
+                  />
+                  ອາຈານສິດສອນ
+              </div>
+                {/* ຊື່ອາຈານ */}
+                <Form.Group
+                  as={Row}
+                  style={{
+                    margin: 0,
+                    marginBottom: 10,
+                    paddingLeft: 20,
+                    fontSize: 16
+                  }}
+                >
+                  <Form.Label column sm='4' className='text-left'>
+                    ລະຫັດອາຈານ
+                </Form.Label>
+                  <Col sm='8' style={{marginTop:8}}>
+                    <span>{param.data && param.data.teacher && param.data.teacher.connect.userId}</span>
                   </Col>
                 </Form.Group>
               </div>
@@ -207,7 +340,7 @@ function CourseAddConfirm({
                   <i
                     className='fa fa-caret-down'
                     aria-hidden='true'
-                    style={{ marginRight: 5 }}
+                    style={{ marginRight: 5, color: Consts.SECONDARY_COLOR }}
                   />
                   ຄໍາອະທິບາຍ
               </div>
@@ -224,7 +357,7 @@ function CourseAddConfirm({
                   <Form.Label column sm='4' className='text-left'>
                     ເນື້ອໃນຂອງວິຊາ
                 </Form.Label>
-                  <Col sm='8'>
+                  <Col sm='8' style={{marginTop:8}}>
                     <span>{param.data && param.data.description}</span>
                   </Col>
                 </Form.Group>
@@ -236,7 +369,7 @@ function CourseAddConfirm({
                   <i
                     className='fa fa-caret-down'
                     aria-hidden='true'
-                    style={{ marginRight: 5 }}
+                    style={{ marginRight: 5, color: Consts.SECONDARY_COLOR }}
                   />
                   ອັບໂຫລດ
               </div>
@@ -253,7 +386,7 @@ function CourseAddConfirm({
                   <Form.Label column sm='4' className='text-left'>
                     ອັບໂຫລດໄຟລ
                 </Form.Label>
-                  <Col sm='8'>
+                  <Col sm='8' style={{marginTop:8}}>
                     <span>{param.data && param.data.syllabusFile && param.data.syllabusFile.create.title}</span>
                   </Col>
                 </Form.Group>
@@ -265,12 +398,12 @@ function CourseAddConfirm({
           <div className='row'>
             <div style={{ padding: 15 }} className='col'>
               <Button
-                onClick={_handleShowAddConfirmModalClose}
+                onClick={_handleShowEditConfirmModalClose}
                 style={{
                   width: '100%',
                   backgroundColor: '#fff',
                   color: '#6f6f6f',
-                  borderColor: '#6f6f6f'
+                  borderColor: Consts.SECONDARY_COLOR
                 }}
               >
                 ຍົກເລີກ
@@ -284,7 +417,7 @@ function CourseAddConfirm({
                   color: '#fff',
                   borderColor: Consts.SECONDARY_COLOR
                 }}
-                onClick={() => _confirmCourseAdd()}
+                onClick={() => _confirmCourseEdit()}
               >
                 ຕົກລົງ
             </Button>
@@ -314,4 +447,4 @@ function CourseAddConfirm({
   )
 }
 
-export default CourseAddConfirm
+export default CourseEditConfirm

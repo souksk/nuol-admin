@@ -31,6 +31,7 @@ import axios from "axios"
 import CourseEditConfirm from './CourseEditConfirm'
 
 function CourseEdit() {
+  const [selectedOption, setSelectedOption] = useState(null)
 
   const { history, location, match } = useReactRouter()
 
@@ -60,6 +61,13 @@ function CourseEdit() {
     const facaltyIndex = _.findIndex(FACULTY, { 'name': e.target.value });
     setSelectFacultyIndex(facaltyIndex)
   }
+
+  /**
+   * init form param
+   */
+  //init timeIndexes
+  if (courseData && courseData.dayTimeIndexes && courseData.dayTimeIndexes[courseData.dayTimeIndexes.length - 1].timeIndexes.length > 0 && selectTimeIndexes.length <= 0)
+    setSelectTimeIndexes(courseData.dayTimeIndexes[courseData.dayTimeIndexes.length - 1].timeIndexes)
 
   //init faculty index
   if (selectFacultyIndex == -1 && courseData && courseData.faculty && courseData.faculty.name)
@@ -149,6 +157,53 @@ function CourseEdit() {
     </li>
   ));
 
+
+  /**
+  * ກໍານົດຄ່າ selectTimeIndexes ເວລາກົດເລືອກຊົ່ວໂມງຮຽນ
+  *   */
+  const _timeIndexClick = (i) => {
+    if (!_.includes(selectTimeIndexes, i)) {
+      let data = [...selectTimeIndexes, i];
+      setSelectTimeIndexes(data)
+    } else {
+      let data = [...selectTimeIndexes];
+      _.remove(data, (n) => n == i)
+      setSelectTimeIndexes(data)
+    }
+  }
+
+  /**
+   * ສະແດງປຸ່ມກໍານົດຊົວໂມງຮຽນ
+   *   */
+  const RenderButton = () => {
+    return (
+      <ButtonToolbar>
+        <ButtonGroup className="" style={{ width: "100% !important" }}>
+          <Button onClick={() => _timeIndexClick(0)} variant={_.includes(selectTimeIndexes, 0) ? "primary" : "outline-primary"}>ຊມ1</Button >
+          <Button onClick={() => _timeIndexClick(1)} variant={_.includes(selectTimeIndexes, 1) ? "primary" : "outline-primary"}>ຊມ2</Button >
+          <Button onClick={() => _timeIndexClick(2)} variant={_.includes(selectTimeIndexes, 2) ? "primary" : "outline-primary"}>ຊມ3</Button >
+          <Button onClick={() => _timeIndexClick(3)} variant={_.includes(selectTimeIndexes, 3) ? "primary" : "outline-primary"}>ຊມ4</Button >
+          <Button onClick={() => _timeIndexClick(4)} variant={_.includes(selectTimeIndexes, 4) ? "primary" : "outline-primary"}>ຊມ5</Button >
+          <Button onClick={() => _timeIndexClick(5)} variant={_.includes(selectTimeIndexes, 5) ? "primary" : "outline-primary"}>ຊມ6</Button >
+          <Button onClick={() => _timeIndexClick(6)} variant={_.includes(selectTimeIndexes, 6) ? "primary" : "outline-primary"}>ຊມ7</Button >
+        </ButtonGroup>
+      </ButtonToolbar>
+    )
+  }
+
+  /**
+   * ແປງຂໍ້ມູນວັນ ເປັນ ຕົວເລກ
+   *   */
+  const _renderDayInt = (dayString) => {
+    if (dayString == "ຈັນ") return 0;
+    else if (dayString == "ອັງຄານ") return 1;
+    else if (dayString == "ພຸດ") return 2;
+    else if (dayString == "ພະຫັດ") return 3;
+    else if (dayString == "ສຸກ") return 4;
+    else if (dayString == "ເສົາ") return 5;
+    else if (dayString == "ອາທິດ") return 6;
+  }
+
   /**
    * ແປງຂໍ້ມູນຊື່ department ເປັນ id 
    *   */
@@ -183,9 +238,15 @@ function CourseEdit() {
             department: courseData.department ? courseData.department.name : "",
             faculty: courseData.faculty ? courseData.faculty.name : "",
             courseCode: courseData.courseCode || '',
+            yearLevel: courseData.yearLevel || '0',
+            semester: courseData.semester || '0',
             description: courseData.description || '',
+            day: courseData.dayTimeIndexes.length > 0 ? (courseData.dayTimeIndexes[0].dayString ? courseData.dayTimeIndexes[0].dayString : '') : '',
             unit: courseData.unit || '0',
+            timeIndexX: 0,
+            timeIndexY: 0,
             note: courseData.note || '',
+            teacher: (courseData.teacher) ? courseData.teacher.userId : '',
           }}
           validate={values => {
             const errors = {};
@@ -218,7 +279,43 @@ function CourseEdit() {
                 courseCode: values.courseCode,
                 description: values.description,
                 note: values.note,
+                yearLevel: parseInt(values.yearLevel),
+                semester: parseInt(values.semester),
                 unit: parseInt(values.unit),
+                dayTimeIndexes: {
+                  updateMany: {
+                    data: {
+                      dayInt: _renderDayInt(values.day),
+                      dayString: values.day,
+                      timeIndexes: { set: selectTimeIndexes }
+                    },
+                    where: { dayString: courseData.dayTimeIndexes[0].dayString }
+                  }
+                  // create: {
+                  //   dayInt: _renderDayInt(values.day),
+                  //   dayString: values.day,
+                  //   timeIndexes: {
+                  //     set: selectTimeIndexes
+                  //   }
+                  // }
+                }
+              }
+            }
+
+            // //Check if there is teacher 
+            if (values.teacher) {
+              paramQL = {
+                data: {
+                  ...paramQL.data,
+                  teacher: {
+                    connect: {
+                      userId: values.teacher,
+                    }
+                  }
+                },
+                where: {
+                  ...paramQL.where
+                }
               }
             }
 
@@ -300,6 +397,65 @@ function CourseEdit() {
                       </Form.Group>}
                     </div>
 
+                    {/* ---------- ປີຮຽນແລະພາກຮຽນ --------- */}
+                    <div style={{ marginBottom: 10 }}>
+                      <div>
+                        <i
+                          className='fa fa-caret-down'
+                          aria-hidden='true'
+                          style={{ marginRight: 5, color: Consts.SECONDARY_COLOR }}
+                        />
+                      ປີຮຽນແລະພາກຮຽນ</div>
+                      {/* ປີຮຽນ */}
+                      <Form.Group
+                        as={Row}
+                        style={{
+                          margin: 0,
+                          marginBottom: 10,
+                          paddingLeft: 20,
+                          fontSize: 16
+                        }}
+                      >
+                        <Form.Label column sm='4' className='text-left'>
+                          ປີຮຽນ</Form.Label>
+                        <Col sm='8'>
+                          <Form.Control as='select' name="yearLevel"
+                            value={values.yearLevel}
+                            onChange={handleChange}>
+                            <option disabled={true} value="0">---ກະລຸນາເລືອກປີຮຽນ---</option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                          </Form.Control>
+                        </Col>
+                      </Form.Group>
+
+                      {/* ພາກຮຽນ */}
+                      <Form.Group
+                        as={Row}
+                        style={{
+                          margin: 0,
+                          marginBottom: 10,
+                          paddingLeft: 20,
+                          fontSize: 16
+                        }}
+                      >
+                        <Form.Label column sm='4' className='text-left'>
+                          ພາກຮຽນ</Form.Label>
+                        <Col sm='8'>
+                          <Form.Control as='select' name="semester"
+                            value={values.semester}
+                            onChange={handleChange}>
+                            <option disabled={true} value="0">---ກະລຸນາເລືອກພາກຮຽນ---</option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                          </Form.Control>
+                        </Col>
+                      </Form.Group>
+                    </div>
+
                     {/* ---------- ຂໍ້ມູນວິຊາ --------- */}
                     <div style={{ marginBottom: 10 }}>
                       <div>
@@ -379,6 +535,100 @@ function CourseEdit() {
                             <option>4</option>
                             <option>5</option>
                             <option>6</option>
+                          </Form.Control>
+                        </Col>
+                      </Form.Group>
+                    </div>
+
+                    {/* ---------- ຕາຕະລາງມື້ສອນ --------- */}
+                    <div style={{ marginBottom: 10 }}>
+                      <div>
+                        <i
+                          className='fa fa-caret-down'
+                          aria-hidden='true'
+                          style={{ marginRight: 5, color: Consts.SECONDARY_COLOR }}
+                        />
+                      ຕາຕະລາງມື້ສອນ
+                    </div>
+                      {/* ວັນ */}
+                      <Form.Group
+                        as={Row}
+                        style={{
+                          margin: 0,
+                          marginBottom: 10,
+                          paddingLeft: 20,
+                          fontSize: 16
+                        }}
+                      >
+                        <Form.Label column sm='4' className='text-left'>
+                          ວັນ</Form.Label>
+                        <Col sm='8'>
+                          <Form.Control as='select' name="day"
+                            value={values.day}
+                            onChange={handleChange}>
+                            <option disabled={true} value="">---ກະລຸນາເລືອກວັນ---</option>
+                            <option value="ຈັນ">ຈັນ</option>
+                            <option value="ອັງຄານ">ອັງຄານ</option>
+                            <option value="ພຸດ">ພຸດ</option>
+                            <option value="ພະຫັດ">ພະຫັດ</option>
+                            <option value="ສຸກ">ສຸກ</option>
+                            <option value="ເສົາ">ເສົາ</option>
+                            <option value="ວັນທິດ">ວັນທິດ</option>
+                          </Form.Control>
+                        </Col>
+                      </Form.Group>
+
+                      {/* ຊົ່ວໂມງ */}
+                      <Form.Group
+                        as={Row}
+                        style={{
+                          margin: 0,
+                          marginBottom: 10,
+                          paddingLeft: 20,
+                          fontSize: 16
+                        }}
+                      >
+                        <Form.Label column sm='4' className='text-left'>
+                          ຊົ່ວໂມງ</Form.Label>
+                        <Col sm='8'>
+                          {/* {renderButton} */}
+                          <RenderButton />
+
+                        </Col>
+                      </Form.Group>
+                    </div>
+
+                    {/* ---------- ອາຈານສິດສອນ --------- */}
+                    <div style={{ marginBottom: 10 }}>
+                      <div>
+                        <i
+                          className='fa fa-caret-down'
+                          aria-hidden='true'
+                          style={{ marginRight: 5, color: Consts.SECONDARY_COLOR }}
+                        />
+                      ອາຈານສິດສອນ
+                    </div>
+                      {/* ຊື່ອາຈານ */}
+                      <Form.Group
+                        as={Row}
+                        style={{
+                          margin: 0,
+                          marginBottom: 10,
+                          paddingLeft: 20,
+                          fontSize: 16
+                        }}
+                      >
+                        <Form.Label column sm='4' className='text-left'>
+                          ຊື່ອາຈານ</Form.Label>
+                        <Col sm='8'>
+                          <Form.Control as="select" name="teacher"
+                            value={values.teacher}
+                            onChange={handleChange}>
+                            <option value="">ກະລຸນາເລືອກອາຈານ . . .</option>
+                            {teacherData &&
+                              teacherData.users.map((teacher, index) => (
+                                <option key={index} value={teacher.userId}>{(teacher.firstname) + ' ' + (teacher.lastname ? teacher.lastname : '')}</option>
+                              ))}
                           </Form.Control>
                         </Col>
                       </Form.Group>

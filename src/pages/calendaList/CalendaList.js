@@ -12,7 +12,7 @@ import {
   InputGroup,
   FormControl
 } from 'react-bootstrap'
-// import CourseSearch from './CourseSearch'
+// import CalendaSearch from './CalendaSearch'
 import Consts from '../../consts'
 import {
   CustomContainer,
@@ -24,16 +24,16 @@ import {
 } from '../../common'
 import * as _ from 'lodash'
 import { useQuery, useMutation, useLazyQuery } from '@apollo/react-hooks'
-import { COURSES } from '../../apollo/course'
+import { STUDYCALENDAS } from '../../apollo/calenda'
 import { FACULTIES } from '../../apollo/faculty'
 
-function CourseList() {
+function CalendaList() {
   const { history, location, match } = useReactRouter()
-  const [loadCourses, apolloData] = useLazyQuery(COURSES)
+  const [loadStudyCalendas, apolloData] = useLazyQuery(STUDYCALENDAS)
   // const {data: courseData, loading: loadCourses, error: errorCourses} = useQuery(COURSES)
   // const { loading, error } = apolloData
-  const courseData =
-    apolloData.data && apolloData.data.courses ? apolloData.data.courses : []
+  const studyCalendaData =
+    apolloData.data && apolloData.data.studyCalendas ? apolloData.data.studyCalendas : []
   // const [courseData, setCourseData] = useState({})
 
   // Query faculties
@@ -47,11 +47,11 @@ function CourseList() {
   const [selectedFaculty, setselectedFaculty] = useState('')
   const [selectedDepartment, setselectedDepartment] = useState('')
   const [selectedYearLevel, setselectedYearLevel] = useState(null)
-  const [title, setTitle] = useState('ວິຊາທັງຫມົດ')
+  const [title, setTitle] = useState('ຕາຕະລາງຮຽນທັງຫມົດ')
 
   // on first load
   useEffect(() => {
-    loadCourses()
+    loadStudyCalendas()
     loadFaculties()
   }, [])
 
@@ -59,16 +59,16 @@ function CourseList() {
   const _handleSearchViewClose = () => setShowSearchView(false)
   const _handleSearchViewShow = () => setShowSearchView(true)
 
-  const _courseDetail = data => {
-    history.push('/course-detail', data)
+  const _studyCalendaDetail = data => {
+    history.push('/calenda-detail', data)
   }
 
-  const _courseEdit = data => {
-    history.push('/course-edit', data)
+  const _studyCalendaEdit = data => {
+    history.push('/calenda-edit', data)
   }
 
-  const _courseAdd = () => {
-    history.push('/course-add')
+  const _studyCalendaAdd = () => {
+    history.push('/calenda-add')
   }
 
   // const _onSearch = value => {
@@ -113,7 +113,7 @@ function CourseList() {
   //   // Close search view
   //   _handleSearchViewClose()
 
-  //   loadCourses({
+  //   loadStudyCalendas({
   //     variables: { where: ((Object.keys(where)).length > 0) ? where : {} }
   //   })
 
@@ -128,11 +128,11 @@ function CourseList() {
       {/* Breadcrumb */}
       <Breadcrumb>
         <Breadcrumb.Item href='' onClick={() => {
-            history.push('/course-list')
-            window.location.reload(true)
-          }
+          history.push('/calenda-list')
+          window.location.reload(true)
+        }
         }>
-          ຈັດການວິຊາ
+          ຈັດການຕາຕະລາງຮຽນ
         </Breadcrumb.Item>
         <Breadcrumb.Item active>
           {title}
@@ -145,8 +145,8 @@ function CourseList() {
           <CustomButton
             confirm
             addIcon
-            title='ເພີ່ມວິຊາ'
-            onClick={() => _courseAdd()}
+            title='ເພີ່ມຕາຕະລາງ'
+            onClick={() => _studyCalendaAdd()}
           />
         </div>
 
@@ -165,7 +165,7 @@ function CourseList() {
             color: Consts.FONT_COLOR_SECONDARY
           }}
         >
-          ທັງຫມົດ {courseData.length} ວິຊາ
+          ທັງຫມົດ {studyCalendaData.length} ຕາຕະລາງ
         </div>
 
         {/* Table list */}
@@ -173,19 +173,20 @@ function CourseList() {
           <table border='1' bordercolor='#fff' style={{ width: '100%' }}>
             <thead>
               <TableHeader>
-                <th style={{width: 60}}>ລຳດັບ</th>
-                <th style={{width: 100}}>ລະຫັດວິຊາ</th>
-                <th style={{width: 250}}>ຊື່ວິຊາ</th>
-                <th style={{width: 250}}>ຄະນະ</th>
-                <th style={{width: 250}}>ພາກວິຊາ</th>
-                <th style={{width: 100}}>ຈຳນວນໜ່ວຍກິດ</th>
-                <th style={{width: 250}}>ຄຳອະທິບາຍ</th>
-                <th style={{width: 180}}>ຈັດການ</th>
+                <th style={{ width: 60 }}>ລຳດັບ</th>
+                <th style={{ width: 100 }}>ລະຫັດຕາຕະລາງ</th>
+                <th style={{ width: 250 }}>ຊື່ວິຊາ</th>
+                <th style={{ width: 250 }}>ອາຈານ</th>
+                <th style={{ width: 100 }}>ປິຮຽນ</th>
+                <th style={{ width: 100 }}>ພາກຮຽນ</th>
+                <th style={{ width: 100 }}>ວັນ</th>
+                <th style={{ width: 100 }}>ຊົ່ວໂມງ</th>
+                <th style={{ width: 180 }}>ຈັດການ</th>
               </TableHeader>
             </thead>
             <tbody>
-              {courseData.length > 0 &&
-                courseData.map((x, index) => {
+              {studyCalendaData.length > 0 &&
+                studyCalendaData.map((x, index) => {
                   return (
                     <tr
                       style={{
@@ -198,22 +199,36 @@ function CourseList() {
                         {index + 1}
                       </TableCell>
                       <TableCell>
-                        {x.courseCode}
+                        {x.calendaCoce}
                       </TableCell>
                       <TableCell>
-                        {x.title}
+                        {x.course && x.course.title}
                       </TableCell>
                       <TableCell>
-                        {x.faculty && x.faculty.name}{' '}
+                        {x.teacher && x.teacher.firstname}{' '}
+                        {x.teacher && x.teacher.lastname}
                       </TableCell>
                       <TableCell>
-                        {x.department && x.department.name}{' '}
+                        {x.yearLevel}
                       </TableCell>
                       <TableCell>
-                        {x.unit}{' '}
+                        {x.semester}
                       </TableCell>
                       <TableCell>
-                        {x.description}
+                        {
+                          x.dayTimeIndexes.length != 0 ?
+                            (x.dayTimeIndexes.map((d, index) => (
+                              <p key={index}>{d.dayString}</p>
+                            ))) : ''
+                        }
+                      </TableCell>
+                      <TableCell>
+                        {
+                          x.dayTimeIndexes.length != 0 ?
+                            (x.dayTimeIndexes.map((t, index) => (
+                              <p key={index}>{t.timeIndexes + ' '}</p>
+                            ))) : ''
+                        }
                       </TableCell>
                       <TableCell>
                         <div
@@ -224,8 +239,8 @@ function CourseList() {
                           }}
                         >
                           <div
-                            onClick={() => _courseEdit(x)}
-                            style={{ cursor: 'pointer', backgroundColor:'#FFFFFF', padding: 3, width: 64, borderRadius: 4}}
+                            onClick={() => _studyCalendaEdit(x)}
+                            style={{ cursor: 'pointer', backgroundColor: '#FFFFFF', padding: 3, width: 64, borderRadius: 4 }}
                           >
                             <FontAwesomeIcon
                               icon={['fas', 'edit']}
@@ -233,8 +248,8 @@ function CourseList() {
                             />{' '}
                           </div>
                           <div
-                            onClick={() => _courseDetail(x)}
-                            style={{ cursor: 'pointer', backgroundColor:'#FFFFFF', padding: 3, width: 64, borderRadius: 4 }}
+                            onClick={() => _studyCalendaDetail(x)}
+                            style={{ cursor: 'pointer', backgroundColor: '#FFFFFF', padding: 3, width: 64, borderRadius: 4 }}
                           >
                             <FontAwesomeIcon
                               icon={['fas', 'external-link-alt']}
@@ -252,7 +267,7 @@ function CourseList() {
       </CustomContainer>
 
       {/* Search Modal */}
-      {/* <CourseSearch
+      {/* <CalendaSearch
         facultyData={facultyData ? facultyData.faculties : []}
         showSearchView={showSearchView}
         _handleSearchViewClose={_handleSearchViewClose}
@@ -262,4 +277,4 @@ function CourseList() {
   )
 }
 
-export default CourseList
+export default CalendaList
