@@ -1,5 +1,4 @@
 import React, { useState, useCallback, useEffect } from 'react'
-import './courseAdd.css'
 import useReactRouter from 'use-react-router'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import Select from 'react-select'
@@ -27,7 +26,7 @@ import axios from "axios"
 // Custom
 import Consts from '../../consts'
 // import FACULTY from '../../consts/faculty'
-import CalendaAddConfirm from './CalendaAddConfirm'
+import CalendaEditConfirm from './CalendaEditConfirm'
 import {
   CustomContainer,
   SearchBar,
@@ -38,17 +37,23 @@ import {
 } from '../../common'
 import { COURSES } from '../../apollo/course'
 import { TEACHERS } from './../../apollo/user'
+import { STUDYCALENDA } from '../../apollo/calenda'
 
-function CalendaAdd() {
+function CalendaEdit() {
   const { history, location, match } = useReactRouter()
 
+  //init apollo
+  const { data: apolloData, loading: apolloLoading, error: apolloError } = useQuery(STUDYCALENDA, { variables: { where: { id: location.state.id } } })
+  const studyCalendaData =
+    apolloData && apolloData.studyCalenda ? apolloData.studyCalenda : {}
+
   // States
-  const [showAddConfirmModal, setShowAddConfirmModal] = useState(false)
+  const [showEditConfirmModal, setShowEditConfirmModal] = useState(false)
   const [formParam, setFormParam] = useState({})
 
   // Set states
-  const _handleShowAddConfirmModalClose = () => setShowAddConfirmModal(false)
-  const _handleShowAddConfirmModalShow = () => setShowAddConfirmModal(true)
+  const _handleShowEditConfirmModalClose = () => setShowEditConfirmModal(false)
+  const _handleShowEditConfirmModalShow = () => setShowEditConfirmModal(true)
 
   const [
     loadTeachers,
@@ -78,12 +83,12 @@ function CalendaAdd() {
     window.location.reload(true)
   }
 
-  const _add = async (param) => {
+  const _edit = async (param) => {
     setFormParam(param)
-    _handleShowAddConfirmModalShow()
+    _handleShowEditConfirmModalShow()
   }
 
-  const calendaAddValidation = Yup.object().shape({
+  const calendaEditValidation = Yup.object().shape({
     course: Yup.string()
       .required('Required'),
     teacher: Yup.string()
@@ -110,7 +115,8 @@ function CalendaAdd() {
     setYears(year)
   }
 
-  if (teacherLoading) return <p>loading...</p>
+  if (teacherLoading || apolloLoading) return <p>loading...</p>
+  // console.log("studyCalendaData: ", studyCalendaData)
 
   return (
     <div>
@@ -119,29 +125,27 @@ function CalendaAdd() {
         <Breadcrumb.Item href='' onClick={() => history.push('/calenda-list')}>
           ຈັດການຕາຕະລາງຮຽນ
         </Breadcrumb.Item>
-        <Breadcrumb.Item active>ເພີ່ມຕາຕະລາງຮຽນ</Breadcrumb.Item>
+        <Breadcrumb.Item active>ແກ້ໄຂຕາຕະລາງຮຽນ</Breadcrumb.Item>
       </Breadcrumb>
 
       <CustomContainer>
-        <Title text='ເພີ່ມຕາຕະລາງຮຽນ' />
+        <Title text='ແກ້ໄຂຕາຕະລາງຮຽນ' />
 
-        <Formik
+        {studyCalendaData && <Formik
           initialValues={{
-            course: '',
-            calendaCode: '',
-            yearLevel: '0',
-            semester: '0',
-            timeIndexX: 0,
-            timeIndexY: 0,
-            teacher: '',
-            dayStart: 0,
-            monthStart: 0,
-            yearStart: 0,
-            dayEnd: 0,
-            monthEnd: 0,
-            yearEnd: 0
+            course: studyCalendaData.course ? studyCalendaData.course.id : '',
+            calendaCode: studyCalendaData.calendaCoce || '',
+            yearLevel: studyCalendaData.yearLevel ? studyCalendaData.yearLevel : '0',
+            semester: studyCalendaData.semester ? studyCalendaData.semester : '0',
+            teacher: studyCalendaData.teacher ? studyCalendaData.teacher.id : '',
+            dayStart: studyCalendaData.startDate ? parseInt(new Date(studyCalendaData.startDate).getDate()) : 0,
+            monthStart: studyCalendaData.startDate ? parseInt(new Date(studyCalendaData.startDate).getMonth()) + 1 : 0,
+            yearStart: studyCalendaData.startDate ? parseInt(new Date(studyCalendaData.startDate).getFullYear()) : 0,
+            dayEnd: studyCalendaData.endDate ? parseInt(new Date(studyCalendaData.endDate).getDate()) : 0,
+            monthEnd: studyCalendaData.endDate ? parseInt(new Date(studyCalendaData.endDate).getMonth()) + 1 : 0,
+            yearEnd: studyCalendaData.endDate ? parseInt(new Date(studyCalendaData.endDate).getFullYear()) : 0
           }}
-          validationSchema={calendaAddValidation}
+          validationSchema={calendaEditValidation}
           onSubmit={(values, { setSubmitting }) => {
 
             //Set parameters for inserting to graphql
@@ -192,7 +196,7 @@ function CalendaAdd() {
               delete values.yearEnd
             }
 
-            // //Check if there is teacher 
+            // // //Check if there is teacher 
             if (values.teacher) {
               paramQL = {
                 data: {
@@ -202,18 +206,19 @@ function CalendaAdd() {
                       id: values.teacher,
                     }
                   },
-                }
+                },
+                where: { id: studyCalendaData.id }
               }
             }
-            if (values.yearLevel == 0) {
+            if (parseInt(values.yearLevel) == 0) {
               delete paramQL.data.yearLevel
             }
-            if (values.semester == 0) {
+            if (parseInt(values.semester) == 0) {
               delete paramQL.data.semester
             }
 
             // console.log("paramQL: ", paramQL)
-            _add(paramQL)
+            _edit(paramQL)
           }}
         >
           {({
@@ -283,7 +288,7 @@ function CalendaAdd() {
                           onChange={handleChange}
                           isInvalid={!!errors.teacher}
                           required={true}>
-                          <option value="">---ກະລຸນາເລືອກອາຈານ---</option>
+                          <option disabled={true} value="">---ກະລຸນາເລືອກອາຈານ---</option>
                           {teacherData &&
                             teacherData.users.map((teacher, index) => (
                               <option key={index} value={teacher.id}>{(teacher.firstname) + ' ' + (teacher.lastname ? teacher.lastname : '')}</option>
@@ -318,7 +323,7 @@ function CalendaAdd() {
                         ລະຫັດຕາຕະລາງ
                       </Form.Label>
                       <Col sm='8'>
-                        <Form.Control type='text' placeholder='ກະລຸນາປ້ອນ' name="calendaCode"
+                        <Form.Control disabled={true} type='text' placeholder='ກະລຸນາປ້ອນ' name="calendaCode"
                           value={values.calendaCode}
                           onChange={handleChange}
                           isInvalid={!!errors.calendaCode} />
@@ -340,9 +345,8 @@ function CalendaAdd() {
                       <Col sm='8'>
                         <Form.Control as='select' name="yearLevel"
                           value={values.yearLevel}
-                          onChange={handleChange}
-                          isInvalid={!!errors.yearLevel}>
-                          <option disabled={true} value="0">---ກະລຸນາເລືອກປີຮຽນ---</option>
+                          onChange={handleChange}>
+                          <option disabled={true} value={'0'}>---ກະລຸນາເລືອກປີຮຽນ---</option>
                           <option value={'1'}>1</option>
                           <option value={'2'}>2</option>
                           <option value={'3'}>3</option>
@@ -366,8 +370,7 @@ function CalendaAdd() {
                       <Col sm='8'>
                         <Form.Control as='select' name="semester"
                           value={values.semester}
-                          onChange={handleChange}
-                          isInvalid={!!errors.semester}>
+                          onChange={handleChange}>
                           <option disabled={true} value="0">---ກະລຸນາເລືອກພາກຮຽນ---</option>
                           <option value={'1'}>1</option>
                           <option value={'2'}>2</option>
@@ -493,25 +496,25 @@ function CalendaAdd() {
                       <CustomButton title='ຍົກເລີກ' onClick={() => _cancel()} />
                     </div>
 
-                    <CustomButton confirm title='ເພີ່ມຕາຕະລາງຮຽນ' onClick={handleSubmit} />
+                    <CustomButton confirm title='ແກ້ໄຂຕາຕະລາງຮຽນ' onClick={handleSubmit} />
                   </div>
                 </div>
 
                 {/* ------- AddConfirm Modal ------ */}
-                <CalendaAddConfirm
-                  showAddConfirmModal={showAddConfirmModal}
-                  _handleShowAddConfirmModalClose={_handleShowAddConfirmModalClose}
+                <CalendaEditConfirm
+                  showEditConfirmModal={showEditConfirmModal}
+                  _handleShowEditConfirmModalClose={_handleShowEditConfirmModalClose}
                   param={formParam}
                 />
 
               </div>
 
             )}
-        </Formik>
+        </Formik>}
       </CustomContainer>
 
     </div>
   )
 }
 
-export default CalendaAdd
+export default CalendaEdit

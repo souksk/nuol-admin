@@ -18,18 +18,19 @@ import {
 import Consts from '../../consts'
 
 import { useQuery, useMutation, useLazyQuery } from '@apollo/react-hooks';
-import { CREATE_STUDYCALENDA } from '../../apollo/calenda'
+import { UPDATE_STUDYCALENDA, STUDYCALENDA } from '../../apollo/calenda'
 import { COURSES } from '../../apollo/course'
 import { TEACHERS } from './../../apollo/user'
 import * as _ from 'lodash';
 
-function CalendaAddConfirm({
-  showAddConfirmModal,
-  _handleShowAddConfirmModalClose,
+function CalendaEditConfirm({
+  showEditConfirmModal,
+  _handleShowEditConfirmModalClose,
   param,
 }) {
   const { history, location, match } = useReactRouter()
-  const [createStudyCalenda] = useMutation(CREATE_STUDYCALENDA);
+
+  const [updateStudyCalenda] = useMutation(UPDATE_STUDYCALENDA);
 
   const [
     loadCourse,
@@ -51,15 +52,16 @@ function CalendaAddConfirm({
   //Set State
   const [showToast, setShowToast] = useState(false);
 
-  const _confirmCalendaAdd = () => {
+  const _confirmCalendaEdit = () => {
 
     // console.log(param)
-    const aaa = createStudyCalenda({ variables: param }).then(async () => {
+
+    const aaa = updateStudyCalenda({ variables: param }).then(async () => {
       await history.push("/calenda-list")
       window.location.reload(true)
     }).catch((err) => {
       //console.log(err)
-      _handleShowAddConfirmModalClose()
+      _handleShowEditConfirmModalClose()
       setShowToast(true)
     });
     // //console.log(aaa)
@@ -89,8 +91,8 @@ function CalendaAddConfirm({
   return (
     <div>
       <Modal
-        show={showAddConfirmModal}
-        onHide={_handleShowAddConfirmModalClose}
+        show={showEditConfirmModal}
+        onHide={_handleShowEditConfirmModalClose}
         size='lg'
       >
         <Modal.Title style={{ textAlign: 'center', paddingTop: 20 }}>
@@ -280,7 +282,7 @@ function CalendaAddConfirm({
           <div className='row'>
             <div style={{ padding: 15 }} className='col'>
               <Button
-                onClick={_handleShowAddConfirmModalClose}
+                onClick={_handleShowEditConfirmModalClose}
                 style={{
                   width: '100%',
                   backgroundColor: '#fff',
@@ -299,7 +301,7 @@ function CalendaAddConfirm({
                   color: '#fff',
                   borderColor: Consts.SECONDARY_COLOR
                 }}
-                onClick={() => _confirmCalendaAdd()}
+                onClick={() => _confirmCalendaEdit()}
               >
                 ຕົກລົງ
             </Button>
@@ -329,4 +331,4 @@ function CalendaAddConfirm({
   )
 }
 
-export default CalendaAddConfirm
+export default CalendaEditConfirm

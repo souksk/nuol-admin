@@ -21,9 +21,11 @@ import {
 import useReactRouter from 'use-react-router'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import Consts from '../../consts'
+import CalendaTimeAdd from './CalendaTimeAdd'
+import CalendaTimeDelete from './CalendaTimeDelete'
 import CalendaDeleteConfirm from './CalendaDeleteConfirm'
 import { useQuery, useMutation } from '@apollo/react-hooks'
-import { STUDYCALENDA } from '../../apollo/calenda'
+import { STUDYCALENDA, UPDATE_STUDYCALENDA } from '../../apollo/calenda'
 import * as moment from "moment"
 import 'moment/locale/lo';
 moment.locale("lo");
@@ -39,10 +41,19 @@ function CalendaDetail() {
 
   // States
   const [showDeleteConfirmView, setShowDeleteConfirmView] = useState(false)
+  const [showTimeAddView, setShowTimeAddView] = useState(false)
+  const [showTimeDeleteView, setShowTimeDeleteView] = useState(false)
+  const [dataTime, setDataTime] = useState({})
 
   // Set states
   const _handleDeleteConfirmViewClose = () => setShowDeleteConfirmView(false)
   const _handleDeleteConfirmViewShow = () => setShowDeleteConfirmView(true)
+
+  const _handleTimeAddViewClose = () => setShowTimeAddView(false)
+  const _handleTimeAddViewShow = () => setShowTimeAddView(true)
+
+  const _handleTimeDeleteViewClose = () => setShowTimeDeleteView(false)
+  const _handleTimeDeleteViewShow = () => setShowTimeDeleteView(true)
 
   const _edit = (data) => {
     history.push('/calenda-edit', data)
@@ -50,6 +61,15 @@ function CalendaDetail() {
 
   const _delete = () => {
     _handleDeleteConfirmViewShow()
+  }
+
+  const _timeAdd = () => {
+    _handleTimeAddViewShow()
+  }
+
+  const _timeDelete = (time) => {
+    setDataTime(time)
+    _handleTimeDeleteViewShow()
   }
 
   if (apolloLoading) return <p>Loading...</p>
@@ -82,6 +102,23 @@ function CalendaDetail() {
 
           {/* Button group */}
           <div>
+
+            {/* ເພີ່ມເວລາສອນ */}
+            <button
+              style={{
+                backgroundColor: '#fff',
+                color: Consts.FONT_COLOR_SECONDARY,
+                width: 150,
+                height: 40,
+                marginRight: 5,
+                border: '1px solid ' + Consts.FONT_COLOR_SECONDARY,
+                outline: 'none'
+              }}
+              onClick={() => _timeAdd()}
+            >
+              <i className='fa fa-clock' /> ເພີ່ມເວລາສອນ
+            </button>
+
             {/* ແກ້ໃຂ */}
             <button
               style={{
@@ -112,6 +149,7 @@ function CalendaDetail() {
             >
               <i className='fa fa-trash' /> ລຶບ
             </button>
+
           </div>
         </div>
 
@@ -188,11 +226,13 @@ function CalendaDetail() {
                       <th style={{ width: 60 }}>ລຳດັບ</th>
                       <th style={{ width: 120 }}>ວັນ</th>
                       <th style={{ width: 120 }}>ຊົ່ວໂມງ</th>
+                      <th style={{ width: 60 }}>ລຶບ</th>
                     </TableHeader>
                   </thead>
                   <tbody>
                     {
                       studyCalendaData &&
+                      studyCalendaData.dayTimeIndexes && 
                       studyCalendaData.dayTimeIndexes.length > 0 &&
                       studyCalendaData.dayTimeIndexes.map((x, index) => {
                         return (
@@ -211,6 +251,25 @@ function CalendaDetail() {
                             </TableCell>
                             <TableCell>
                               {x.timeIndexes + ''}
+                            </TableCell>
+                            <TableCell>
+                              <div
+                                style={{
+                                  display: 'flex',
+                                  flexDirection: 'row',
+                                  justifyContent: 'space-around'
+                                }}
+                              >
+                                <div
+                                  onClick={() => _timeDelete(x)}
+                                  style={{ cursor: 'pointer', backgroundColor: '#FFFFFF', padding: 3, width: 64, borderRadius: 4 }}
+                                >
+                                  <FontAwesomeIcon
+                                    icon={['fas', 'trash']}
+                                    color={Consts.BORDER_COLOR_DELETE}
+                                  />{' '}
+                                </div>
+                              </div>
                             </TableCell>
                           </tr>
                         )
@@ -255,6 +314,20 @@ function CalendaDetail() {
           _handleDeleteConfirmViewClose={_handleDeleteConfirmViewClose}
           data={studyCalendaData}
         />
+
+        <CalendaTimeAdd
+          showTimeAddView={showTimeAddView}
+          _handleTimeAddViewClose={_handleTimeAddViewClose}
+          data={studyCalendaData}
+        />
+
+        <CalendaTimeDelete
+          showTimeDeleteView={showTimeDeleteView}
+          _handleTimeDeleteViewClose={_handleTimeDeleteViewClose}
+          data={studyCalendaData}
+          dataTime={dataTime}
+        />
+
       </CustomContainer>
     </div>
   )

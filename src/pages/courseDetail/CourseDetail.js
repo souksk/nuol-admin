@@ -208,6 +208,7 @@ function CourseDetail() {
           _handleDeleteConfirmViewClose={_handleDeleteConfirmViewClose}
           data={courseData}
         />
+
       </CustomContainer>
     </div>
   )

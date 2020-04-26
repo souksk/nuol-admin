@@ -52,6 +52,7 @@ import DepartmentList from '../pages/departmentList/DepartmentList'
 import CalendaList from '../pages/calendaList/CalendaList'
 import CalendaDetail from '../pages/calendaDetail/CalendaDetail'
 import CalendaAdd from '../pages/calendaAdd/CalendaAdd'
+import CalendaEdit from '../pages/calendaEdit/CalendaEdit'
 
 
 const Main = styled.main`
@@ -197,6 +198,11 @@ function Routes() {
                   <PrivateRoute
                     path='/calenda-add'
                     component={props => <CalendaAdd />}
+                  />
+
+                  <PrivateRoute
+                    path='/calenda-edit'
+                    component={props => <CalendaEdit />}
                   />
 
                 </div>

@@ -68,6 +68,7 @@ export const STUDYCALENDA = gql`
       calendaCoce
       title
       course{
+        id
         title
         courseCode
         unit
@@ -79,6 +80,7 @@ export const STUDYCALENDA = gql`
         }
       }
       dayTimeIndexes{
+        dayInt
         dayString
         timeIndexes
       }
@@ -104,9 +106,9 @@ export const STUDYCALENDA = gql`
 `
 
 export const UPDATE_STUDYCALENDA = gql`
-  query UpdateStudyCalenda(
+  mutation UpdateStudyCalenda(
     $data: StudyCalendaUpdateInput!
-    $where: StudyCalendaWhereUniqueInput!,
+    $where: StudyCalendaWhereUniqueInput!
     ) {
       updateStudyCalenda(data: $data, where: $where) {
       id
