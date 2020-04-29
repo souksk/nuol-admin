@@ -128,28 +128,6 @@ const DepartmentSearch = ({
                     </Form.Control>
                   </Col>
                 </Form.Group>
-
-                <hr />
-
-                <Form.Group
-                  as={Row}
-                  controlId='formPlaintextEmail'
-                  style={{margin: 0, marginBottom: 10}}
-                >
-                  <Form.Label column sm='4' className='text-left'>
-                    ລະຫັດອາຈານ
-                  </Form.Label>
-                  <Col sm='8'>
-                    <Form.Control
-                      type='text'
-                      placeholder='ກະລຸນາປ້ອນ'
-                      name='userId'
-                      value={values.userId}
-                      onChange={handleChange}
-                      isInvalid={!!errors.userId}
-                    />
-                  </Col>
-                </Form.Group>
               </div>
               <div style={{height: 20}} />
               <div className='row'>

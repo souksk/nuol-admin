@@ -19,7 +19,14 @@ import {
 } from 'react-bootstrap'
 import { useQuery, useMutation } from '@apollo/react-hooks';
 import * as _ from 'lodash';
-
+import 'date-fns';
+import Grid from '@material-ui/core/Grid';
+import DateFnsUtils from '@date-io/date-fns';
+import {
+  MuiPickersUtilsProvider,
+  KeyboardTimePicker,
+  KeyboardDatePicker,
+} from '@material-ui/pickers';
 import Consts from '../../consts'
 import StudentAddConfirm from './StudentAddConfirm'
 import { CustomContainer, Title, CustomButton } from '../../common'
@@ -34,13 +41,8 @@ function StudentAdd() {
   const [selectFacaltyIndex, setSelectFacaltyIndex] = useState(-1)
   const [selectFacalty, setSelectFacalty] = useState('')
   const [selectDepartment, setSelectDepartment] = useState('')
-  var [days, setDays] = useState([])
-  var [months, setMonths] = useState([])
-  var [years, setYears] = useState([])
 
-  useEffect(() => {
-    dataBirthday()
-  }, [])
+  const [sDate, setSDate] = useState(null);
 
   const facultyApollo = useQuery(FACULTIES)
   const FACULTY = facultyApollo && facultyApollo.data && facultyApollo.data.faculties
@@ -49,9 +51,9 @@ function StudentAdd() {
   const _handleShowAddConfirmModalClose = () => setShowAddConfirmModal(false)
   const _handleShowAddConfirmModalShow = () => setShowAddConfirmModal(true)
 
-  // useEffect(() => {
-  //   _selectDepartment()
-  // }, [selectFacalty])
+  const handleStartDateChange = (date) => {
+    setSDate(date);
+  };
 
   const _cancel = () => {
     history.push("/student-list")
@@ -61,12 +63,6 @@ function StudentAdd() {
   const _add = () => {
     _handleShowAddConfirmModalShow()
   }
-
-  const onDrop = useCallback(acceptedFiles => {
-    // Do something with the files
-  }, [])
-
-  const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop })
 
   const _selectFacalty = (e) => {
     setSelectDepartment('')
@@ -93,24 +89,6 @@ function StudentAdd() {
     }
     // let departnemt  = _.find(FACULTY[selectFacaltyIndex].departments, function(o) { return o.name == name });
     return id
-  }
-
-  const dataBirthday = () => {
-    var day = []
-    var month = []
-    var year = []
-    for (var i = 1; i <= 31; i++) {
-      day.push(i)
-    }
-    for (var i = 1; i <= 12; i++) {
-      month.push(i)
-    }
-    for (var i = parseInt(new Date().getFullYear()); i >= parseInt(new Date().getFullYear()) - 99; i--) {
-      year.push(i)
-    }
-    setDays(day)
-    setMonths(month)
-    setYears(year)
   }
 
   return (
@@ -142,9 +120,6 @@ function StudentAdd() {
             note: '',
             yearLevel: '',
             facalty: '',
-            day: 0,
-            month: 0,
-            year: 0,
             gender: 'MALE',
             maritualStatus: 'SINGLE'
           }}
@@ -162,13 +137,12 @@ function StudentAdd() {
             return errors;
           }}
           onSubmit={(values, { setSubmitting }) => {
-            let birthday = ''
-            if (values.day != 0 && values.month != 0 && values.year != 0) {
-              birthday = values.year + '-' + values.month + '-' + values.day
-            } else {
-              delete values.day
-              delete values.month
-              delete values.year
+            let birthday
+            if (sDate) {
+              birthday = (new Date(sDate).getFullYear()) + '-' + (new Date(sDate).getMonth() + 1) + '-' + (new Date(sDate).getDate())
+              values = {
+                ...values, birthday
+              }
             }
             if (values.yearLevel) {
               values.yearLevel = parseInt(values.yearLevel)
@@ -207,7 +181,7 @@ function StudentAdd() {
               delete values.department
             }
             let data = {
-              ...values, birthday
+              ...values
             }
             let paramQL = {
               data
@@ -382,140 +356,124 @@ function StudentAdd() {
 
                   {/* ວັນເດືອນປີເກີດ */}
                   <Form.Group
-                      as={Row}
-                      style={{
-                        margin: 0,
-                        marginBottom: 10,
-                        paddingLeft: 20,
-                        fontSize: 16
-                      }}
-                    >
-                      <Form.Label column sm='4' className='text-left'>
-                        ວັນເດືອນປີເກີດ</Form.Label>
-                      <Col sm='8'>
-                        <div style={{ display: 'flex', flexDirection: 'row', width: '100%' }}>
-                          <Form.Control as='select' name="day"
-                            value={values.day}
-                            onChange={handleChange}>
-                            <option disabled={true} value={0}>ເລືອກວັນທີ</option>
-                            {days.map((d, index) => (
-                              <option value={parseInt(d)} key={index}>{d}</option>
-                            ))
-                            }
-                          </Form.Control>
-                          <Form.Control as='select' name="month"
-                            value={values.month}
-                            onChange={handleChange}>
-                            <option disabled={true} value={0}>ເລືອກເດືອນ</option>
-                            {months.map((m, index) => (
-                              <option value={parseInt(m)} key={index}>{m}</option>
-                            ))
-                            }
-                          </Form.Control>
-                          <Form.Control as='select' name="year"
-                            value={values.year}
-                            onChange={handleChange}>
-                            <option disabled={true} value={0}>ເລືອກປີ</option>
-                            {years.map((y, index) => (
-                              <option value={parseInt(y)} key={index}>{y}</option>
-                            ))
-                            }
-                          </Form.Control>
-                        </div>
-                      </Col>
-                    </Form.Group>
+                    as={Row}
+                    style={{
+                      margin: 0,
+                      marginBottom: 10,
+                      paddingLeft: 20,
+                      fontSize: 16
+                    }}
+                  >
+                    <Form.Label column sm='4' className='text-left'>
+                      ວັນເດືອນປີເກີດ</Form.Label>
+                    <Col sm='3'>
+                      <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                        <Grid style={{ marginTop: -15 }} container justify="space-around">
+                          <KeyboardDatePicker
+                            disableToolbar
+                            variant="inline"
+                            format="dd/MM/yyyy"
+                            margin="normal"
+                            id="sDate"
+                            value={sDate}
+                            onChange={handleStartDateChange}
+                          />
+                        </Grid>
+                      </MuiPickersUtilsProvider>
+                    </Col>
+                  </Form.Group>
 
-                    {/* ເພດ */}
-                    <Form.Group
-                      as={Row}
-                      style={{
-                        margin: 0,
-                        marginBottom: 10,
-                        paddingLeft: 20,
-                        fontSize: 16
-                      }}
-                      name="gender" 
-                      onChange={handleChange}
-                    >
-                      <Form.Label column sm='4' className='text-left'>
-                        ເພດ
+                  {/* ເພດ */}
+                  <Form.Group
+                    as={Row}
+                    style={{
+                      margin: 0,
+                      marginBottom: 10,
+                      paddingLeft: 20,
+                      fontSize: 16
+                    }}
+                    name="gender"
+                    onChange={handleChange}
+                  >
+                    <Form.Label column sm='4' className='text-left'>
+                      ເພດ
                       </Form.Label>
-                      <Col sm='8'>
-                        <div style={{ display: 'flex', flexDirection: 'row', width: '100%' }}>
-                          <Col sm={4}>
-                            <input
-                              id="male"
-                              value="MALE"
-                              name="gender"
-                              checked={values.gender == 'MALE' ? true : false}
-                              type="radio"
-                            />{'\t'}
-                            <label htmlFor="male">ຊາຍ</label>
-                          </Col>
-                          <Col sm={4}>
-                            <input
-                              id="female"
-                              value="FEMALE"
-                              name="gender"
-                              checked={values.gender == 'FEMALE' ? true : false}
-                              type="radio"
-                            />{'\t'}
-                            <label htmlFor="female">ຍິງ</label>
-                          </Col>
-                          <Col sm={4}>
-                            <input
-                              id="other"
-                              value="OTHER"
-                              name="gender"
-                              checked={values.gender == 'OTHER' ? true : false}
-                              type="radio"
-                            />{'\t'}
-                            <label htmlFor="other">ອື່ນໆ</label>
-                          </Col>
-                        </div>
-                      </Col>
-                    </Form.Group>
+                    <Col sm='8'>
+                      <div style={{ display: 'flex', flexDirection: 'row', width: '100%' }}>
+                        <Col sm={4}>
+                          <input
+                            id="male"
+                            value="MALE"
+                            name="gender"
+                            checked={values.gender == 'MALE' ? true : false}
+                            type="radio"
+                          />{'\t'}
+                          <label htmlFor="male">ຊາຍ</label>
+                        </Col>
+                        <Col sm={4}>
+                          <input
+                            id="female"
+                            value="FEMALE"
+                            name="gender"
+                            checked={values.gender == 'FEMALE' ? true : false}
+                            type="radio"
+                          />{'\t'}
+                          <label htmlFor="female">ຍິງ</label>
+                        </Col>
+                        <Col sm={4}>
+                          <input
+                            id="other"
+                            value="OTHER"
+                            name="gender"
+                            checked={values.gender == 'OTHER' ? true : false}
+                            type="radio"
+                          />{'\t'}
+                          <label htmlFor="other">ອື່ນໆ</label>
+                        </Col>
+                      </div>
+                    </Col>
+                  </Form.Group>
 
-                    {/* ສະຖານະ */}
-                    <Form.Group
-                      as={Row}
-                      style={{
-                        margin: 0,
-                        marginBottom: 10,
-                        paddingLeft: 20,
-                        fontSize: 16
-                      }}
-                      name="maritualStatus" 
-                      onChange={handleChange}
-                    >
-                      <Form.Label column sm='4' className='text-left'>
+                  {/* ສະຖານະ */}
+                  <Form.Group
+                    as={Row}
+                    style={{
+                      margin: 0,
+                      marginBottom: 10,
+                      paddingLeft: 20,
+                      fontSize: 16
+                    }}
+                    name="maritualStatus"
+                    onChange={handleChange}
+                  >
+                    <Form.Label column sm='4' className='text-left'>
                       ສະຖານະ
                       </Form.Label>
-                      <Col sm='8'>
-                        <div style={{ display: 'flex', flexDirection: 'row', width: '100%' }}>
-                          <Col sm={4}>
-                            <input
-                              id="single"
-                              value="SINGLE"
-                              name="maritualStatus"
-                              checked={values.maritualStatus == 'SINGLE' ? true : false}
-                              type="radio"
-                            />{'\t'}
-                            <label htmlFor="single">ໂສດ</label>
-                          </Col>
-                          <Col sm={4}>
-                            <input
-                              id="marriage"
-                              value="MARRIAGE"
-                              name="maritualStatus"
-                              checked={values.maritualStatus == 'MARRIAGE' ? true : false}
-                              type="radio"
-                            />{'\t'}
-                            <label htmlFor="marriage">ແຕ່ງງານ</label>
-                          </Col>
-                        </div>
-                      </Col>
-                    </Form.Group>
+                    <Col sm='8'>
+                      <div style={{ display: 'flex', flexDirection: 'row', width: '100%' }}>
+                        <Col sm={4}>
+                          <input
+                            id="single"
+                            value="SINGLE"
+                            name="maritualStatus"
+                            checked={values.maritualStatus == 'SINGLE' ? true : false}
+                            type="radio"
+                          />{'\t'}
+                          <label htmlFor="single">ໂສດ</label>
+                        </Col>
+                        <Col sm={4}>
+                          <input
+                            id="marriage"
+                            value="MARRIAGE"
+                            name="maritualStatus"
+                            checked={values.maritualStatus == 'MARRIAGE' ? true : false}
+                            type="radio"
+                          />{'\t'}
+                          <label htmlFor="marriage">ແຕ່ງງານ</label>
+                        </Col>
+                      </div>
+                    </Col>
+                  </Form.Group>
 
                   {/* ເບີໂທ */}
                   <Form.Group

@@ -63,7 +63,7 @@ export const FACULTY = gql`
 `
 
 export const CREATE_FACULTY = gql`
-  query CreateFaculty(
+  mutation CreateFaculty(
     $data: FacultyCreateInput!
   ) {
     createFaculty(
@@ -75,7 +75,7 @@ export const CREATE_FACULTY = gql`
 `
 
 export const UPDATE_FACULTY = gql`
-  query UpdateFaculty(
+  mutation UpdateFaculty(
     $data: FacultyUpdateInput!
     $where: FacultyWhereUniqueInput!
   ) {
@@ -89,7 +89,7 @@ export const UPDATE_FACULTY = gql`
 `
 
 export const DELETE_FACULTY = gql`
-  query DeleteFaculty(
+  mutation DeleteFaculty(
     $where: FacultyWhereUniqueInput!
   ) {
     deleteFaculty(

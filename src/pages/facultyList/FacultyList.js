@@ -14,6 +14,7 @@ import {
 } from 'react-bootstrap'
 import * as _ from 'lodash'
 import FacultySearch from './FacultySearch'
+import FacultyAdd from './FacultyAdd'
 import Consts from '../../consts'
 import {
   CustomContainer,
@@ -48,6 +49,7 @@ function FacultyList() {
 
   // States
   const [showSearchView, setShowSearchView] = useState(false)
+  const [showAddView, setShowAddView] = useState(false)
 
   // on first load
   useEffect(() => {
@@ -59,6 +61,9 @@ function FacultyList() {
   const _handleSearchViewClose = () => setShowSearchView(false)
   const _handleSearchViewShow = () => setShowSearchView(true)
 
+  const _handleAddViewClose = () => setShowAddView(false)
+  const _handleAddViewShow = () => setShowAddView(true)
+
   const _facultyDetail = event => {
     history.push('/faculty-detail', event)
   }
@@ -68,54 +73,56 @@ function FacultyList() {
   }
 
   const _facultyAdd = () => {
-    history.push('/faculty-add')
+    _handleAddViewShow()
+    // history.push('/faculty-add')
   }
 
-  const _onSearch = value => {
-    //console.log('value: ', value)
-    // update view
-    const facultyName = facultyData.faculties[parseInt(value.faculty) - 1]
-      ? facultyData.faculties[parseInt(value.faculty) - 1].name
-      : ''
+  // const _onSearch = value => {
+  //console.log('value: ', value)
+  // update view
+  // const facultyName = facultyData.faculties[parseInt(value.faculty) - 1]
+  //   ? facultyData.faculties[parseInt(value.faculty) - 1].name
+  //   : ''
 
-    setselectedFaculty(facultyName)
-    setselectedDepartment(value.department)
+  // setselectedFaculty(facultyName)
+  // setselectedDepartment(value.department)
 
-    let where = {}
-    if (!_.isEmpty(value.userId)) {
-      where = {
-        userId_contains: value.userId
-      }
-    } else {
-      // faculty search
-      if (!_.isEmpty(facultyName)) {
-        where['faculty'] = {
-          name_contains: facultyName
-        }
-      }
+  // let where = {}
+  // if (!_.isEmpty(value.userId)) {
+  //   where = {
+  //     userId_contains: value.userId
+  //   }
+  // } else {
+  //   // faculty search
+  //   if (!_.isEmpty(facultyName)) {
+  //     where['faculty'] = {
+  //       name_contains: facultyName
+  //     }
+  //   }
 
-      // department search
-      if (!_.isEmpty(value.department)) {
-        where['department'] = {
-          name_contains: value.department
-        }
-      }
-    }
+  //   // department search
+  //   if (!_.isEmpty(value.department)) {
+  //     where['department'] = {
+  //       name_contains: value.department
+  //     }
+  //   }
+  // }
 
-    //console.log('where: ', where)
+  //console.log('where: ', where)
 
-    // Close search view
-    _handleSearchViewClose()
+  // Close search view
+  // _handleSearchViewClose()
 
-    loadTeachers({
-      variables: { where: ((Object.keys(where)).length > 0) ? ({ AND: { ...where, role: 'TEACHER' } }) : { role: 'TEACHER' } }
-    })
+  // loadTeachers({
+  //   variables: { where: ((Object.keys(where)).length > 0) ? ({ AND: { ...where, role: 'TEACHER' } }) : { role: 'TEACHER' } }
+  // })
 
-    // set title
-    setTitle('ຜົນການຄົ້ນຫາ')
-  }
+  // // set title
+  // setTitle('ຜົນການຄົ້ນຫາ')
+  // }
 
   if (teacherLoading) return <p>ກໍາລັງໂຫຼດຂໍ້ມູນ...</p>
+  console.log("facultyData: ", facultyData)
 
   return (
     <div>
@@ -139,10 +146,10 @@ function FacultyList() {
         </div>
 
         {/* custom search button */}
-        <SearchBar
+        {/* <SearchBar
           title='ຄະນະວິທະຍາສາດທໍາມະຊາດ,...'
           onClick={() => _handleSearchViewShow()}
-        />
+        /> */}
 
         {/* ວິຊາທັງຫມົດ */}
         <div
@@ -161,10 +168,10 @@ function FacultyList() {
           <table border='1' bordercolor='#fff' style={{ width: '100%' }}>
             <thead>
               <TableHeader>
-                <th style={{width: 60}}>ລຳດັບ</th>
-                <th style={{width: 300}}>ຊື່ຄະນະ</th>
-                <th style={{width: 300}}>ຄຳອະທິບາຍ</th>
-                <th style={{width: 300}}>ຜູ້ສ້າງ</th>
+                <th style={{ width: 60 }}>ລຳດັບ</th>
+                <th style={{ width: 300 }}>ຊື່ຄະນະ</th>
+                <th style={{ width: 300 }}>ຄຳອະທິບາຍ</th>
+                <th style={{ width: 300 }}>ໝາຍເຫດ</th>
                 <th style={{ width: 180 }}>ຈັດການ</th>
               </TableHeader>
             </thead>
@@ -190,7 +197,7 @@ function FacultyList() {
                         {x.description ? x.description : '-'}
                       </TableCell>
                       <TableCell>
-                        {x.createdBy ? (x.createdBy.firstname + ' ' + x.createdBy.lastname) : '-'}
+                        {x.note ? x.note : '-'}
                       </TableCell>
                       <TableCell>
                         <div
@@ -229,12 +236,18 @@ function FacultyList() {
       </CustomContainer>
 
       {/* Search Modal */}
-      <FacultySearch
+      {/* <FacultySearch
         facultyData={facultyData ? facultyData.faculties : []}
         showSearchView={showSearchView}
         _handleSearchViewClose={_handleSearchViewClose}
         onSearch={value => _onSearch(value)}
+      /> */}
+
+      <FacultyAdd
+        showAddView={showAddView}
+        _handleAddViewClose={_handleAddViewClose}
       />
+
     </div>
   )
 }

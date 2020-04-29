@@ -10,12 +10,14 @@ function CustomSideNav({ location, history }) {
 
 	return (
 		<SideNav
-			onSelect={(selected) => {
+			onSelect={async (selected) => {
 				setSelectStatus(selected.split('-')[0]);
 				const to = '/' + selected;
 				if (location.pathname !== to) {
-					history.push(to);
-					// window.location.reload(true)
+					await history.push(to);
+					if(to == '/calenda-list'){
+						window.location.reload(true)
+					}
 				}
 			}}
 			style={{

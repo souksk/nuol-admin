@@ -29,15 +29,11 @@ function TeacherAddConfirm({
   const { history, location, match } = useReactRouter()
   const [createUser, { data, loading, error }] = useMutation(CREATE_USER)
 
-  var _day = param.data && param.data.day ? param.data.day : ''
-  var _month = param.data && param.data.month ? param.data.month : ''
-  var _year = param.data && param.data.year ? param.data.year : ''
+  var _day = param.data && param.data.birthday ? new Date(param.data.birthday).getDate() : ''
+  var _month = param.data && param.data.birthday ? new Date(param.data.birthday).getMonth() + 1 : ''
+  var _year = param.data && param.data.birthday ? new Date(param.data.birthday).getFullYear() : ''
 
   const _confirmTeacherAdd = async () => {
-
-    delete param.data.day
-    delete param.data.month
-    delete param.data.year
 
     if (!param.data.email) {
       delete param.data.email
@@ -47,9 +43,6 @@ function TeacherAddConfirm({
     }
     if (!param.data.lastname) {
       delete param.data.lastname
-    }
-    if (!param.data.birthday || param.data.birthday == 'undefined-undefined-undefined') {
-      delete param.data.birthday
     }
     if (!param.data.gender) {
       delete param.data.gender

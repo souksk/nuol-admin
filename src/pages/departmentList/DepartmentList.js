@@ -141,10 +141,10 @@ function DepartmentList() {
         </div>
 
         {/* custom search button */}
-        <SearchBar
+        {/* <SearchBar
           title='ພາກວິຊາວິທະຍາສາດຄອມພິວເຕີ,...'
           onClick={() => _handleSearchViewShow()}
-        />
+        /> */}
 
         {/* ວິຊາທັງຫມົດ */}
         <div

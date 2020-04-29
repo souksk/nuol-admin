@@ -30,29 +30,17 @@ function TeacherEditConfirm({
   const [updateUser, { data }] = useMutation(UPDATE_USER);
   const [onLoading, setOnLoading] = useState(false);
 
-  var _day = param.data && param.data.day ? param.data.day : ''
-  var _month = param.data && param.data.month ? param.data.month : ''
-  var _year = param.data && param.data.year ? param.data.year : ''
+  var _day = param.data && param.data.birthday ? new Date(param.data.birthday).getDate() : ''
+  var _month = param.data && param.data.birthday ? new Date(param.data.birthday).getMonth() + 1 : ''
+  var _year = param.data && param.data.birthday ? new Date(param.data.birthday).getFullYear() : ''
 
   //send to backend server
   const _confirmTeacherEdit = async () => {
     // //console.log(param)
     setOnLoading(true)
-    delete param.data.day
-    delete param.data.month
-    delete param.data.year
 
-    if (!param.data.email) {
-      delete param.data.email
-    }
-    if (!param.data.phone) {
-      delete param.data.phone
-    }
     if (!param.data.lastname) {
       delete param.data.lastname
-    }
-    if (!param.data.birthday || param.data.birthday == 'undefined-undefined-undefined') {
-      delete param.data.birthday
     }
     if (!param.data.gender) {
       delete param.data.gender
@@ -291,7 +279,7 @@ function TeacherEditConfirm({
                 </Form.Group>
 
                 {/* ເບີໂທ */}
-                <Form.Group
+                {param.data && param.data.phone && <Form.Group
                   as={Row}
                   style={{
                     margin: 0,
@@ -304,13 +292,12 @@ function TeacherEditConfirm({
                     ເບີໂທ
                 </Form.Label>
                   <Col sm='8' style={{marginTop:8}}>
-                    <span>{param.data && param.data.phone && param.data.phone}</span>
+                    <span>{param.data.phone}</span>
                   </Col>
-                </Form.Group>
-
+                </Form.Group>}
 
                 {/* ອີເມວ */}
-                <Form.Group
+                {param.data && param.data.email && <Form.Group
                   as={Row}
                   style={{
                     margin: 0,
@@ -323,9 +310,9 @@ function TeacherEditConfirm({
                     ອີເມວ
                 </Form.Label>
                   <Col sm='8' style={{marginTop:8}}>
-                    <span>{param.data && param.data.email}</span>
+                    <span>{param.data.email}</span>
                   </Col>
-                </Form.Group>
+                </Form.Group>}
               </div>
 
               {/* ---------- ໄອດີ ແລະ ລະຫັດຜ່ານ --------- */}

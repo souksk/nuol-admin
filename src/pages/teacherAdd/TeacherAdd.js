@@ -17,7 +17,14 @@ import {
   InputGroup,
   FormControl
 } from 'react-bootstrap'
-
+import 'date-fns';
+import Grid from '@material-ui/core/Grid';
+import DateFnsUtils from '@date-io/date-fns';
+import {
+  MuiPickersUtilsProvider,
+  KeyboardTimePicker,
+  KeyboardDatePicker,
+} from '@material-ui/pickers';
 import Consts from '../../consts'
 import TeacherAddConfirm from './TeacherAddConfirm'
 import { CustomContainer, Title, CustomButton } from '../../common'
@@ -36,13 +43,8 @@ function TeacherAdd() {
   const [selectFacaltyIndex, setSelectFacaltyIndex] = useState(-1)
   const [selectFacaltyName, setSelectFacaltyName] = useState('')
   const [selectDepartmentName, setSelectDepartmentName] = useState('')
-  var [days, setDays] = useState([])
-  var [months, setMonths] = useState([])
-  var [years, setYears] = useState([])
 
-  useEffect(() => {
-    dataBirthday()
-  }, [])
+  const [sDate, setSDate] = useState(null);
 
   const facultyApollo = useQuery(FACULTIES)
   const FACULTY = facultyApollo && facultyApollo.data && facultyApollo.data.faculties
@@ -50,6 +52,10 @@ function TeacherAdd() {
   // Set states
   const _handleShowAddConfirmModalClose = () => setShowAddConfirmModal(false)
   const _handleShowAddConfirmModalShow = () => setShowAddConfirmModal(true)
+
+  const handleStartDateChange = (date) => {
+    setSDate(date);
+  };
 
   const _cancel = () => {
     history.push('/teacher-list')
@@ -80,24 +86,6 @@ function TeacherAdd() {
     return departnemt.id
   }
 
-  const dataBirthday = () => {
-    var day = []
-    var month = []
-    var year = []
-    for (var i = 1; i <= 31; i++) {
-      day.push(i)
-    }
-    for (var i = 1; i <= 12; i++) {
-      month.push(i)
-    }
-    for (var i = parseInt(new Date().getFullYear()); i >= parseInt(new Date().getFullYear()) - 99; i--) {
-      year.push(i)
-    }
-    setDays(day)
-    setMonths(month)
-    setYears(year)
-  }
-
   return (
     <div>
       {/* Breadcrumb */}
@@ -123,9 +111,6 @@ function TeacherAdd() {
             password: '',
             note: '',
             facalty: '',
-            day: 0,
-            month: 0,
-            year: 0,
             gender: 'MALE',
             maritualStatus: 'SINGLE'
           }}
@@ -145,13 +130,12 @@ function TeacherAdd() {
           onSubmit={(values, { setSubmitting }) => {
             // set department name
             setSelectDepartmentName(values.department)
-            let birthday = ''
-            if (values.day != 0 && values.month != 0 && values.year != 0) {
-              birthday = values.year + '-' + values.month + '-' + values.day
-            } else {
-              delete values.day
-              delete values.month
-              delete values.year
+            let birthday
+            if (sDate) {
+              birthday = (new Date(sDate).getFullYear()) + '-' + (new Date(sDate).getMonth() + 1) + '-' + (new Date(sDate).getDate())
+              values = {
+                ...values, birthday
+              }
             }
             if (values.facalty) {
               let facultyData = {
@@ -179,12 +163,12 @@ function TeacherAdd() {
               delete values.department
             }
             let data = {
-              ...values, birthday
+              ...values
             }
             let paramQL = {
               data
             }
-            //console.log("paramQL: ", paramQL)
+            // console.log("paramQL: ", paramQL)
             setFormParam(paramQL)
             _add()
           }}
@@ -355,36 +339,20 @@ function TeacherAdd() {
                     >
                       <Form.Label column sm='4' className='text-left'>
                         ວັນເດືອນປີເກີດ</Form.Label>
-                      <Col sm='8'>
-                        <div style={{ display: 'flex', flexDirection: 'row', width: '100%' }}>
-                          <Form.Control as='select' name="day"
-                            value={values.day}
-                            onChange={handleChange}>
-                            <option disabled={true} value={0}>ເລືອກວັນທີ</option>
-                            {days.map((d, index) => (
-                              <option value={parseInt(d)} key={index}>{d}</option>
-                            ))
-                            }
-                          </Form.Control>
-                          <Form.Control as='select' name="month"
-                            value={values.month}
-                            onChange={handleChange}>
-                            <option disabled={true} value={0}>ເລືອກເດືອນ</option>
-                            {months.map((m, index) => (
-                              <option value={parseInt(m)} key={index}>{m}</option>
-                            ))
-                            }
-                          </Form.Control>
-                          <Form.Control as='select' name="year"
-                            value={values.year}
-                            onChange={handleChange}>
-                            <option disabled={true} value={0}>ເລືອກປີ</option>
-                            {years.map((y, index) => (
-                              <option value={parseInt(y)} key={index}>{y}</option>
-                            ))
-                            }
-                          </Form.Control>
-                        </div>
+                      <Col sm='3'>
+                        <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                          <Grid style={{ marginTop: -15 }} container justify="space-around">
+                            <KeyboardDatePicker
+                              disableToolbar
+                              variant="inline"
+                              format="dd/MM/yyyy"
+                              margin="normal"
+                              id="sDate"
+                              value={sDate}
+                              onChange={handleStartDateChange}
+                            />
+                          </Grid>
+                        </MuiPickersUtilsProvider>
                       </Col>
                     </Form.Group>
 
@@ -397,7 +365,7 @@ function TeacherAdd() {
                         paddingLeft: 20,
                         fontSize: 16
                       }}
-                      name="gender" 
+                      name="gender"
                       onChange={handleChange}
                     >
                       <Form.Label column sm='4' className='text-left'>
@@ -448,11 +416,11 @@ function TeacherAdd() {
                         paddingLeft: 20,
                         fontSize: 16
                       }}
-                      name="maritualStatus" 
+                      name="maritualStatus"
                       onChange={handleChange}
                     >
                       <Form.Label column sm='4' className='text-left'>
-                      ສະຖານະ
+                        ສະຖານະ
                       </Form.Label>
                       <Col sm='8'>
                         <div style={{ display: 'flex', flexDirection: 'row', width: '100%' }}>

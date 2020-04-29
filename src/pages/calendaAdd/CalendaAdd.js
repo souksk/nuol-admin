@@ -20,6 +20,14 @@ import {
   ButtonGroup,
   ProgressBar
 } from 'react-bootstrap'
+import 'date-fns';
+import Grid from '@material-ui/core/Grid';
+import DateFnsUtils from '@date-io/date-fns';
+import {
+  MuiPickersUtilsProvider,
+  KeyboardTimePicker,
+  KeyboardDatePicker,
+} from '@material-ui/pickers';
 import * as _ from 'lodash';
 import { useQuery, useMutation, useLazyQuery } from '@apollo/react-hooks';
 import axios from "axios"
@@ -42,9 +50,15 @@ import { TEACHERS } from './../../apollo/user'
 function CalendaAdd() {
   const { history, location, match } = useReactRouter()
 
+  // const [startDate, setStartDate] = useState(new Date().toISOString());
+  // const [endDate, setEndDate] = useState(new Date().toISOString());
+
   // States
   const [showAddConfirmModal, setShowAddConfirmModal] = useState(false)
   const [formParam, setFormParam] = useState({})
+
+  const [sDate, setSDate] = useState(null);
+  const [eDate, setEDate] = useState(null);
 
   // Set states
   const _handleShowAddConfirmModalClose = () => setShowAddConfirmModal(false)
@@ -72,6 +86,13 @@ function CalendaAdd() {
     loadTeachers()
     dataBirthday()
   }, [])
+
+  const handleStartDateChange = (date) => {
+    setSDate(date);
+  };
+  const handleEndDateChange = (date) => {
+    setEDate(date);
+  };
 
   const _cancel = () => {
     history.push("/calenda-list")
@@ -134,17 +155,19 @@ function CalendaAdd() {
             timeIndexX: 0,
             timeIndexY: 0,
             teacher: '',
-            dayStart: 0,
-            monthStart: 0,
-            yearStart: 0,
-            dayEnd: 0,
-            monthEnd: 0,
-            yearEnd: 0
+            // dayStart: 0,
+            // monthStart: 0,
+            // yearStart: 0,
+            // dayEnd: 0,
+            // monthEnd: 0,
+            // yearEnd: 0
           }}
           validationSchema={calendaAddValidation}
           onSubmit={(values, { setSubmitting }) => {
 
             //Set parameters for inserting to graphql
+            let startDate
+            let endDate
             let paramQL = {
               data: {
                 course: {
@@ -157,40 +180,56 @@ function CalendaAdd() {
                 semester: parseInt(values.semester),
               }
             }
-
-            let startDate = ''
-            if (values.dayStart && values.monthStart && values.yearStart) {
-              startDate = values.yearStart + '-' + values.monthStart + '-' + values.dayStart
+            if (sDate) {
+              startDate = (new Date(sDate).getFullYear()) + '-' + (new Date(sDate).getMonth() + 1) + '-' + (new Date(sDate).getDate())
               paramQL = {
                 data: {
                   ...paramQL.data, startDate
                 }
               }
-              delete values.dayStart
-              delete values.monthStart
-              delete values.yearStart
-            } else {
-              delete values.dayStart
-              delete values.monthStart
-              delete values.yearStart
             }
-
-            let endDate = ''
-            if (values.dayEnd && values.monthEnd && values.yearEnd) {
-              endDate = values.yearEnd + '-' + values.monthEnd + '-' + values.dayEnd
+            if (eDate) {
+              endDate = (new Date(eDate).getFullYear()) + '-' + (new Date(eDate).getMonth() + 1) + '-' + (new Date(eDate).getDate())
               paramQL = {
                 data: {
                   ...paramQL.data, endDate
                 }
               }
-              delete values.dayStart
-              delete values.monthStart
-              delete values.yearStart
-            } else {
-              delete values.dayEnd
-              delete values.monthEnd
-              delete values.yearEnd
             }
+
+            // let startDate = ''
+            // if (values.dayStart && values.monthStart && values.yearStart) {
+            //   startDate = values.yearStart + '-' + values.monthStart + '-' + values.dayStart
+            //   paramQL = {
+            //     data: {
+            //       ...paramQL.data, startDate
+            //     }
+            //   }
+            //   delete values.dayStart
+            //   delete values.monthStart
+            //   delete values.yearStart
+            // } else {
+            //   delete values.dayStart
+            //   delete values.monthStart
+            //   delete values.yearStart
+            // }
+
+            // let endDate = ''
+            // if (values.dayEnd && values.monthEnd && values.yearEnd) {
+            //   endDate = values.yearEnd + '-' + values.monthEnd + '-' + values.dayEnd
+            //   paramQL = {
+            //     data: {
+            //       ...paramQL.data, endDate
+            //     }
+            //   }
+            //   delete values.dayStart
+            //   delete values.monthStart
+            //   delete values.yearStart
+            // } else {
+            //   delete values.dayEnd
+            //   delete values.monthEnd
+            //   delete values.yearEnd
+            // }
 
             // //Check if there is teacher 
             if (values.teacher) {
@@ -399,8 +438,21 @@ function CalendaAdd() {
                       <Form.Label column sm='4' className='text-left'>
                         ວັນເລີ່ມສອນ
                       </Form.Label>
-                      <Col sm='8'>
-                        <div style={{ display: 'flex', flexDirection: 'row', width: '100%' }}>
+                      <Col sm='3'>
+                        <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                          <Grid style={{ marginTop: -15 }} container justify="space-around">
+                            <KeyboardDatePicker
+                              disableToolbar
+                              variant="inline"
+                              format="dd/MM/yyyy"
+                              margin="normal"
+                              id="sDate"
+                              value={sDate}
+                              onChange={handleStartDateChange}
+                            />
+                          </Grid>
+                        </MuiPickersUtilsProvider>
+                        {/* <div style={{ display: 'flex', flexDirection: 'row', width: '100%' }}>
                           <Form.Control as='select' name="dayStart"
                             value={values.dayStart}
                             onChange={handleChange}>
@@ -428,7 +480,7 @@ function CalendaAdd() {
                             ))
                             }
                           </Form.Control>
-                        </div>
+                        </div> */}
                       </Col>
                     </Form.Group>
 
@@ -444,8 +496,21 @@ function CalendaAdd() {
                       <Form.Label column sm='4' className='text-left'>
                         ວັນສິ້ນສຸດການສອນ
                       </Form.Label>
-                      <Col sm='8'>
-                        <div style={{ display: 'flex', flexDirection: 'row', width: '100%' }}>
+                      <Col sm='3'>
+                        <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                          <Grid style={{ marginTop: -15 }} container justify="space-around">
+                            <KeyboardDatePicker
+                              disableToolbar
+                              variant="inline"
+                              format="dd/MM/yyyy"
+                              margin="normal"
+                              id="eDate"
+                              value={eDate}
+                              onChange={handleEndDateChange}
+                            />
+                          </Grid>
+                        </MuiPickersUtilsProvider>
+                        {/* <div style={{ display: 'flex', flexDirection: 'row', width: '100%' }}>
                           <Form.Control as='select' name="dayEnd"
                             value={values.dayEnd}
                             onChange={handleChange}>
@@ -473,7 +538,7 @@ function CalendaAdd() {
                             ))
                             }
                           </Form.Control>
-                        </div>
+                        </div> */}
                       </Col>
                     </Form.Group>
                   </div>

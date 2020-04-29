@@ -155,7 +155,7 @@ function TeacherList() {
             color: Consts.FONT_COLOR_SECONDARY
           }}
         >
-          ທັງຫມົດ {teacherData && teacherData.users.length} ທ່ານ
+          ທັງຫມົດ {teacherData && teacherData.users && teacherData.users.length} ທ່ານ
         </div>
 
         {/* Table list */}

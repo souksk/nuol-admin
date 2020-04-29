@@ -19,6 +19,14 @@ import {
   ButtonGroup,
   ProgressBar
 } from 'react-bootstrap'
+import 'date-fns';
+import Grid from '@material-ui/core/Grid';
+import DateFnsUtils from '@date-io/date-fns';
+import {
+  MuiPickersUtilsProvider,
+  KeyboardTimePicker,
+  KeyboardDatePicker,
+} from '@material-ui/pickers';
 import * as _ from 'lodash';
 import { useQuery, useMutation, useLazyQuery } from '@apollo/react-hooks';
 import axios from "axios"
@@ -51,6 +59,12 @@ function CalendaEdit() {
   const [showEditConfirmModal, setShowEditConfirmModal] = useState(false)
   const [formParam, setFormParam] = useState({})
 
+  const startD = studyCalendaData && (studyCalendaData.startDate ? new Date(studyCalendaData.startDate) : null)
+  const endD = studyCalendaData && (studyCalendaData.endDate ? new Date(studyCalendaData.endDate) : null)
+
+  const [sDate, setSDate] = useState(startD);
+  const [eDate, setEDate] = useState(endD);
+
   // Set states
   const _handleShowEditConfirmModalClose = () => setShowEditConfirmModal(false)
   const _handleShowEditConfirmModalShow = () => setShowEditConfirmModal(true)
@@ -65,18 +79,31 @@ function CalendaEdit() {
   const courseApollo = useQuery(COURSES)
   const COURSE = courseApollo && courseApollo.data && courseApollo.data.courses
 
-  var [days, setDays] = useState([])
-  var [months, setMonths] = useState([])
-  var [years, setYears] = useState([])
+  // var [days, setDays] = useState([])
+  // var [months, setMonths] = useState([])
+  // var [years, setYears] = useState([])
 
   useEffect(() => {
-    // //console.log("update:", formParam)
-  }, [formParam])
+    // console.log("update:", formParam)
+    if(studyCalendaData.startDate){
+      handleStartDateChange(new Date(studyCalendaData.startDate))
+    }
+    if(studyCalendaData.endDate){
+      handleEndDateChange(new Date(studyCalendaData.endDate))
+    }
+  }, [studyCalendaData])
 
   useEffect(() => {
     loadTeachers()
-    dataBirthday()
+    // dataBirthday()
   }, [])
+
+  const handleStartDateChange = (date) => {
+    setSDate(date);
+  };
+  const handleEndDateChange = (date) => {
+    setEDate(date);
+  };
 
   const _cancel = () => {
     history.push("/calenda-list")
@@ -97,23 +124,23 @@ function CalendaEdit() {
       .required('Required'),
   });
 
-  const dataBirthday = () => {
-    var day = []
-    var month = []
-    var year = []
-    for (var i = 1; i <= 31; i++) {
-      day.push(i)
-    }
-    for (var i = 1; i <= 12; i++) {
-      month.push(i)
-    }
-    for (var i = parseInt(new Date().getFullYear()); i >= parseInt(new Date().getFullYear()) - 99; i--) {
-      year.push(i)
-    }
-    setDays(day)
-    setMonths(month)
-    setYears(year)
-  }
+  // const dataBirthday = () => {
+  //   var day = []
+  //   var month = []
+  //   var year = []
+  //   for (var i = 1; i <= 31; i++) {
+  //     day.push(i)
+  //   }
+  //   for (var i = 1; i <= 12; i++) {
+  //     month.push(i)
+  //   }
+  //   for (var i = parseInt(new Date().getFullYear()); i >= parseInt(new Date().getFullYear()) - 99; i--) {
+  //     year.push(i)
+  //   }
+  //   setDays(day)
+  //   setMonths(month)
+  //   setYears(year)
+  // }
 
   if (teacherLoading || apolloLoading) return <p>loading...</p>
   // console.log("studyCalendaData: ", studyCalendaData)
@@ -138,17 +165,19 @@ function CalendaEdit() {
             yearLevel: studyCalendaData.yearLevel ? studyCalendaData.yearLevel : '0',
             semester: studyCalendaData.semester ? studyCalendaData.semester : '0',
             teacher: studyCalendaData.teacher ? studyCalendaData.teacher.id : '',
-            dayStart: studyCalendaData.startDate ? parseInt(new Date(studyCalendaData.startDate).getDate()) : 0,
-            monthStart: studyCalendaData.startDate ? parseInt(new Date(studyCalendaData.startDate).getMonth()) + 1 : 0,
-            yearStart: studyCalendaData.startDate ? parseInt(new Date(studyCalendaData.startDate).getFullYear()) : 0,
-            dayEnd: studyCalendaData.endDate ? parseInt(new Date(studyCalendaData.endDate).getDate()) : 0,
-            monthEnd: studyCalendaData.endDate ? parseInt(new Date(studyCalendaData.endDate).getMonth()) + 1 : 0,
-            yearEnd: studyCalendaData.endDate ? parseInt(new Date(studyCalendaData.endDate).getFullYear()) : 0
+            // dayStart: studyCalendaData.startDate ? parseInt(new Date(studyCalendaData.startDate).getDate()) : 0,
+            // monthStart: studyCalendaData.startDate ? parseInt(new Date(studyCalendaData.startDate).getMonth()) + 1 : 0,
+            // yearStart: studyCalendaData.startDate ? parseInt(new Date(studyCalendaData.startDate).getFullYear()) : 0,
+            // dayEnd: studyCalendaData.endDate ? parseInt(new Date(studyCalendaData.endDate).getDate()) : 0,
+            // monthEnd: studyCalendaData.endDate ? parseInt(new Date(studyCalendaData.endDate).getMonth()) + 1 : 0,
+            // yearEnd: studyCalendaData.endDate ? parseInt(new Date(studyCalendaData.endDate).getFullYear()) : 0
           }}
           validationSchema={calendaEditValidation}
           onSubmit={(values, { setSubmitting }) => {
 
             //Set parameters for inserting to graphql
+            let startDate
+            let endDate
             let paramQL = {
               data: {
                 course: {
@@ -162,39 +191,56 @@ function CalendaEdit() {
               }
             }
 
-            let startDate = ''
-            if (values.dayStart && values.monthStart && values.yearStart) {
-              startDate = values.yearStart + '-' + values.monthStart + '-' + values.dayStart
+            if (sDate) {
+              startDate = (new Date(sDate).getFullYear()) + '-' + (new Date(sDate).getMonth() + 1) + '-' + (new Date(sDate).getDate())
               paramQL = {
                 data: {
                   ...paramQL.data, startDate
                 }
               }
-              delete values.dayStart
-              delete values.monthStart
-              delete values.yearStart
-            } else {
-              delete values.dayStart
-              delete values.monthStart
-              delete values.yearStart
             }
-
-            let endDate = ''
-            if (values.dayEnd && values.monthEnd && values.yearEnd) {
-              endDate = values.yearEnd + '-' + values.monthEnd + '-' + values.dayEnd
+            if (eDate) {
+              endDate = (new Date(eDate).getFullYear()) + '-' + (new Date(eDate).getMonth() + 1) + '-' + (new Date(eDate).getDate())
               paramQL = {
                 data: {
                   ...paramQL.data, endDate
                 }
               }
-              delete values.dayStart
-              delete values.monthStart
-              delete values.yearStart
-            } else {
-              delete values.dayEnd
-              delete values.monthEnd
-              delete values.yearEnd
             }
+
+            // let startDate = ''
+            // if (values.dayStart && values.monthStart && values.yearStart) {
+            //   startDate = values.yearStart + '-' + values.monthStart + '-' + values.dayStart
+            //   paramQL = {
+            //     data: {
+            //       ...paramQL.data, startDate
+            //     }
+            //   }
+            //   delete values.dayStart
+            //   delete values.monthStart
+            //   delete values.yearStart
+            // } else {
+            //   delete values.dayStart
+            //   delete values.monthStart
+            //   delete values.yearStart
+            // }
+
+            // let endDate = ''
+            // if (values.dayEnd && values.monthEnd && values.yearEnd) {
+            //   endDate = values.yearEnd + '-' + values.monthEnd + '-' + values.dayEnd
+            //   paramQL = {
+            //     data: {
+            //       ...paramQL.data, endDate
+            //     }
+            //   }
+            //   delete values.dayStart
+            //   delete values.monthStart
+            //   delete values.yearStart
+            // } else {
+            //   delete values.dayEnd
+            //   delete values.monthEnd
+            //   delete values.yearEnd
+            // }
 
             // // //Check if there is teacher 
             if (values.teacher) {
@@ -402,8 +448,21 @@ function CalendaEdit() {
                       <Form.Label column sm='4' className='text-left'>
                         ວັນເລີ່ມສອນ
                       </Form.Label>
-                      <Col sm='8'>
-                        <div style={{ display: 'flex', flexDirection: 'row', width: '100%' }}>
+                      <Col sm='3'>
+                        <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                          <Grid style={{ marginTop: -15 }} container justify="space-around">
+                            <KeyboardDatePicker
+                              disableToolbar
+                              variant="inline"
+                              format="dd/MM/yyyy"
+                              margin="normal"
+                              id="sDate"
+                              value={sDate}
+                              onChange={handleStartDateChange}
+                            />
+                          </Grid>
+                        </MuiPickersUtilsProvider>
+                        {/* <div style={{ display: 'flex', flexDirection: 'row', width: '100%' }}>
                           <Form.Control as='select' name="dayStart"
                             value={values.dayStart}
                             onChange={handleChange}>
@@ -431,7 +490,7 @@ function CalendaEdit() {
                             ))
                             }
                           </Form.Control>
-                        </div>
+                        </div> */}
                       </Col>
                     </Form.Group>
 
@@ -447,8 +506,21 @@ function CalendaEdit() {
                       <Form.Label column sm='4' className='text-left'>
                         ວັນສິ້ນສຸດການສອນ
                       </Form.Label>
-                      <Col sm='8'>
-                        <div style={{ display: 'flex', flexDirection: 'row', width: '100%' }}>
+                      <Col sm='3'>
+                        <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                          <Grid style={{ marginTop: -15 }} container justify="space-around">
+                            <KeyboardDatePicker
+                              disableToolbar
+                              variant="inline"
+                              format="dd/MM/yyyy"
+                              margin="normal"
+                              id="eDate"
+                              value={eDate}
+                              onChange={handleEndDateChange}
+                            />
+                          </Grid>
+                        </MuiPickersUtilsProvider>
+                        {/* <div style={{ display: 'flex', flexDirection: 'row', width: '100%' }}>
                           <Form.Control as='select' name="dayEnd"
                             value={values.dayEnd}
                             onChange={handleChange}>
@@ -476,7 +548,7 @@ function CalendaEdit() {
                             ))
                             }
                           </Form.Control>
-                        </div>
+                        </div> */}
                       </Col>
                     </Form.Group>
                   </div>
