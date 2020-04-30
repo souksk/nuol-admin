@@ -96,7 +96,7 @@ function CalendaEditConfirm({
         size='lg'
       >
         <Modal.Title style={{ textAlign: 'center', paddingTop: 20 }}>
-          ຢືນຢັນການເພີ່ມຕາຕະລາງຮຽນ
+          CONFIRM EDIT STUDY CALENDA
       </Modal.Title>
         <Modal.Body
           style={{
@@ -123,7 +123,7 @@ function CalendaEditConfirm({
                     aria-hidden='true'
                     style={{ marginRight: 5 }}
                   />
-                  ວິຊາ ແລະ ອາຈານສອນ
+                  Course and Teacher
               </div>
                 {/* ຄະນະ */}
                 <Form.Group
@@ -136,7 +136,7 @@ function CalendaEditConfirm({
                   }}
                 >
                   <Form.Label column sm='4' className='text-left'>
-                    ຊື່ວິຊາ
+                    Course
                 </Form.Label>
                   <Col sm='8'>
                     <span>{param.data && _convertCourse(param.data.course.connect.id)}</span>
@@ -154,7 +154,7 @@ function CalendaEditConfirm({
                   }}
                 >
                   <Form.Label column sm='4' className='text-left'>
-                  ຊື່ອາຈານ
+                  Teacher
                 </Form.Label>
                   <Col sm='8'>
                     <span>{param.data && param.data.teacher && _convertTeacher(param.data.teacher.connect.id)}</span>
@@ -170,7 +170,7 @@ function CalendaEditConfirm({
                     aria-hidden='true'
                     style={{ marginRight: 5 }}
                   />
-                  ຂໍ້ມູນຕາຕະລາງການສອນ
+                  Study calenda
               </div>
                 {/* ປີຮຽນ */}
                 <Form.Group
@@ -183,7 +183,7 @@ function CalendaEditConfirm({
                   }}
                 >
                   <Form.Label column sm='4' className='text-left'>
-                  ລະຫັດຕາຕະລາງ
+                  Calenda ID
                 </Form.Label>
                   <Col sm='8'>
                     <span>{param.data && param.data.calendaCoce}</span>
@@ -201,7 +201,7 @@ function CalendaEditConfirm({
                   }}
                 >
                   <Form.Label column sm='4' className='text-left'>
-                  ປີຮຽນ
+                  Year level
                 </Form.Label>
                   <Col sm='8'>
                     <span>{param.data && param.data.yearLevel}</span>
@@ -219,7 +219,7 @@ function CalendaEditConfirm({
                   }}
                 >
                   <Form.Label column sm='4' className='text-left'>
-                    ພາກຮຽນ
+                    Semester
                 </Form.Label>
                   <Col sm='8'>
                     <span>{param.data && param.data.semester}</span>
@@ -235,7 +235,7 @@ function CalendaEditConfirm({
                     aria-hidden='true'
                     style={{ marginRight: 5 }}
                   />
-                  ວັນເລີ່ມ ແລະ ວັນສິ້ນສຸດການສອນ
+                  Start date and End date
               </div>
 
                 {/* ວັນເລີ່ມສອນ */}
@@ -249,7 +249,7 @@ function CalendaEditConfirm({
                   }}
                 >
                   <Form.Label column sm='4' className='text-left'>
-                  ວັນເລີ່ມສອນ
+                  Start date
                 </Form.Label>
                   <Col sm='8'>
                     <span>{param.data && param.data.startDate}</span>
@@ -267,7 +267,7 @@ function CalendaEditConfirm({
                   }}
                 >
                   <Form.Label column sm='4' className='text-left'>
-                  ວັນສິ້ນສຸດການສອນ
+                  End date
                 </Form.Label>
                   <Col sm='8'>
                     <span>{param.data && param.data.endDate}</span>
@@ -290,7 +290,7 @@ function CalendaEditConfirm({
                   borderColor: '#6f6f6f'
                 }}
               >
-                ຍົກເລີກ
+                Cancel
             </Button>
             </div>
             <div style={{ padding: 15 }} className='col'>
@@ -303,7 +303,7 @@ function CalendaEditConfirm({
                 }}
                 onClick={() => _confirmCalendaEdit()}
               >
-                ຕົກລົງ
+                Edit
             </Button>
             </div>
           </div>

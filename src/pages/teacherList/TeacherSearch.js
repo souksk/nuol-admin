@@ -40,7 +40,7 @@ const TeacherSearch = ({
   return (
     <Modal show={showSearchView} onHide={_handleSearchViewClose} size='lg'>
       <Modal.Title style={{textAlign: 'center', paddingTop: 20}}>
-        ຄົ້ນຫາອາຈານ
+        TEACHER SEARCH
       </Modal.Title>
 
       <Modal.Body style={{marginLeft: 50, marginRight: 50, padding: 50}}>
@@ -72,7 +72,7 @@ const TeacherSearch = ({
                   style={{margin: 0, marginBottom: 10}}
                 >
                   <Form.Label column sm='4' className='text-left'>
-                    ຄະນະ
+                    Faculty
                   </Form.Label>
                   <Col sm='8'>
                     <Form.Control
@@ -85,7 +85,7 @@ const TeacherSearch = ({
                       }}
                       isInvalid={!!errors.faculty}
                     >
-                      <option value='0'>-----ທຸກຄະນະ-----</option>
+                      <option value='0'>-----All faculty-----</option>
                       {facultyData &&
                         facultyData.map((faculty, index) => {
                           return (
@@ -104,7 +104,7 @@ const TeacherSearch = ({
                   style={{margin: 0, marginBottom: 10}}
                 >
                   <Form.Label column sm='4' className='text-left'>
-                    ພາກວິຊາ
+                    Department
                   </Form.Label>
                   <Col sm='8'>
                     <Form.Control
@@ -114,7 +114,7 @@ const TeacherSearch = ({
                       onChange={handleChange}
                       isInvalid={!!errors.department}
                     >
-                      <option value='0'>-----ທຸກພາກວິຊາ-----</option>
+                      <option value='0'>-----All department-----</option>
                       {facultyData[selectedFacultyIndex - 1] &&
                         facultyData[
                           selectedFacultyIndex - 1
@@ -137,12 +137,12 @@ const TeacherSearch = ({
                   style={{margin: 0, marginBottom: 10}}
                 >
                   <Form.Label column sm='4' className='text-left'>
-                    ລະຫັດອາຈານ
+                    Teacher ID
                   </Form.Label>
                   <Col sm='8'>
                     <Form.Control
                       type='text'
-                      placeholder='ກະລຸນາປ້ອນ'
+                      placeholder='please input...'
                       name='userId'
                       value={values.userId}
                       onChange={handleChange}
@@ -158,7 +158,7 @@ const TeacherSearch = ({
                     confirm
                     onClick={handleSubmit}
                     width='100%'
-                    title='ຄົ້ນຫາ'
+                    title='Search'
                   />
                 </div>
               </div>

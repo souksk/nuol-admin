@@ -52,15 +52,15 @@ function RegistrationDetail() {
                     history.push('/registration-list')
                     window.location.reload(true)
                 }}>
-                    ລົງທະບຽນວິຊາ
+                    Registration
                 </Breadcrumb.Item>
                 <Breadcrumb.Item onClick={() => {
                     history.push('/registration-list')
                     window.location.reload(true)
                 }}>
-                    ລາຍການລົງທະບຽນທັງຫມົດ
+                    All Registrations
                 </Breadcrumb.Item>
-                <Breadcrumb.Item active>ລາຍລະອຽດ</Breadcrumb.Item>
+                <Breadcrumb.Item active>Registration Detail</Breadcrumb.Item>
             </Breadcrumb>
 
             <CustomContainer>
@@ -72,7 +72,7 @@ function RegistrationDetail() {
                         alignItems: 'center'
                     }}
                 >
-                    <Title text='ລາຍລະອຽດ' />
+                    <Title text='REGISTRATION DETAIL' />
 
                     {/* Button group */}
                     <div>
@@ -90,7 +90,7 @@ function RegistrationDetail() {
                             }}
                             onClick={() => _edit()}
                         >
-                            <FontAwesomeIcon icon='edit' style={{ fontSize: 16 }} /> ແກ້ໃຂ
+                            <FontAwesomeIcon icon='edit' style={{ fontSize: 16 }} /> Edit
                         </button>
 
                         {/* ລຶບ */}
@@ -105,7 +105,7 @@ function RegistrationDetail() {
                             }}
                             onClick={() => _delete()}
                         >
-                            <i className='fa fa-trash' /> ລຶບ
+                            <i className='fa fa-trash' /> Delete
                         </button>
                     </div>
                 </div>
@@ -121,78 +121,78 @@ function RegistrationDetail() {
                 >
 
                     {data.student ? <div style={{ padding: 20, paddingBottom: 0 }}>
-                        <div style={{ fontWeight: "bold" }}><FontAwesomeIcon icon='caret-down' style={{ marginRight: 16, marginLeft: -24, fontSize: 24, color: Consts.PRIMARY_COLOR }} />ຂໍ້ມູນນັກຮຽນທີ່ລົງທະບຽນ</div>
+                        <div style={{ fontWeight: "bold" }}><FontAwesomeIcon icon='caret-down' style={{ marginRight: 16, marginLeft: -24, fontSize: 24, color: Consts.PRIMARY_COLOR }} />Student Detail</div>
                         <div style={{ paddingLeft: 20, fontSize: 14 }}>
                             <Row>
-                                <Col>ລະຫັດນັກຮຽນ</Col>
+                                <Col>Student ID</Col>
                                 <Col>{data.student.userId ? data.student.userId : '-'}</Col>
                             </Row>
                             <Row>
-                                <Col>ຊື່</Col>
+                                <Col>First name</Col>
                                 <Col>{data.student.firstname ? data.student.firstname : '-'}</Col>
                             </Row>
                             <Row>
-                                <Col>ນາມສະກຸນ</Col>
+                                <Col>Last name</Col>
                                 <Col>{data.student.lastname ? data.student.lastname : '-'}</Col>
                             </Row>
                             <Row>
-                                <Col>ວັນເດືອນປີເກີດ</Col>
+                                <Col>Birthday</Col>
                                 <Col>{data.student.birthday ? new Date(data.student.birthday).toLocaleDateString('la-LA') : '-'}</Col>
                             </Row>
                             <Row>
-                                <Col>ເບິໂທ</Col>
+                                <Col>Phone number</Col>
                                 <Col>{data.student.phone ? data.student.phone : '-'}</Col>
                             </Row>
                             <Row>
-                                <Col>ອີເມວ</Col>
+                                <Col>E-Mail</Col>
                                 <Col>{data.student.email ? data.student.email : '-'}</Col>
                             </Row>
                             <Row>
-                                <Col>ປີຮຽນ</Col>
+                                <Col>Year level</Col>
                                 <Col>{data.student.yearLevel ? data.student.yearLevel : '-'}</Col>
                             </Row>
                         </div>
                     </div> : ''}
 
                     {data.course ? <div style={{ padding: 20, paddingBottom: 0 }}>
-                        <div style={{ fontWeight: "bold" }}><FontAwesomeIcon icon='caret-down' style={{ marginRight: 16, marginLeft: -24, fontSize: 24, color: Consts.PRIMARY_COLOR }} />ຂໍ້ມູນວິຊາທີ່ລົງທະບຽນ</div>
+                        <div style={{ fontWeight: "bold" }}><FontAwesomeIcon icon='caret-down' style={{ marginRight: 16, marginLeft: -24, fontSize: 24, color: Consts.PRIMARY_COLOR }} />Course Detail</div>
                         <div style={{ paddingLeft: 20, fontSize: 14 }}>
                             <Row>
-                                <Col>ລະຫັດວິຊາ</Col>
+                                <Col>Course ID</Col>
                                 <Col>{data.course.courseCode ? data.course.courseCode : '-'}</Col>
                             </Row>
                             <Row>
-                                <Col>ຊື່ວິຊາ</Col>
+                                <Col>Course name</Col>
                                 <Col>{data.course.title ? data.course.title : '-'}</Col>
                             </Row>
                             <Row>
-                                <Col>ຄະນະ</Col>
+                                <Col>Faculty</Col>
                                 <Col>{data.course.department ? (data.course.department.faculty ? (data.course.department.faculty.name ? data.course.department.faculty.name : '-') : '-') : '-'}</Col>
                             </Row>
                             <Row>
-                                <Col>ພາກວິຊາ</Col>
+                                <Col>Department</Col>
                                 <Col>{data.course.department ? (data.course.department.name ? data.course.department.name : '-') : '-'}</Col>
                             </Row>
                             <Row>
-                                <Col>ປີຮຽນ</Col>
+                                <Col>Year level</Col>
                                 <Col>{data.course.yearLevel ? data.course.yearLevel : '-'}</Col>
                             </Row>
                         </div>
                     </div> : ''}
 
                     <div style={{ padding: 20, paddingBottom: 0 }}>
-                        <div style={{ fontWeight: "bold" }}><FontAwesomeIcon icon='caret-down' style={{ marginRight: 16, marginLeft: -24, fontSize: 24, color: Consts.PRIMARY_COLOR }} />ຂໍ້ມູນການລົງທະບຽນ</div>
+                        <div style={{ fontWeight: "bold" }}><FontAwesomeIcon icon='caret-down' style={{ marginRight: 16, marginLeft: -24, fontSize: 24, color: Consts.PRIMARY_COLOR }} />Registration Detfail</div>
                         <div style={{ paddingLeft: 20, fontSize: 14 }}>
                             <Row>
-                                <Col>ລົງທະບຽນວັນທີ</Col>
+                                <Col>Register date</Col>
                                 <Col>{data.createdAt ? new Date(data.createdAt).toLocaleString('la-LA', { hour12: false }) : '-'}</Col>
                             </Row>
                             <Row>
-                                <Col>ອັບເດດວັນທີ</Col>
-                                <Col>{data.createdAt ? new Date(data.updatedAt).toLocaleString('la-LA', { hour12: false }) : '-'}</Col>
+                                <Col>Update date</Col>
+                                <Col>{data.updatedAt ? new Date(data.updatedAt).toLocaleString('la-LA', { hour12: false }) : '-'}</Col>
                             </Row>
                             <Row>
-                                <Col>ໝາຍເຫດ</Col>
+                                <Col>Description</Col>
                                 <Col>{data.note ? data.note : '-'}</Col>
                             </Row>
                         </div>

@@ -67,16 +67,13 @@ function StudentAddConfirm({
     let result
     switch (gender) {
       case 'MALE':
-        result = 'ຊາຍ'
+        result = 'Male'
         break;
       case 'FEMALE':
-        result = 'ຍິງ'
-        break;
-      case 'OTHER':
-        result = 'ອື່ນໆ'
+        result = 'Famale'
         break;
       default:
-        result = 'ຊາຍ'
+        result = 'Male'
     }
     return result
   }
@@ -85,13 +82,13 @@ function StudentAddConfirm({
     let result
     switch (maritualStatus) {
       case 'SINGLE':
-        result = 'ໂສດ'
+        result = 'Single'
         break;
       case 'MARRIAGE':
-        result = 'ແຕ່ງງານແລ້ວ'
+        result = 'Marriage'
         break;
       default:
-        result = 'ໂສດ'
+        result = 'Single'
     }
     return result
   }
@@ -104,7 +101,7 @@ function StudentAddConfirm({
       size='lg'
     >
       <Modal.Title style={{ textAlign: 'center', paddingTop: 20 }}>
-        ຢືນຢັນການເພີ່ມນັກຮຽນ
+        CONFIRM ADD NEW STUDENT
       </Modal.Title>
       <Modal.Body
         style={{
@@ -132,7 +129,7 @@ function StudentAddConfirm({
                       aria-hidden='true'
                       style={{ marginRight: 5, color: Consts.SECONDARY_COLOR }}
                     />
-                ຄະນະແລະພາກວິຊາ
+                Faculty and Department
               </div>
                   {/* ຄະນະ */}
                   <Form.Group
@@ -145,7 +142,7 @@ function StudentAddConfirm({
                     }}
                   >
                     <Form.Label column sm='4' className='text-left'>
-                      ຄະນະ
+                    Faculty
                 </Form.Label>
                     <Col sm='8' style={{marginTop:8}}>
                       <span>{facalty ? facalty : '-'}</span>
@@ -163,7 +160,7 @@ function StudentAddConfirm({
                     }}
                   >
                     <Form.Label column sm='4' className='text-left'>
-                      ພາກວິຊາ
+                    Department
                 </Form.Label>
                     <Col sm='8' style={{marginTop:8}}>
                       <span>{department ? department : '-'}</span>
@@ -181,8 +178,8 @@ function StudentAddConfirm({
                     }}
                   >
                     <Form.Label column sm='4' className='text-left'>
-                      ປີຮຽນ
-                </Form.Label>
+                      Year level
+                    </Form.Label>
                     <Col sm='8' style={{marginTop:8}}>
                       <span>{param.data && (param.data.yearLevel ? param.data.yearLevel : '-')}</span>
                     </Col>
@@ -197,8 +194,8 @@ function StudentAddConfirm({
                       aria-hidden='true'
                       style={{ marginRight: 5, color: Consts.SECONDARY_COLOR }}
                     />
-                ຂໍ້ມູນນັກຮຽນ
-              </div>
+                    Student
+                  </div>
                   {/* ຊື່ */}
                   <Form.Group
                     as={Row}
@@ -210,7 +207,7 @@ function StudentAddConfirm({
                     }}
                   >
                     <Form.Label column sm='4' className='text-left'>
-                      ຊື່
+                      First name
                 </Form.Label>
                     <Col sm='8' style={{marginTop:8}}>
                       <span>
@@ -230,7 +227,7 @@ function StudentAddConfirm({
                     }}
                   >
                     <Form.Label column sm='4' className='text-left'>
-                      ນາມສະກຸນ
+                      Last name
                 </Form.Label>
                     <Col sm='8' style={{marginTop:8}}>
                       <span>
@@ -250,7 +247,7 @@ function StudentAddConfirm({
                     }}
                   >
                     <Form.Label column sm='4' className='text-left'>
-                      ວັນເດືອນປີເກີດ
+                      Birthday
                 </Form.Label>
                     <Col sm='8' style={{marginTop:8}}>
                       <span>
@@ -270,7 +267,7 @@ function StudentAddConfirm({
                     }}
                   >
                     <Form.Label column sm='4' className='text-left'>
-                      ເພດ
+                      Gender
                 </Form.Label>
                     <Col sm='8' style={{marginTop:8}}>
                       <span>
@@ -290,7 +287,7 @@ function StudentAddConfirm({
                     }}
                   >
                     <Form.Label column sm='4' className='text-left'>
-                      ສະຖານະ
+                      Status
                 </Form.Label>
                     <Col sm='8' style={{marginTop:8}}>
                       <span>
@@ -300,7 +297,7 @@ function StudentAddConfirm({
                   </Form.Group>
 
                   {/* ເບີໂທ */}
-                  <Form.Group
+                  {param.data && param.data.phone && <Form.Group
                     as={Row}
                     style={{
                       margin: 0,
@@ -310,17 +307,17 @@ function StudentAddConfirm({
                     }}
                   >
                     <Form.Label column sm='4' className='text-left'>
-                      ເບີໂທ
-                </Form.Label>
+                      Phone number
+                    </Form.Label>
                     <Col sm='8' style={{marginTop:8}}>
                       <span>
-                        {param.data && (param.data.phone ? param.data.phone : '-')}
+                        {param.data.phone}
                       </span>
                     </Col>
-                  </Form.Group>
+                  </Form.Group>}
 
                   {/* ອີເມວ */}
-                  <Form.Group
+                  {param.data && param.data.email && <Form.Group
                     as={Row}
                     style={{
                       margin: 0,
@@ -330,14 +327,14 @@ function StudentAddConfirm({
                     }}
                   >
                     <Form.Label column sm='4' className='text-left'>
-                      ອີເມວ
-                </Form.Label>
+                      E-Mail
+                    </Form.Label>
                     <Col sm='8' style={{marginTop:8}}>
                       <span>
-                        {param.data && (param.data.email ? param.data.email : '-')}
+                        {param.data.email}
                       </span>
                     </Col>
-                  </Form.Group>
+                  </Form.Group>}
                 </div>
 
                 {/* ---------- ໄອດີແລະລະຫັດຜ່ານ --------- */}
@@ -348,8 +345,8 @@ function StudentAddConfirm({
                       aria-hidden='true'
                       style={{ marginRight: 5, color: Consts.SECONDARY_COLOR }}
                     />
-                ໄອດີແລະລະຫັດຜ່ານ
-              </div>
+                    User ID and Password
+                  </div>
                   {/* ໄອດີ */}
                   <Form.Group
                     as={Row}
@@ -361,8 +358,8 @@ function StudentAddConfirm({
                     }}
                   >
                     <Form.Label column sm='4' className='text-left'>
-                      ໄອດີ
-                </Form.Label>
+                      User ID
+                    </Form.Label>
                     <Col sm='8' style={{marginTop:8}}>
                       <span>{param.data && (param.data.userId ? param.data.userId : '-')}</span>
                     </Col>
@@ -379,8 +376,8 @@ function StudentAddConfirm({
                     }}
                   >
                     <Form.Label column sm='4' className='text-left'>
-                      ລະຫັດຜ່ານ
-                </Form.Label>
+                      Password
+                    </Form.Label>
                     <Col sm='8' style={{marginTop:8}}>
                       <span>
                         {param.data && (param.data.password ? param.data.password : '-')}
@@ -397,8 +394,8 @@ function StudentAddConfirm({
                       aria-hidden='true'
                       style={{ marginRight: 5, color: Consts.SECONDARY_COLOR }}
                     />
-                ອື່ນໆ
-              </div>
+                    Other
+                  </div>
                   {/* ລາຍລະອຽດ */}
                   <Form.Group
                     as={Row}
@@ -410,7 +407,7 @@ function StudentAddConfirm({
                     }}
                   >
                     <Form.Label column sm='4' className='text-left'>
-                      ລາຍລະອຽດ
+                      Description
                 </Form.Label>
                     <Col sm='8' style={{marginTop:8}}>
                       <span>
@@ -430,7 +427,7 @@ function StudentAddConfirm({
                     }}
                   >
                     <Form.Label column sm='4' className='text-left'>
-                      ໝາຍເຫດ
+                      Note
                 </Form.Label>
                     <Col sm='8' style={{marginTop:8}}>
                       <span>
@@ -454,7 +451,7 @@ function StudentAddConfirm({
                     borderColor: Consts.SECONDARY_COLOR
                   }}
                 >
-                  ຍົກເລີກ
+                  Cancel
             </Button>
               </div>
               <div style={{ padding: 15 }} className='col'>
@@ -467,7 +464,7 @@ function StudentAddConfirm({
                   }}
                   onClick={() => _confirmStudentAdd()}
                 >
-                  ເພີ່ມ
+                  Add
             </Button>
               </div>
             </div>

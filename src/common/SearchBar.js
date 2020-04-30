@@ -10,7 +10,7 @@ function SearchBar ({title, onClick}) {
             className=' '
             style={{margin: 0, color: Consts.FONT_COLOR_SECONDARY}}
           >
-            ຄົ້ນຫາ
+            Search
           </p>
         </div>
       </div>

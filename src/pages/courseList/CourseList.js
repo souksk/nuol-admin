@@ -47,7 +47,7 @@ function CourseList() {
   const [selectedFaculty, setselectedFaculty] = useState('')
   const [selectedDepartment, setselectedDepartment] = useState('')
   const [selectedYearLevel, setselectedYearLevel] = useState(null)
-  const [title, setTitle] = useState('ວິຊາທັງຫມົດ')
+  const [title, setTitle] = useState('ALL COURSES')
 
   // on first load
   useEffect(() => {
@@ -121,7 +121,7 @@ function CourseList() {
   //   setTitle('ຜົນການຄົ້ນຫາ')
   // }
 
-  // if(loadCourses) return <p>Loading...</p>
+  if(apolloData.loading) return <p>Loading...</p>
 
   return (
     <div>
@@ -132,10 +132,10 @@ function CourseList() {
             window.location.reload(true)
           }
         }>
-          ຈັດການວິຊາ
+          Course Management
         </Breadcrumb.Item>
         <Breadcrumb.Item active>
-          {title}
+          All Courses
         </Breadcrumb.Item>
       </Breadcrumb>
 
@@ -145,7 +145,7 @@ function CourseList() {
           <CustomButton
             confirm
             addIcon
-            title='ເພີ່ມວິຊາ'
+            title='Add New'
             onClick={() => _courseAdd()}
           />
         </div>
@@ -165,7 +165,7 @@ function CourseList() {
             color: Consts.FONT_COLOR_SECONDARY
           }}
         >
-          ທັງຫມົດ {courseData.length} ວິຊາ
+          All {courseData.length} course
         </div>
 
         {/* Table list */}
@@ -173,14 +173,14 @@ function CourseList() {
           <table border='1' bordercolor='#fff' style={{ width: '100%' }}>
             <thead>
               <TableHeader>
-                <th style={{width: 60}}>ລຳດັບ</th>
-                <th style={{width: 100}}>ລະຫັດວິຊາ</th>
-                <th style={{width: 250}}>ຊື່ວິຊາ</th>
-                <th style={{width: 250}}>ຄະນະ</th>
-                <th style={{width: 250}}>ພາກວິຊາ</th>
-                <th style={{width: 100}}>ຈຳນວນໜ່ວຍກິດ</th>
-                <th style={{width: 250}}>ຄຳອະທິບາຍ</th>
-                <th style={{width: 180}}>ຈັດການ</th>
+                <th style={{width: 60}}>#</th>
+                <th style={{width: 100}}>COURSE ID</th>
+                <th style={{width: 250}}>COURSE NAME</th>
+                <th style={{width: 250}}>FACULTY NAME</th>
+                <th style={{width: 250}}>DEPARTMENT NAME</th>
+                <th style={{width: 100}}>UNIT</th>
+                <th style={{width: 250}}>DESCRIPTION</th>
+                <th style={{width: 180}}>ACTIONS</th>
               </TableHeader>
             </thead>
             <tbody>

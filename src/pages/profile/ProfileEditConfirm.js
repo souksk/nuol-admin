@@ -27,18 +27,16 @@ function ProfileEditConfirm({
 }) {
   const { history, location, match } = useReactRouter()
   const [updateUser, { data }] = useMutation(UPDATE_USER);
-  var _day = param.data && param.data.day ? param.data.day : ''
-  var _month = param.data && param.data.month ? param.data.month : ''
-  var _year = param.data && param.data.year ? param.data.year : ''
+
+  var _day = param.data && param.data.birthday ? new Date(param.data.birthday).getDate() : ''
+  var _month = param.data && param.data.birthday ? new Date(param.data.birthday).getMonth() + 1 : ''
+  var _year = param.data && param.data.birthday ? new Date(param.data.birthday).getFullYear() : ''
 
   //send to backend server
   const _confirmProfileEdit = async () => {
-    delete param.data.day
-    delete param.data.month
-    delete param.data.year
-    
-    if(!param.data.birthday){
-      delete param.data.birthday
+
+    if (param.data.userId) {
+      delete param.data.userId
     }
 
     await updateUser({ variables: param });
@@ -53,7 +51,7 @@ function ProfileEditConfirm({
       size='lg'
     >
       <Modal.Title style={{ textAlign: 'center', paddingTop: 20 }}>
-        ຢືນຢັນການແກ້ໄຂຂໍ້ມູນສ່ວນຕົວ
+        CONFIRM EDIT PROFILE
       </Modal.Title>
       <Modal.Body
         style={{
@@ -81,7 +79,7 @@ function ProfileEditConfirm({
                   aria-hidden='true'
                   style={{ marginRight: 5 }}
                 />
-                ຂໍ້ມູນສ່ວນຕົວ
+                General
               </div>
               {/* ຊື່ */}
               <Form.Group
@@ -94,7 +92,7 @@ function ProfileEditConfirm({
                 }}
               >
                 <Form.Label column sm='4' className='text-left'>
-                  ຊື່
+                  First name
                 </Form.Label>
                 <Col sm='8'>
                   <span>{param.data && (param.data.firstname ? param.data.firstname : '-')} </span>
@@ -112,7 +110,7 @@ function ProfileEditConfirm({
                 }}
               >
                 <Form.Label column sm='4' className='text-left'>
-                  ນາມສະກຸນ
+                  Last name
                 </Form.Label>
                 <Col sm='8'>
                   <span>{param.data && (param.data.lastname ? param.data.lastname : '-')}</span>
@@ -130,33 +128,17 @@ function ProfileEditConfirm({
                 }}
               >
                 <Form.Label column sm='4' className='text-left'>
-                  ວັນເດືອນປີເກີດ
+                  Birthday
                 </Form.Label>
                 <Col sm='8'>
-                  <span>{param.data && (param.data.birthday ? (_day + '-' + _month + '-' + _year) : '-')}</span>
-                </Col>
-              </Form.Group>
-
-              {/* ລະຫັດອາຈານ */}
-              <Form.Group
-                as={Row}
-                style={{
-                  margin: 0,
-                  marginBottom: 10,
-                  paddingLeft: 20,
-                  fontSize: 16
-                }}
-              >
-                <Form.Label column sm='4' className='text-left'>
-                  ລະຫັດນັກຮຽນ
-                </Form.Label>
-                <Col sm='8'>
-                  <span>{param.data && (param.data.userId ? param.data.userId : '-')}</span>
+                  <span>
+                    {param.data && ((param.data.birthday && param.data.birthday != "undefined-undefined-undefined") ? (_day + '-' + _month + '-' + _year) : '-')}
+                  </span>
                 </Col>
               </Form.Group>
 
               {/* ເບີໂທ */}
-              <Form.Group
+              {param.data && param.data.phone && <Form.Group
                 as={Row}
                 style={{
                   margin: 0,
@@ -166,16 +148,16 @@ function ProfileEditConfirm({
                 }}
               >
                 <Form.Label column sm='4' className='text-left'>
-                  ເບີໂທ
+                  Phone number
                 </Form.Label>
                 <Col sm='8'>
-                  <span>{param.data && (param.data.phone ? param.data.phone : '-')}</span>
+                  <span>{param.data.phone}</span>
                 </Col>
-              </Form.Group>
+              </Form.Group>}
 
 
               {/* ອີເມວ */}
-              <Form.Group
+              {param.data && param.data.email && <Form.Group
                 as={Row}
                 style={{
                   margin: 0,
@@ -185,12 +167,14 @@ function ProfileEditConfirm({
                 }}
               >
                 <Form.Label column sm='4' className='text-left'>
-                  ອີເມວ
+                  E-Mail
                 </Form.Label>
                 <Col sm='8'>
-                  <span>{param.data && (param.data.email ? param.data.email : '-')}</span>
+                  <span>
+                    {param.data.email}
+                  </span>
                 </Col>
-              </Form.Group>
+              </Form.Group>}
             </div>
 
             {/* ---------- ໄອດີ ແລະ ລະຫັດຜ່ານ --------- */}
@@ -201,7 +185,7 @@ function ProfileEditConfirm({
                   aria-hidden='true'
                   style={{ marginRight: 5 }}
                 />
-                ໄອດີ ແລະ ລະຫັດຜ່ານ
+                User ID and Password
               </div>
               {/* ໄອດີ */}
               <Form.Group
@@ -214,7 +198,7 @@ function ProfileEditConfirm({
                 }}
               >
                 <Form.Label column sm='4' className='text-left'>
-                  ໄອດີ
+                  User ID
                 </Form.Label>
                 <Col sm='8'>
                   <span>{param.data && (param.data.userId ? param.data.userId : '-')}</span>
@@ -232,7 +216,7 @@ function ProfileEditConfirm({
                 }}
               >
                 <Form.Label column sm='4' className='text-left'>
-                  ລະຫັດຜ່ານ
+                  Password
                 </Form.Label>
                 <Col sm='8'>
                   <span>{param.data && (param.data.password ? param.data.password : '-')}</span>
@@ -249,7 +233,7 @@ function ProfileEditConfirm({
                   aria-hidden='true'
                   style={{ marginRight: 5 }}
                 />
-                ອື່ນໆ
+                Other
               </div>
               {/* ລາຍລະອຽດ */}
               <Form.Group
@@ -262,7 +246,7 @@ function ProfileEditConfirm({
                 }}
               >
                 <Form.Label column sm='4' className='text-left'>
-                  ລາຍລະອຽດ
+                  Description
                 </Form.Label>
                 <Col sm='8'>
                   <span>{param.data && (param.data.description ? param.data.description : '-')}</span>
@@ -280,7 +264,7 @@ function ProfileEditConfirm({
                 }}
               >
                 <Form.Label column sm='4' className='text-left'>
-                  ໝາຍເຫດ
+                  Note
                 </Form.Label>
                 <Col sm='8'>
                   <span>{param.data && (param.data.note ? param.data.note : '-')}</span>
@@ -303,7 +287,7 @@ function ProfileEditConfirm({
                 borderColor: '#6f6f6f'
               }}
             >
-              ຍົກເລີກ
+              Cancel
             </Button>
           </div>
           <div style={{ padding: 15 }} className='col'>
@@ -316,7 +300,7 @@ function ProfileEditConfirm({
               }}
               onClick={() => _confirmProfileEdit()}
             >
-              ຕົກລົງ
+              Edit
             </Button>
           </div>
         </div>

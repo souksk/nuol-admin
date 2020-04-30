@@ -15,6 +15,9 @@ import {
 import * as _ from 'lodash'
 import FacultySearch from './FacultySearch'
 import FacultyAdd from './FacultyAdd'
+import FacultyEdit from './FacultyEdit'
+import FacultyDelete from './FacultyDelete'
+import FacultyDetail from './FacultyDetail'
 import Consts from '../../consts'
 import {
   CustomContainer,
@@ -25,56 +28,69 @@ import {
   TableCell
 } from '../../common'
 import { useQuery, useMutation, useLazyQuery } from '@apollo/react-hooks'
-import { TEACHERS } from './../../apollo/user'
 import { FACULTIES } from '../../apollo/faculty'
 
 function FacultyList() {
-  const [selectedFaculty, setselectedFaculty] = useState('')
-  const [selectedDepartment, setselectedDepartment] = useState('')
-  const [title, setTitle] = useState('ລາຍຊື່ຄະນະທັງຫມົດ')
+  // const [selectedFaculty, setselectedFaculty] = useState('')
+  // const [selectedDepartment, setselectedDepartment] = useState('')
+  const [title, setTitle] = useState('All Faculties')
 
   const { history, location, match } = useReactRouter()
-
-  // Query teacher
-  const [
-    loadTeachers,
-    { called: teacherCalled, loading: teacherLoading, data: teacherData }
-  ] = useLazyQuery(TEACHERS)
 
   // Query faculties
   const [
     loadFaculties,
     { called: facultyCalled, loading: facultyLoading, data: facultyData }
-  ] = useLazyQuery(FACULTIES)
+  ] = useLazyQuery(FACULTIES, { variables: { orderBy: 'createdAt_DESC' } })
 
   // States
   const [showSearchView, setShowSearchView] = useState(false)
   const [showAddView, setShowAddView] = useState(false)
+  const [showEditView, setShowEditView] = useState(false)
+  const [dataForEdit, setDataForEdit] = useState(null)
+  const [showDeleteView, setShowDeleteView] = useState(false)
+  const [dataForDelete, setDataForDelete] = useState(null)
+  const [showDetailView, setShowDetailView] = useState(false)
+  const [dataForDetail, setDataForDetail] = useState(null)
 
   // on first load
   useEffect(() => {
-    loadTeachers()
     loadFaculties()
   }, [])
 
   // Set states
-  const _handleSearchViewClose = () => setShowSearchView(false)
-  const _handleSearchViewShow = () => setShowSearchView(true)
+  // const _handleSearchViewClose = () => setShowSearchView(false)
+  // const _handleSearchViewShow = () => setShowSearchView(true)
 
   const _handleAddViewClose = () => setShowAddView(false)
   const _handleAddViewShow = () => setShowAddView(true)
 
-  const _facultyDetail = event => {
-    history.push('/faculty-detail', event)
-  }
+  const _handleEditViewClose = () => setShowEditView(false)
+  const _handleEditViewShow = () => setShowEditView(true)
 
-  const _facultyEdit = event => {
-    history.push('/faculty-edit', event)
-  }
+  const _handleDeleteViewClose = () => setShowDeleteView(false)
+  const _handleDeleteViewShow = () => setShowDeleteView(true)
+
+  const _handleDetailViewClose = () => setShowDetailView(false)
+  const _handleDetailViewShow = () => setShowDetailView(true)
 
   const _facultyAdd = () => {
     _handleAddViewShow()
-    // history.push('/faculty-add')
+  }
+
+  const _facultyEdit = (data) => {
+    setDataForEdit(data)
+    _handleEditViewShow()
+  }
+
+  const _facultyDelete = (data) => {
+    setDataForDelete(data)
+    _handleDeleteViewShow()
+  }
+
+  const _facultyDetail = (data) => {
+    setDataForDetail(data)
+    _handleDetailViewShow()
   }
 
   // const _onSearch = value => {
@@ -121,17 +137,16 @@ function FacultyList() {
   // setTitle('ຜົນການຄົ້ນຫາ')
   // }
 
-  if (teacherLoading) return <p>ກໍາລັງໂຫຼດຂໍ້ມູນ...</p>
-  console.log("facultyData: ", facultyData)
+  if(facultyLoading) return <p>Loading...</p>
 
   return (
     <div>
       {/* Breadcrumb */}
       <Breadcrumb>
         <Breadcrumb.Item href='' onClick={() => history.push('/faculty-list')}>
-          ຈັດການຄະນະ
+        Faculty Management
         </Breadcrumb.Item>
-        <Breadcrumb.Item active>ຄະນະທັງຫມົດ</Breadcrumb.Item>
+        <Breadcrumb.Item active>All faculties</Breadcrumb.Item>
       </Breadcrumb>
 
       <CustomContainer>
@@ -140,7 +155,7 @@ function FacultyList() {
           <CustomButton
             confirm
             addIcon
-            title='ເພີ່ມຄະນະ'
+            title='Add New'
             onClick={() => _facultyAdd()}
           />
         </div>
@@ -160,7 +175,7 @@ function FacultyList() {
             color: Consts.FONT_COLOR_SECONDARY
           }}
         >
-          ທັງຫມົດ {facultyData && facultyData.faculties && facultyData.faculties.length} ຄະນະ
+          All {facultyData && facultyData.faculties && facultyData.faculties.length} faculties
         </div>
 
         {/* Table list */}
@@ -168,11 +183,11 @@ function FacultyList() {
           <table border='1' bordercolor='#fff' style={{ width: '100%' }}>
             <thead>
               <TableHeader>
-                <th style={{ width: 60 }}>ລຳດັບ</th>
-                <th style={{ width: 300 }}>ຊື່ຄະນະ</th>
-                <th style={{ width: 300 }}>ຄຳອະທິບາຍ</th>
-                <th style={{ width: 300 }}>ໝາຍເຫດ</th>
-                <th style={{ width: 180 }}>ຈັດການ</th>
+                <th style={{ width: 60 }}>#</th>
+                <th style={{ width: 300 }}>FACULTY NAME</th>
+                <th style={{ width: 300 }}>DESCRIPTION</th>
+                <th style={{ width: 300 }}>NOTE</th>
+                <th style={{ width: 150 }}>ACTIONS</th>
               </TableHeader>
             </thead>
             <tbody>
@@ -216,13 +231,22 @@ function FacultyList() {
                               color={Consts.BORDER_COLOR}
                             />{' '}
                           </div>
-                          <div
+                          {/* <div
                             onClick={() => _facultyDetail(x)}
                             style={{ cursor: 'pointer', backgroundColor: '#FFFFFF', padding: 3, width: 64, borderRadius: 4 }}
                           >
                             <FontAwesomeIcon
-                              icon={['fas', 'external-link-alt']}
+                              icon={['fas', 'eye']}
                               color={Consts.BORDER_COLOR}
+                            />{' '}
+                          </div> */}
+                          <div
+                            onClick={() => _facultyDelete(x)}
+                            style={{ cursor: 'pointer', backgroundColor: '#FFFFFF', padding: 3, width: 64, borderRadius: 4 }}
+                          >
+                            <FontAwesomeIcon
+                              icon={['fas', 'trash']}
+                              color={Consts.BORDER_COLOR_DELETE}
                             />{' '}
                           </div>
                         </div>
@@ -246,6 +270,24 @@ function FacultyList() {
       <FacultyAdd
         showAddView={showAddView}
         _handleAddViewClose={_handleAddViewClose}
+      />
+
+      <FacultyEdit
+        showEditView={showEditView}
+        _handleEditViewClose={_handleEditViewClose}
+        dataForEdit={dataForEdit}
+      />
+
+      <FacultyDelete
+        showDeleteView={showDeleteView}
+        _handleDeleteViewClose={_handleDeleteViewClose}
+        dataForDelete={dataForDelete}
+      />
+
+      <FacultyDetail
+        showDetailView={showDetailView}
+        _handleDetailViewClose={_handleDetailViewClose}
+        dataForDetail={dataForDetail}
       />
 
     </div>

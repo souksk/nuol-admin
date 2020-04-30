@@ -125,7 +125,7 @@ function CourseAdd() {
 
   const _fileUploaded = acceptedFiles.map(file => (
     <li key={file.path}>
-      {file.path} ຂະຫນາດ: {file.size} bytes
+      {file.path} size: {file.size} bytes
     </li>
   ));
 
@@ -158,13 +158,13 @@ function CourseAdd() {
       {/* Breadcrumb */}
       <Breadcrumb>
         <Breadcrumb.Item href='' onClick={() => history.push('/course-list')}>
-          ຈັດການວິຊາ
+          Course Management
         </Breadcrumb.Item>
-        <Breadcrumb.Item active>ເພີ່ມວິຊາ</Breadcrumb.Item>
+        <Breadcrumb.Item active>Add New Course</Breadcrumb.Item>
       </Breadcrumb>
 
       <CustomContainer>
-        <Title text='ເພີ່ມວິຊາ' />
+        <Title text='ADD NEW COURSE' />
 
         <Formik
           initialValues={{
@@ -226,7 +226,7 @@ function CourseAdd() {
                         aria-hidden='true'
                         style={{ marginRight: 5 }}
                       />
-                      ຄະນະແລະພາກວິຊາ
+                      Faculty and Department
                   </div>
                     {/* ຄະນະ */}
                     <Form.Group
@@ -239,7 +239,7 @@ function CourseAdd() {
                       }}
                     >
                       <Form.Label column sm='4' className='text-left'>
-                        ຄະນະ
+                      Faculty
                       </Form.Label>
                       <Col sm='8'>
                         {FACULTY && <Form.Control as='select' name="facalty"
@@ -251,7 +251,7 @@ function CourseAdd() {
                           isInvalid={!!errors.facalty}
                           required={true}
                         >
-                          <option disabled={true} value="">---ກະລຸນາເລືອກຄະນະ---</option>
+                          <option disabled={true} value="">---Select faculty---</option>
                           {FACULTY.map((x, index) => <option key={"faculty" + index}>{x.name}</option>)}
                         </Form.Control>}
                       </Col>
@@ -268,13 +268,13 @@ function CourseAdd() {
                       }}
                     >
                       <Form.Label column sm='4' className='text-left'>
-                        ພາກວິຊາ</Form.Label>
+                      Department</Form.Label>
                       <Col sm='8'>
                         <Form.Control as='select' name="department"
                           value={values.department}
                           onChange={handleChange}
                           isInvalid={!!errors.department}>
-                          <option disabled={true} value="">---ກະລຸນາເລືອກພາກວິຊາ---</option>
+                          <option disabled={true} value="">---select department---</option>
                           {selectFacaltyIndex > -1 && FACULTY[selectFacaltyIndex].departments.map((x, index) => <option key={"department" + index}>{x.name}</option>)}
                         </Form.Control>
                       </Col>
@@ -289,7 +289,7 @@ function CourseAdd() {
                         aria-hidden='true'
                         style={{ marginRight: 5 }}
                       />
-                      ຂໍ້ມູນວິຊາ
+                      Course
                     </div>
                     {/* ຊື່ວິຊາ */}
                     <Form.Group
@@ -302,7 +302,7 @@ function CourseAdd() {
                       }}
                     >
                       <Form.Label column sm='4' className='text-left'>
-                        ຊື່ວິຊາ</Form.Label>
+                        Course name</Form.Label>
                       <Col sm='8'>
                         <Form.Control type='text' placeholder='ກະລຸນາປ້ອນ' name="title"
                           value={values.title}
@@ -322,7 +322,7 @@ function CourseAdd() {
                       }}
                     >
                       <Form.Label column sm='4' className='text-left'>
-                        ລະຫັດວິຊາ</Form.Label>
+                        Course ID</Form.Label>
                       <Col sm='8'>
                         <Form.Control type='text' placeholder='ກະລຸນາປ້ອນ' name="courseCode"
                           value={values.courseCode}
@@ -342,13 +342,13 @@ function CourseAdd() {
                       }}
                     >
                       <Form.Label column sm='4' className='text-left'>
-                        ຈໍານວນຫນ່ວຍກິດ</Form.Label>
+                        Unit</Form.Label>
                       <Col sm='8'>
                         <Form.Control as='select' name="unit"
                           value={values.unit}
                           onChange={handleChange}
                           isInvalid={!!errors.unit}>
-                          <option disabled={true} value="0">---ກະລຸນາເລືອກຈໍານວນຫນ່ວຍກິດ---</option>
+                          <option disabled={true} value="0">---Select unit---</option>
                           <option>1</option>
                           <option>2</option>
                           <option>3</option>
@@ -368,7 +368,7 @@ function CourseAdd() {
                         aria-hidden='true'
                         style={{ marginRight: 5 }}
                       />
-                      ຄໍາອະທິບາຍ
+                      Description
                     </div>
                     {/* ເນື້ອໃນຂອງວິຊາ */}
                     <Form.Group
@@ -381,7 +381,7 @@ function CourseAdd() {
                       }}
                     >
                       <Form.Label column sm='4' className='text-left'>
-                        ເນື້ອໃນຂອງວິຊາ
+                      Description
                       </Form.Label>
                       <Col sm='8'>
                         <Form.Control as='textarea' rows='3' name="description"
@@ -400,7 +400,7 @@ function CourseAdd() {
                         aria-hidden='true'
                         style={{ marginRight: 5 }}
                       />
-                      ອັບໂຫລດ
+                      File
                     </div>
                     {/* ອັບໂຫລດໄຟລ */}
                     <Form.Group
@@ -413,7 +413,7 @@ function CourseAdd() {
                       }}
                     >
                       <Form.Label column sm='4' className='text-left'>
-                        ອັບໂຫລດໄຟລ
+                        File upload
                       </Form.Label>
                       <Col sm='8'>
                         <div
@@ -442,10 +442,10 @@ function CourseAdd() {
                               src='/assets/download.png'
                             />
                           </div>
-                          <span>ໂຍນໄຟລທີ່ຕ້ອງການອັບໂຫລດໃສ່ນີ້</span>
+                          <span>Drag or select file</span>
                         </div>
                         {acceptedFiles.length > 0 && <aside>
-                          <h4>ໄຟລທີ່ຈະອັບໂຫລດ</h4>
+                          <h4>File to upload</h4>
                           <ul>{_fileUploaded}</ul>
                         </aside>}
                       </Col>
@@ -459,7 +459,7 @@ function CourseAdd() {
 
 
                   {fileUploadProgress > 0 && fileUploadProgress < 100 && <div>
-                    <h3>ກໍາລັງອັບໂຫລດໄຟລເອກະສານ....</h3>
+                    <h3>File uploading....</h3>
                     <ProgressBar animated now={fileUploadProgress} label={`${fileUploadProgress}%`} />
                   </div>
                   }
@@ -477,10 +477,10 @@ function CourseAdd() {
                     }}
                   >
                     <div style={{ marginRight: 80 }}>
-                      <CustomButton title='ຍົກເລີກ' onClick={() => _cancel()} />
+                      <CustomButton title='Cancel' onClick={() => _cancel()} />
                     </div>
 
-                    <CustomButton confirm title='ເພີ່ມວິຊາ' onClick={handleSubmit} />
+                    <CustomButton confirm title='Add' onClick={handleSubmit} />
                   </div>
                 </div>
 

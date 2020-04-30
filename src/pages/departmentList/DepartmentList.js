@@ -13,6 +13,9 @@ import {
   FormControl
 } from 'react-bootstrap'
 import * as _ from 'lodash'
+import DepartmentAdd from './DepartmentAdd'
+import DepartmentEdit from './DepartmentEdit'
+import DepartmentDelete from './DepartmentDelete'
 import DepartmentSearch from './DepartmentSearch'
 import Consts from '../../consts'
 import {
@@ -24,109 +27,115 @@ import {
   TableCell
 } from '../../common'
 import { useQuery, useMutation, useLazyQuery } from '@apollo/react-hooks'
-import { TEACHERS } from './../../apollo/user'
 import { DEPARTMENTS } from '../../apollo/deparment'
 
 function DepartmentList() {
   const [selectedFaculty, setselectedFaculty] = useState('')
   const [selectedDepartment, setselectedDepartment] = useState('')
-  const [title, setTitle] = useState('ລາຍຊື່ພາກວິຊາທັງຫມົດ')
+  const [title, setTitle] = useState('All Departments')
 
   const { history, location, match } = useReactRouter()
-
-  // Query teacher
-  const [
-    loadTeachers,
-    { called: teacherCalled, loading: teacherLoading, data: teacherData }
-  ] = useLazyQuery(TEACHERS, {
-    variables: { where: { role: 'TEACHER' } }
-  })
 
   // Query faculties
   const [
     loadDepartments,
     { called: departmentCalled, loading: departmentLoading, data: departmentData }
-  ] = useLazyQuery(DEPARTMENTS)
+  ] = useLazyQuery(DEPARTMENTS, { variables: { orderBy: 'createdAt_DESC' } })
 
   // States
   const [showSearchView, setShowSearchView] = useState(false)
+  const [showAddView, setShowAddView] = useState(false)
+  const [showEditView, setShowEditView] = useState(false)
+  const [dataForEdit, setDataForEdit] = useState(null)
+  const [showDeleteView, setShowDeleteView] = useState(false)
+  const [dataForDelete, setDataForDelete] = useState(null)
 
   // on first load
   useEffect(() => {
-    loadTeachers()
     loadDepartments()
   }, [])
 
   // Set states
-  const _handleSearchViewClose = () => setShowSearchView(false)
-  const _handleSearchViewShow = () => setShowSearchView(true)
+  // const _handleSearchViewClose = () => setShowSearchView(false)
+  // const _handleSearchViewShow = () => setShowSearchView(true)
 
-  const _teacherDetail = event => {
-    history.push('/teacher-detail', event)
+  const _handleAddViewClose = () => setShowAddView(false)
+  const _handleAddViewShow = () => setShowAddView(true)
+
+  const _handleEditViewClose = () => setShowEditView(false)
+  const _handleEditViewShow = () => setShowEditView(true)
+
+  const _handleDeleteViewClose = () => setShowDeleteView(false)
+  const _handleDeleteViewShow = () => setShowDeleteView(true)
+
+  const _departmantDelete = (data) => {
+    setDataForDelete(data)
+    _handleDeleteViewShow()
   }
 
-  const _teacherEdit = event => {
-    history.push('/teacher-edit', event)
+  const _departmentEdit = (data) => {
+    setDataForEdit(data)
+    _handleEditViewShow()
   }
 
-  const _teacherAdd = () => {
-    history.push('/teacher-add')
+  const _departmentAdd = () => {
+    _handleAddViewShow()
   }
 
-  const _onSearch = value => {
-    //console.log('value: ', value)
-    // update view
-    // const facultyName = facultyData.faculties[parseInt(value.faculty) - 1]
-    //   ? facultyData.faculties[parseInt(value.faculty) - 1].name
-    //   : ''
+  // const _onSearch = value => {
+  //console.log('value: ', value)
+  // update view
+  // const facultyName = facultyData.faculties[parseInt(value.faculty) - 1]
+  //   ? facultyData.faculties[parseInt(value.faculty) - 1].name
+  //   : ''
 
-    // setselectedFaculty(facultyName)
-    // setselectedDepartment(value.department)
+  // setselectedFaculty(facultyName)
+  // setselectedDepartment(value.department)
 
-    // let where = {}
-    // if (!_.isEmpty(value.userId)) {
-    //   where = {
-    //     userId_contains: value.userId
-    //   }
-    // } else {
-    //   // faculty search
-    //   if (!_.isEmpty(facultyName)) {
-    //     where['faculty'] = {
-    //       name_contains: facultyName
-    //     }
-    //   }
+  // let where = {}
+  // if (!_.isEmpty(value.userId)) {
+  //   where = {
+  //     userId_contains: value.userId
+  //   }
+  // } else {
+  //   // faculty search
+  //   if (!_.isEmpty(facultyName)) {
+  //     where['faculty'] = {
+  //       name_contains: facultyName
+  //     }
+  //   }
 
-    //   // department search
-    //   if (!_.isEmpty(value.department)) {
-    //     where['department'] = {
-    //       name_contains: value.department
-    //     }
-    //   }
-    // }
+  //   // department search
+  //   if (!_.isEmpty(value.department)) {
+  //     where['department'] = {
+  //       name_contains: value.department
+  //     }
+  //   }
+  // }
 
-    //console.log('where: ', where)
+  //console.log('where: ', where)
 
-    // Close search view
-    // _handleSearchViewClose()
+  // Close search view
+  // _handleSearchViewClose()
 
-    // loadTeachers({
-    //   variables: { where: ((Object.keys(where)).length > 0) ? ({ AND: { ...where, role: 'TEACHER' } }) : { role: 'TEACHER' } }
-    // })
+  // loadTeachers({
+  //   variables: { where: ((Object.keys(where)).length > 0) ? ({ AND: { ...where, role: 'TEACHER' } }) : { role: 'TEACHER' } }
+  // })
 
-    // set title
-    // setTitle('ຜົນການຄົ້ນຫາ')
-  }
+  // set title
+  // setTitle('ຜົນການຄົ້ນຫາ')
+  // }
 
-  if (teacherLoading || departmentLoading) return <p>ກໍາລັງໂຫຼດຂໍ້ມູນ...</p>
+  if (departmentLoading) return <p>Loading...</p>
 
   return (
     <div>
       {/* Breadcrumb */}
       <Breadcrumb>
         <Breadcrumb.Item href='' onClick={() => history.push('/department-list')}>
-          ຈັດການພາກວິຊາ
+          Department Management
         </Breadcrumb.Item>
-        <Breadcrumb.Item active>ພາກວິຊາທັງຫມົດ</Breadcrumb.Item>
+        <Breadcrumb.Item active>All Departments</Breadcrumb.Item>
       </Breadcrumb>
 
       <CustomContainer>
@@ -135,8 +144,8 @@ function DepartmentList() {
           <CustomButton
             confirm
             addIcon
-            title='ເພີ່ມພາກວິຊາ'
-            onClick={() => _teacherAdd()}
+            title='Add New'
+            onClick={() => _departmentAdd()}
           />
         </div>
 
@@ -155,7 +164,7 @@ function DepartmentList() {
             color: Consts.FONT_COLOR_SECONDARY
           }}
         >
-          ທັງຫມົດ {teacherData && departmentData.departments && departmentData.departments.length} ພາກວິຊາ
+          All {departmentData && departmentData.departments && departmentData.departments.length} departments
         </div>
 
         {/* Table list */}
@@ -163,12 +172,12 @@ function DepartmentList() {
           <table border='1' bordercolor='#fff' style={{ width: '100%' }}>
             <thead>
               <TableHeader>
-                <th style={{width: 60}}>ລຳດັບ</th>
-                <th style={{width: 300}}>ຊື່ພາກວິຊາ</th>
-                <th style={{width: 300}}>ຄະນະ</th>
-                <th style={{width: 300}}>ຄຳອະທິບາຍ</th>
-                <th style={{width: 200}}>ຜູ້ສ້າງ</th>
-                <th style={{width: 180}}>ຈັດການ</th>
+                <th style={{ width: 60 }}>#</th>
+                <th style={{ width: 300 }}>DEPARTMENT NAME</th>
+                <th style={{ width: 300 }}>FACULTY NAME</th>
+                <th style={{ width: 300 }}>DESCRIPTION</th>
+                <th style={{ width: 200 }}>NOTE</th>
+                <th style={{ width: 180 }}>ACTIONS</th>
               </TableHeader>
             </thead>
             <tbody>
@@ -196,7 +205,7 @@ function DepartmentList() {
                         {x.description ? x.description : '-'}
                       </TableCell>
                       <TableCell>
-                        {x.createdBy ? (x.createdBy.firstname + ' ' + x.createdBy.lastname) : '-'}
+                        {x.note ? x.note : '-'}
                       </TableCell>
                       <TableCell>
                         <div
@@ -207,8 +216,8 @@ function DepartmentList() {
                           }}
                         >
                           <div
-                            onClick={() => _teacherEdit(x)}
-                            style={{ cursor: 'pointer', backgroundColor:'#FFFFFF', padding: 3, width: 64, borderRadius: 4 }}
+                            onClick={() => _departmentEdit(x)}
+                            style={{ cursor: 'pointer', backgroundColor: '#FFFFFF', padding: 3, width: 64, borderRadius: 4 }}
                           >
                             <FontAwesomeIcon
                               icon={['fas', 'edit']}
@@ -216,12 +225,12 @@ function DepartmentList() {
                             />{' '}
                           </div>
                           <div
-                            onClick={() => _teacherDetail(x)}
-                            style={{ cursor: 'pointer', backgroundColor:'#FFFFFF', padding: 3, width: 64, borderRadius: 4 }}
+                            onClick={() => _departmantDelete(x)}
+                            style={{ cursor: 'pointer', backgroundColor: '#FFFFFF', padding: 3, width: 64, borderRadius: 4 }}
                           >
                             <FontAwesomeIcon
-                              icon={['fas', 'external-link-alt']}
-                              color={Consts.BORDER_COLOR}
+                              icon={['fas', 'trash']}
+                              color={Consts.BORDER_COLOR_DELETE}
                             />{' '}
                           </div>
                         </div>
@@ -235,7 +244,7 @@ function DepartmentList() {
       </CustomContainer>
 
       {/* Search Modal */}
-      <DepartmentSearch
+      {/* <DepartmentSearch
         facultyData={
           // facultyData ? facultyData.faculties : []
           []
@@ -243,6 +252,23 @@ function DepartmentList() {
         showSearchView={showSearchView}
         _handleSearchViewClose={_handleSearchViewClose}
         onSearch={value => _onSearch(value)}
+      /> */}
+
+      <DepartmentAdd
+        showAddView={showAddView}
+        _handleAddViewClose={_handleAddViewClose}
+      />
+
+      <DepartmentEdit
+        showEditView={showEditView}
+        _handleEditViewClose={_handleEditViewClose}
+        dataForEdit={dataForEdit}
+      />
+
+      <DepartmentDelete
+        showDeleteView={showDeleteView}
+        _handleDeleteViewClose={_handleDeleteViewClose}
+        dataForDelete={dataForDelete}
       />
     </div>
   )

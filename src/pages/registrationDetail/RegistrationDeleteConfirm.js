@@ -48,7 +48,7 @@ const RegistrationDeleteConfirm = ({
 						fontWeight: 'bold'
 					}}
 				>
-					ຕ້ອງການລຶບການລົງທະບຽນ?
+					Do you want to delete?
 				</Modal.Title>
 
         <p className='text-center'>{data && (data.student ? (data.student.firstname + ' ' + (data.student.lastname ? data.student.lastname : '')) : '')}</p>
@@ -65,7 +65,7 @@ const RegistrationDeleteConfirm = ({
                 borderColor: Consts.DELETE_COLOR_BUTTON
               }}
             >
-              ຍົກເລີກ
+              Cancel
             </Button>
           </div>
           <div style={{ padding: 15 }} className='col'>
@@ -78,7 +78,7 @@ const RegistrationDeleteConfirm = ({
               }}
               onClick={() => _deleteRegistration()}
             >
-              ລຶບ
+              Delete
             </Button>
           </div>
         </div>

@@ -34,7 +34,7 @@ const RegistrationSearch = ({
   return (
     <Modal show={showSearchView} onHide={_handleSearchViewClose} size='lg'>
       <Modal.Title style={{textAlign: 'center', paddingTop: 20}}>
-        <b>ຄົ້ນຫາການລົງທະບຽນຂອງນັກຮຽນ</b>
+        <b>STUDENT'S REGISTRATION SEARCH</b>
       </Modal.Title>
 
       <Modal.Body style={{marginLeft: 50, marginRight: 50, padding: 50}}>
@@ -42,8 +42,8 @@ const RegistrationSearch = ({
           initialValues={{
             faculty: '',
             department: '',
-            yearLevel: '',
-            courseCode: ''
+            yearLevel: 0,
+            userId: ''
           }}
           onSubmit={values => {
             onSearch(values)
@@ -66,7 +66,7 @@ const RegistrationSearch = ({
                 style={{margin: 0, marginBottom: 10}}
               >
                 <Form.Label column sm='4' className='text-left'>
-                  ຄະນະ
+                  Faculty
                 </Form.Label>
                 <Col sm='8'>
                   <Form.Control
@@ -79,7 +79,7 @@ const RegistrationSearch = ({
                     }}
                     isInvalid={!!errors.faculty}
                   >
-                    <option value='0'>ກະລຸນາເລືອກຄະນະ</option>
+                    <option value='0'>Select faculty</option>
                     {facultyData &&
                       facultyData.map((faculty, index) => {
                         return (
@@ -98,7 +98,7 @@ const RegistrationSearch = ({
                 style={{margin: 0, marginBottom: 10}}
               >
                 <Form.Label column sm='4' className='text-left'>
-                  ພາກວິຊາ
+                  Department
                 </Form.Label>
                 <Col sm='8'>
                   <Form.Control
@@ -108,7 +108,7 @@ const RegistrationSearch = ({
                     onChange={handleChange}
                     isInvalid={!!errors.department}
                   >
-                    <option value='0'>ກະລຸນາເລືອກພາກວິຊາ</option>
+                    <option value='0'>Select department</option>
                     {facultyData[selectedFacultyIndex - 1] &&
                       facultyData[
                         selectedFacultyIndex - 1
@@ -123,13 +123,13 @@ const RegistrationSearch = ({
                 </Col>
               </Form.Group>
 
-              <Form.Group
+              {/* <Form.Group
                 as={Row}
                 controlId='formPlaintextEmail'
                 style={{margin: 0, marginBottom: 10}}
               >
                 <Form.Label column sm='4' className='text-left'>
-                  ປີຮຽນ
+                  Year level
                 </Form.Label>
                 <Col sm='8'>
                   <Form.Control
@@ -139,15 +139,15 @@ const RegistrationSearch = ({
                     onChange={handleChange}
                     isInvalid={!!errors.yearLevel}
                   >
-                    <option value='0'>ກະລຸນາເລືອກປີຮຽນ</option>
-                    <option>1</option>
-                    <option>2</option>
-                    <option>3</option>
-                    <option>4</option>
-                    <option>5</option>
+                    <option value={0}>Select year level</option>
+                    <option value={1}>1</option>
+                    <option value={2}>2</option>
+                    <option value={3}>3</option>
+                    <option value={4}>4</option>
+                    <option value={5}>5</option>
                   </Form.Control>
                 </Col>
-              </Form.Group>
+              </Form.Group> */}
 
               <hr />
 
@@ -157,16 +157,16 @@ const RegistrationSearch = ({
                 style={{margin: 0, marginBottom: 10}}
               >
                 <Form.Label column sm='4' className='text-left'>
-                  ລະຫັດນັກຮຽນ
+                  Student ID
                 </Form.Label>
                 <Col sm='8'>
                   <Form.Control
                     type='text'
                     placeholder='ກະລຸນາປ້ອນ'
-                    name='studentId'
-                    value={values.studentId}
+                    name='userId'
+                    value={values.userId}
                     onChange={handleChange}
-                    isInvalid={!!errors.studentId}
+                    isInvalid={!!errors.userId}
                   />
                 </Col>
               </Form.Group>
@@ -178,7 +178,7 @@ const RegistrationSearch = ({
                     confirm
                     onClick={handleSubmit}
                     width='100%'
-                    title='ຄົ້ນຫາ'
+                    title='Search'
                   />
                 </div>
               </div>

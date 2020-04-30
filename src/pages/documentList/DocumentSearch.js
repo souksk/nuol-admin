@@ -43,7 +43,7 @@ const DocumentSearch = ({showSearchView, _handleSearchViewClose, onSearch}) => {
       }) =>
         <Modal show={showSearchView} onHide={_handleSearchViewClose} size='lg'>
           <Modal.Title style={{textAlign: 'center', paddingTop: 20}}>
-            ຄົ້ນຫາເອກະສານ
+            SEARCH DOCUMENT
           </Modal.Title>
 
           <Modal.Body style={{marginLeft: 50, marginRight: 50, padding: 50}}>
@@ -52,7 +52,7 @@ const DocumentSearch = ({showSearchView, _handleSearchViewClose, onSearch}) => {
               <div style={{width: '100%'}}>
                 <Form.Control
                   type='text'
-                  placeholder='ຖານຂໍ້ມູນ, ບົດຄົ້ນຄ້ວາ'
+                  placeholder='database, javaScript, ...'
                   name='keyword'
                   value={values.keyword}
                   onChange={handleChange}
@@ -73,7 +73,7 @@ const DocumentSearch = ({showSearchView, _handleSearchViewClose, onSearch}) => {
                   confirm
                   onClick={handleSubmit}
                   width='100%'
-                  title='ຄົ້ນຫາ'
+                  title='Search'
                 />
               </div>
             </div>

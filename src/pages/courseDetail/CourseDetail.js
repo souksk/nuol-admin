@@ -58,12 +58,12 @@ function CourseDetail() {
       {/* Breadcrumb */}
       <Breadcrumb>
         <Breadcrumb.Item onClick={() => history.push('/course-list')}>
-          ຈັດການວິຊາ
+          Course Management
         </Breadcrumb.Item>
         <Breadcrumb.Item onClick={() => history.push('/course-list')}>
-          ວິຊາທັງຫມົດ
+          All Courses
         </Breadcrumb.Item>
-        <Breadcrumb.Item active>ລາຍລະອຽດວິຊາ</Breadcrumb.Item>
+        <Breadcrumb.Item active>Course Detail</Breadcrumb.Item>
       </Breadcrumb>
 
       <CustomContainer>
@@ -75,7 +75,7 @@ function CourseDetail() {
             alignItems: 'center'
           }}
         >
-          <Title text='ລາຍລະອຽດວິຊາ' />
+          <Title text='COURSE DETAIL' />
 
           {/* Button group */}
           <div>
@@ -92,7 +92,7 @@ function CourseDetail() {
               }}
               onClick={() => _viewDoc(courseData)}
             >
-              ເອກະສານບົດສອນ
+              Documents
             </button>
 
             {/* ແກ້ໃຂ */}
@@ -108,7 +108,7 @@ function CourseDetail() {
               }}
               onClick={() => _edit(courseData)}
             >
-              <FontAwesomeIcon icon='edit' style={{ fontSize: 16 }} /> ແກ້ໃຂ
+              <FontAwesomeIcon icon='edit' style={{ fontSize: 16 }} /> Edit
             </button>
 
             {/* ລຶບ */}
@@ -123,7 +123,7 @@ function CourseDetail() {
               }}
               onClick={() => _delete()}
             >
-              <i className='fa fa-trash' /> ລຶບ
+              <i className='fa fa-trash' /> Delete
             </button>
           </div>
         </div>
@@ -148,7 +148,7 @@ function CourseDetail() {
             }}
           >
             <Row>
-              <Col>ຊື່ວິຊາ</Col>
+              <Col>Course name</Col>
               <Col
                 style={{ color: Consts.FONT_COLOR_PRIMARY, fontWeight: 'bold' }}
               >
@@ -157,7 +157,7 @@ function CourseDetail() {
             </Row>
             <div style={{ height: 10 }} />
             <Row>
-              <Col>ລະຫັດວິຊາ</Col>
+              <Col>Course ID</Col>
               <Col
                 style={{ color: Consts.FONT_COLOR_PRIMARY, fontWeight: 'bold' }}
               >
@@ -166,7 +166,7 @@ function CourseDetail() {
             </Row>
             <div style={{ height: 10 }} />
             <Row>
-              <Col>ຈໍານວນຫນ່ວຍກິດ</Col>
+              <Col>Unit</Col>
               <Col
                 style={{ color: Consts.FONT_COLOR_PRIMARY, fontWeight: 'bold' }}
               >
@@ -177,14 +177,14 @@ function CourseDetail() {
 
           {/* -------- ຄະນະແລະພາກວິຊາ -------- */}
           <div style={{ padding: 20, paddingBottom: 0 }}>
-            <div style={{ fontWeight: "bold" }} style={{ fontWeight: "bold" }} ><FontAwesomeIcon icon='caret-down' style={{ marginRight: 16, marginLeft: -24, fontSize: 24, color: Consts.PRIMARY_COLOR }} />ຄະນະແລະພາກວິຊາ</div>
+            <div style={{ fontWeight: "bold" }} style={{ fontWeight: "bold" }} ><FontAwesomeIcon icon='caret-down' style={{ marginRight: 16, marginLeft: -24, fontSize: 24, color: Consts.PRIMARY_COLOR }} />Faculty and Department</div>
             <div style={{ paddingLeft: 20, fontSize: 14 }}>
               <Row>
-                <Col>ຄະນະ</Col>
+                <Col>Faculty</Col>
                 <Col>{courseData && courseData.faculty && courseData.faculty.name}</Col>
               </Row>
               <Row>
-                <Col>ພາກວິຊາ</Col>
+                <Col>Department</Col>
                 <Col>{courseData && courseData.department && courseData.department.name}</Col>
               </Row>
             </div>
@@ -192,10 +192,10 @@ function CourseDetail() {
 
           {/* -------- ອັບໂຫລດ Syllabus -------- */}
           <div style={{ padding: 20, paddingBottom: 0 }}>
-            <div style={{ fontWeight: "bold" }} ><FontAwesomeIcon icon='caret-down' style={{ marginRight: 16, marginLeft: -24, fontSize: 24, color: Consts.PRIMARY_COLOR }} />ອັບໂຫລດ Syllabus</div>
+            <div style={{ fontWeight: "bold" }} ><FontAwesomeIcon icon='caret-down' style={{ marginRight: 16, marginLeft: -24, fontSize: 24, color: Consts.PRIMARY_COLOR }} />File Syllabus Uploaded</div>
             <div style={{ paddingLeft: 20, fontSize: 14 }}>
               <Row>
-                <Col>ອັບໂຫລດໄຟລ (PDF)</Col>
+                <Col>File upload (PDF)</Col>
                 <Col><a href={courseData && courseData.syllabusFile && courseData.syllabusFile.file}>{courseData && courseData.syllabusFile && courseData.syllabusFile.title}</a></Col>
               </Row>
             </div>

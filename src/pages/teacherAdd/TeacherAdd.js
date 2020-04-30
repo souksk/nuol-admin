@@ -91,13 +91,13 @@ function TeacherAdd() {
       {/* Breadcrumb */}
       <Breadcrumb>
         <Breadcrumb.Item href='' onClick={() => history.push('/teacher-list')}>
-          ຈັດການອາຈານ
+          Teacher Management
         </Breadcrumb.Item>
-        <Breadcrumb.Item active>ເພີ່ມອາຈານ</Breadcrumb.Item>
+        <Breadcrumb.Item active>Add Teacher</Breadcrumb.Item>
       </Breadcrumb>
 
       <CustomContainer>
-        <Title text='ເພີ່ມອາຈານ' />
+        <Title text='ADD TEACHER' />
         <Formik
           initialValues={{
             firstname: '',
@@ -195,7 +195,7 @@ function TeacherAdd() {
                         aria-hidden='true'
                         style={{ marginRight: 5, color: Consts.SECONDARY_COLOR }}
                       />
-                    ຄະນະແລະພາກວິຊາ
+                    Faculty and Department
                   </div>
                     {/* ຄະນະ */}
                     <Form.Group
@@ -208,7 +208,7 @@ function TeacherAdd() {
                       }}
                     >
                       <Form.Label column sm='4' className='text-left'>
-                        ຄະນະ
+                        Faculty
                     </Form.Label>
                       <Col sm='8'>
                         {FACULTY &&
@@ -221,7 +221,7 @@ function TeacherAdd() {
                             name='facalty'
                             value={values.facalty}
                           >
-                            <option disabled={true} value="">---ກະລຸນາເລືອກຄະນະ---</option>
+                            <option disabled={true} value="">---Select faculty---</option>
                             {FACULTY.map((x, index) =>
                               <option key={'faculty' + index} value={x.name}>
                                 {x.name}
@@ -242,7 +242,7 @@ function TeacherAdd() {
                       }}
                     >
                       <Form.Label column sm='4' className='text-left'>
-                        ພາກວິຊາ
+                        Department
                     </Form.Label>
                       <Col sm='8'>
                         <Form.Control
@@ -251,7 +251,7 @@ function TeacherAdd() {
                           value={values.department}
                           onChange={handleChange}
                         >
-                          <option disabled={true} value="">---ກະລຸນາເລືອກພາກວິຊາ---</option>
+                          <option disabled={true} value="">---Select department---</option>
                           {selectFacaltyIndex > -1 &&
                             FACULTY[
                               selectFacaltyIndex
@@ -273,7 +273,7 @@ function TeacherAdd() {
                         aria-hidden='true'
                         style={{ marginRight: 5, color: Consts.SECONDARY_COLOR }}
                       />
-                    ຂໍ້ມູນອາຈານ
+                    Teacher
                   </div>
                     {/* ຊື່ */}
                     <Form.Group
@@ -286,12 +286,12 @@ function TeacherAdd() {
                       }}
                     >
                       <Form.Label column sm='4' className='text-left'>
-                        ຊື່
+                        First name
                     </Form.Label>
                       <Col sm='8'>
                         <Form.Control
                           type='text'
-                          placeholder='ກະລຸນາປ້ອນ'
+                          placeholder='please input...'
                           name='firstname'
                           value={values.firstname}
                           onChange={handleChange}
@@ -314,12 +314,12 @@ function TeacherAdd() {
                       }}
                     >
                       <Form.Label column sm='4' className='text-left'>
-                        ນາມສະກຸນ
+                        Last name
                     </Form.Label>
                       <Col sm='8'>
                         <Form.Control
                           type='text'
-                          placeholder='ກະລຸນາປ້ອນ'
+                          placeholder='please input...'
                           name='lastname'
                           value={values.lastname}
                           onChange={handleChange}
@@ -338,7 +338,7 @@ function TeacherAdd() {
                       }}
                     >
                       <Form.Label column sm='4' className='text-left'>
-                        ວັນເດືອນປີເກີດ</Form.Label>
+                        Birthday</Form.Label>
                       <Col sm='3'>
                         <MuiPickersUtilsProvider utils={DateFnsUtils}>
                           <Grid style={{ marginTop: -15 }} container justify="space-around">
@@ -369,7 +369,7 @@ function TeacherAdd() {
                       onChange={handleChange}
                     >
                       <Form.Label column sm='4' className='text-left'>
-                        ເພດ
+                        Gender
                       </Form.Label>
                       <Col sm='8'>
                         <div style={{ display: 'flex', flexDirection: 'row', width: '100%' }}>
@@ -381,7 +381,7 @@ function TeacherAdd() {
                               checked={values.gender == 'MALE' ? true : false}
                               type="radio"
                             />{'\t'}
-                            <label htmlFor="male">ຊາຍ</label>
+                            <label htmlFor="male">Male</label>
                           </Col>
                           <Col sm={4}>
                             <input
@@ -391,17 +391,7 @@ function TeacherAdd() {
                               checked={values.gender == 'FEMALE' ? true : false}
                               type="radio"
                             />{'\t'}
-                            <label htmlFor="female">ຍິງ</label>
-                          </Col>
-                          <Col sm={4}>
-                            <input
-                              id="other"
-                              value="OTHER"
-                              name="gender"
-                              checked={values.gender == 'OTHER' ? true : false}
-                              type="radio"
-                            />{'\t'}
-                            <label htmlFor="other">ອື່ນໆ</label>
+                            <label htmlFor="female">Famale</label>
                           </Col>
                         </div>
                       </Col>
@@ -420,7 +410,7 @@ function TeacherAdd() {
                       onChange={handleChange}
                     >
                       <Form.Label column sm='4' className='text-left'>
-                        ສະຖານະ
+                        Status
                       </Form.Label>
                       <Col sm='8'>
                         <div style={{ display: 'flex', flexDirection: 'row', width: '100%' }}>
@@ -432,7 +422,7 @@ function TeacherAdd() {
                               checked={values.maritualStatus == 'SINGLE' ? true : false}
                               type="radio"
                             />{'\t'}
-                            <label htmlFor="single">ໂສດ</label>
+                            <label htmlFor="single">Single</label>
                           </Col>
                           <Col sm={4}>
                             <input
@@ -442,7 +432,7 @@ function TeacherAdd() {
                               checked={values.maritualStatus == 'MARRIAGE' ? true : false}
                               type="radio"
                             />{'\t'}
-                            <label htmlFor="marriage">ແຕ່ງງານ</label>
+                            <label htmlFor="marriage">Marriage</label>
                           </Col>
                         </div>
                       </Col>
@@ -459,12 +449,12 @@ function TeacherAdd() {
                       }}
                     >
                       <Form.Label column sm='4' className='text-left'>
-                        ເບີໂທ
+                        Phone number
                     </Form.Label>
                       <Col sm='8'>
                         <Form.Control
                           type='text'
-                          placeholder='ກະລຸນາປ້ອນ'
+                          placeholder='please input...'
                           name='phone'
                           value={values.phone}
                           onChange={handleChange}
@@ -483,12 +473,12 @@ function TeacherAdd() {
                       }}
                     >
                       <Form.Label column sm='4' className='text-left'>
-                        ອີເມວ
+                        E-Mail
                     </Form.Label>
                       <Col sm='8'>
                         <Form.Control
                           type='text'
-                          placeholder='ກະລຸນາປ້ອນ'
+                          placeholder='please input...'
                           name='email'
                           value={values.email}
                           onChange={handleChange}
@@ -505,7 +495,7 @@ function TeacherAdd() {
                         aria-hidden='true'
                         style={{ marginRight: 5, color: Consts.SECONDARY_COLOR }}
                       />
-                    ໄອດີ ແລະ ລະຫັດຜ່ານ
+                    User ID and Password
                   </div>
                     {/* ໄອດີ */}
                     <Form.Group
@@ -518,12 +508,12 @@ function TeacherAdd() {
                       }}
                     >
                       <Form.Label column sm='4' className='text-left'>
-                        ໄອດີ
+                        User ID
                     </Form.Label>
                       <Col sm='8'>
                         <Form.Control
                           type='text'
-                          placeholder='ກະລຸນາປ້ອນ'
+                          placeholder='please input...'
                           name='userId'
                           value={values.userId}
                           onChange={handleChange}
@@ -546,12 +536,12 @@ function TeacherAdd() {
                       }}
                     >
                       <Form.Label column sm='4' className='text-left'>
-                        ລະຫັດຜ່ານ
+                        Password
                     </Form.Label>
                       <Col sm='8'>
                         <Form.Control
                           type='text'
-                          placeholder='ກະລຸນາປ້ອນ'
+                          placeholder='please input...'
                           name='password'
                           value={values.password}
                           onChange={handleChange}
@@ -572,7 +562,7 @@ function TeacherAdd() {
                         aria-hidden='true'
                         style={{ marginRight: 5, color: Consts.SECONDARY_COLOR }}
                       />
-                    ອື່ນໆ
+                    Other
                   </div>
 
                     {/* ລາຍລະອຽດ */}
@@ -586,12 +576,12 @@ function TeacherAdd() {
                       }}
                     >
                       <Form.Label column sm='4' className='text-left'>
-                        ລາຍລະອຽດ
+                        Description
                     </Form.Label>
                       <Col sm='8'>
                         <Form.Control
                           type='text'
-                          placeholder='ກະລຸນາປ້ອນ'
+                          placeholder='please input...'
                           name='description'
                           value={values.description}
                           onChange={handleChange}
@@ -610,12 +600,12 @@ function TeacherAdd() {
                       }}
                     >
                       <Form.Label column sm='4' className='text-left'>
-                        ໝາຍເຫດ
+                        Note
                     </Form.Label>
                       <Col sm='8'>
                         <Form.Control
                           type='text'
-                          placeholder='ກະລຸນາປ້ອນ'
+                          placeholder='please input...'
                           name='note'
                           value={values.note}
                           onChange={handleChange}
@@ -636,12 +626,12 @@ function TeacherAdd() {
                   }}
                 >
                   <div style={{ marginRight: 80 }}>
-                    <CustomButton title='ຍົກເລີກ' onClick={() => _cancel()} />
+                    <CustomButton title='Cancel' onClick={() => _cancel()} />
                   </div>
 
                   <CustomButton
                     confirm
-                    title='ເພີ່ມອາຈານ'
+                    title='Add'
                     onClick={handleSubmit}
                     type='submit'
                   />

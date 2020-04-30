@@ -26,7 +26,7 @@ const CalendaDeleteConfirm = ({ showDeleteConfirmView, _handleDeleteConfirmViewC
 						fontWeight: 'bold'
 					}}
 				>
-					ຕ້ອງການລຶບຕາຕະລາງຂອງ?
+					Do you want delete this calenda?
 				</Modal.Title>
 
 				<p className="text-center">{data ? (data.course ? data.course.title : '') : ''}</p>
@@ -43,7 +43,7 @@ const CalendaDeleteConfirm = ({ showDeleteConfirmView, _handleDeleteConfirmViewC
 								borderColor: Consts.DELETE_COLOR_BUTTON
 							}}
 						>
-							ຍົກເລີກ
+							Cancel
 						</Button>
 					</div>
 					<div style={{ padding: 15 }} className="col">
@@ -56,7 +56,7 @@ const CalendaDeleteConfirm = ({ showDeleteConfirmView, _handleDeleteConfirmViewC
 							}}
 							onClick={() => _deleteCalenda()}
 						>
-							ລຶບ
+							Delete
 						</Button>
 					</div>
 				</div>

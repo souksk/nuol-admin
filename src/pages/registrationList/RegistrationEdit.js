@@ -97,7 +97,7 @@ function RegistrationEdit({
         size='lg'
       >
         <Modal.Title style={{ textAlign: 'center', paddingTop: 20 }}>
-          <b>ແກ້ໄຂການລົງທະບຽນວິຊາ</b>
+          <b>REGISTRATION EDIT</b>
         </Modal.Title>
         <Modal.Body style={{ marginLeft: 50, marginRight: 50, padding: 50 }}>
 
@@ -132,14 +132,14 @@ function RegistrationEdit({
                       style={{ margin: 0, marginBottom: 10 }}
                     >
                       <Form.Label column sm='4' className='text-left'>
-                        ເລືອກນັກສຶກສາ
+                        Student
                       </Form.Label>
                       <Col sm='8'>
                         <Form.Control as='select' name="userId"
                           onChange={handleChange}
                           value={values.userId}
                           isInvalid={!!errors.userId}>
-                          <option disabled={true} value="">---ກະລຸນາເລືອກນັກສຶກສາ---</option>
+                          <option disabled={true} value="">---Select Student---</option>
                           {usersData.users && usersData.users.map((x, index) => <option key={"userId" + index} value={x.userId}>{x.firstname + ' ' + (x.lastname ? x.lastname : '')}</option>)}
                         </Form.Control>
                       </Col>
@@ -152,14 +152,14 @@ function RegistrationEdit({
                       style={{ margin: 0, marginBottom: 10 }}
                     >
                       <Form.Label column sm='4' className='text-left'>
-                        ເລືອກວິຊາ
+                        Course
                       </Form.Label>
                       <Col sm='8'>
                         <Form.Control as='select' name="courseCode"
                           onChange={handleChange}
                           value={values.courseCode}
                           isInvalid={!!errors.courseCode}>
-                          <option disabled={true} value="">---ກະລຸນາເລືອກວິຊາ---</option>
+                          <option disabled={true} value="">---Select course---</option>
                           {coursesData.courses && coursesData.courses.map((x, index) => <option key={"courseCode" + index} value={x.courseCode}>{x.title}</option>)}
                         </Form.Control>
                       </Col>
@@ -172,9 +172,9 @@ function RegistrationEdit({
                       style={{ margin: 0, marginBottom: 10 }}
                     >
                       <Form.Label column sm='4' className='text-left'>
-                        ໝາຍເຫດ</Form.Label>
+                        Description</Form.Label>
                       <Col sm='8'>
-                        <Form.Control type='text' placeholder='ກະລຸນາປ້ອນ' name="note"
+                        <Form.Control type='text' placeholder='please input...' name="note"
                           value={values.note}
                           onChange={handleChange}
                           isInvalid={!!errors.note} />
@@ -193,7 +193,7 @@ function RegistrationEdit({
                           borderColor: Consts.SECONDARY_COLOR
                         }}
                       >
-                        ຍົກເລີກ
+                        Cancel
                       </Button>
                     </div>
                     <div style={{ padding: 15 }} className='col'>
@@ -206,7 +206,7 @@ function RegistrationEdit({
                         }}
                         onClick={handleSubmit}
                       >
-                        ລົງທະບຽນ
+                        Edit
                       </Button>
                     </div>
                   </div>

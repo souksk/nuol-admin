@@ -86,9 +86,9 @@ const CourseDocList = () => {
     <div>
       {/* Breadcrumb */}
       <Breadcrumb>
-        <Breadcrumb.Item href='/course-list'>ຈັດການວິຊາ</Breadcrumb.Item>
-        <Breadcrumb.Item href='/course-list'>ວິຊາທັງຫມົດ</Breadcrumb.Item>
-        <Breadcrumb.Item active>ເອກະສານບົດສອນ</Breadcrumb.Item>
+        <Breadcrumb.Item href='/course-list'>Course Management</Breadcrumb.Item>
+        <Breadcrumb.Item href='/course-list'>All Course</Breadcrumb.Item>
+        <Breadcrumb.Item active>Course's Documents</Breadcrumb.Item>
       </Breadcrumb>
 
       {/* Container */}
@@ -102,7 +102,7 @@ const CourseDocList = () => {
             alignItems: 'center'
           }}
         >
-          <Title text='ເອກະສານບົດສອນ' />
+          <Title text="COURSE'S DOCUMENTS" />
 
           {/* Button group */}
           <div>
@@ -120,7 +120,7 @@ const CourseDocList = () => {
               }}
               onClick={() => _courseDetail()}
             >
-              ລາຍລະອຽດວິຊາ
+              Course Detail
             </button>
 
             {/* ອັບໂຫລດບົດສອນ */}
@@ -137,14 +137,14 @@ const CourseDocList = () => {
               onClick={() => _uploadFile()}
             >
               <FontAwesomeIcon icon='download' style={{ fontSize: 16 }} />{' '}
-              ອັບໂຫລດບົດສອນ
+              Upload Document
             </button>
           </div>
         </div>
 
         {/* -------- ຂໍ້ມູນວິຊາ ----------- */}
         <div style={{ marginTop: 10 }}>
-          <div>ຂໍ້ມູນວິຊາ</div>
+          <div>About Course</div>
           {/* ------ detail box ------ */}
           <div
             style={{
@@ -159,7 +159,7 @@ const CourseDocList = () => {
             }}
           >
             <Row>
-              <Col>ຊື່ວິຊາ</Col>
+              <Col>Course name</Col>
               <Col
                 style={{ color: Consts.FONT_COLOR_PRIMARY, fontWeight: 'bold' }}
               >
@@ -168,7 +168,7 @@ const CourseDocList = () => {
             </Row>
             <div style={{ height: 10 }} />
             <Row>
-              <Col>ລະຫັດວິຊາ</Col>
+              <Col>Course ID</Col>
               <Col
                 style={{ color: Consts.FONT_COLOR_PRIMARY, fontWeight: 'bold' }}
               >
@@ -177,7 +177,7 @@ const CourseDocList = () => {
             </Row>
             <div style={{ height: 10 }} />
             <Row>
-              <Col>ຈໍານວນຫນ່ວຍກິດ</Col>
+              <Col>Unit</Col>
               <Col
                 style={{ color: Consts.FONT_COLOR_PRIMARY, fontWeight: 'bold' }}
               >
@@ -189,7 +189,7 @@ const CourseDocList = () => {
 
         {/* ------ ເອກະສານທີ່ຖືກອັບໂຫລດ -------- */}
         <div style={{ marginTop: 20, marginBottom: 10 }}>
-          ເອກະສານທີ່ຖືກອັບໂຫລດ
+          Course's documents
         </div>
 
         {/* ---------- table --------- */}
@@ -197,11 +197,11 @@ const CourseDocList = () => {
           <table border='1' bordercolor='#fff' style={{ width: '100%' }}>
             <thead>
               <TableHeader>
-                <th>ລຳດັບ</th>
-                <th style={{width: 220}}>ຫົວຂໍ້</th>
-                <th>ໄຟລ</th>
-                <th>ອັບເດດ</th>
-                <th style={{width: 180}}>ຈັດການ</th>
+                <th style={{width:60}}>#</th>
+                <th style={{width: 220}}>FILE TITLE</th>
+                <th>FILE NAME</th>
+                <th>UPDATED AT</th>
+                <th style={{width: 180}}>ACTIONS</th>
               </TableHeader>
             </thead>
             <tbody>
@@ -217,7 +217,7 @@ const CourseDocList = () => {
                     <TableCell>{index + 1}</TableCell>
                     <TableCell>{x.title}</TableCell>
                     <TableCell><a href={x.file}>{x.file}</a></TableCell>
-                    <TableCell>{moment(new Date(x.createdAt)).format("LLL")}</TableCell>
+                    <TableCell>{new Date(x.createdAt).toLocaleString()}</TableCell>
                     <TableCell>
                       <div
                         style={{

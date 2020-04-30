@@ -52,16 +52,13 @@ function StudentDetail() {
     let result
     switch (gender) {
       case 'MALE':
-        result = 'ຊາຍ'
+        result = 'Male'
         break;
       case 'FEMALE':
-        result = 'ຍິງ'
-        break;
-      case 'OTHER':
-        result = 'ອື່ນໆ'
+        result = 'Famale'
         break;
       default:
-        result = 'ຊາຍ'
+        result = 'Male'
     }
     return result
   }
@@ -70,13 +67,13 @@ function StudentDetail() {
     let result
     switch (maritualStatus) {
       case 'SINGLE':
-        result = 'ໂສດ'
+        result = 'Single'
         break;
       case 'MARRIAGE':
-        result = 'ແຕ່ງງານແລ້ວ'
+        result = 'Marriage'
         break;
       default:
-        result = 'ໂສດ'
+        result = 'Single'
     }
     return result
   }
@@ -86,12 +83,12 @@ function StudentDetail() {
       {/* Breadcrumb */}
       <Breadcrumb>
         <Breadcrumb.Item onClick={() => history.push('/student-list')}>
-          ຈັດການນັກຮຽນ
+          Student Management
         </Breadcrumb.Item>
         <Breadcrumb.Item onClick={() => history.push('/student-list')}>
-          ລາຍຊື່ນັກຮຽນທັງໝົດ
+          All Students
         </Breadcrumb.Item>
-        <Breadcrumb.Item active>ລາຍລະອຽດນັກຮຽນ</Breadcrumb.Item>
+        <Breadcrumb.Item active>Student Detail</Breadcrumb.Item>
       </Breadcrumb>
       <CustomContainer>
         <div
@@ -102,7 +99,7 @@ function StudentDetail() {
             alignItems: 'center'
           }}
         >
-          <Title text='ລາຍລະອຽດນັກຮຽນ' />
+          <Title text='STUDENT DETAIL' />
 
           {/* Button group */}
           <div>
@@ -119,7 +116,7 @@ function StudentDetail() {
               }}
               onClick={() => _edit()}
             >
-              <FontAwesomeIcon icon='edit' style={{ fontSize: 16 }} /> ແກ້ໄຂ
+              <FontAwesomeIcon icon='edit' style={{ fontSize: 16 }} /> Edit
             </button>
 
             {/* ລຶບ */}
@@ -134,7 +131,7 @@ function StudentDetail() {
               }}
               onClick={() => _delete()}
             >
-              <i className='fa fa-trash' /> ລຶບ
+              <i className='fa fa-trash' /> Delete
             </button>
           </div>
         </div>
@@ -151,18 +148,18 @@ function StudentDetail() {
 
           {/* -------- ຄະນະແລະພາກວິຊາ -------- */}
           <div style={{ padding: 20, paddingBottom: 0 }}>
-            <div style={{ fontWeight: "bold" }}><FontAwesomeIcon icon='caret-down' style={{ marginRight: 16, marginLeft: -24, fontSize: 24, color: Consts.PRIMARY_COLOR }} />ຄະນະແລະພາກວິຊາ</div>
+            <div style={{ fontWeight: "bold" }}><FontAwesomeIcon icon='caret-down' style={{ marginRight: 16, marginLeft: -24, fontSize: 24, color: Consts.PRIMARY_COLOR }} />Faculty and Department</div>
             <div style={{ paddingLeft: 20, fontSize: 14 }}>
               <Row>
-                <Col>ຄະນະ</Col>
+                <Col>Faculty</Col>
                 <Col>{(studentData && studentData.faculty && studentData.faculty.name) ? studentData && studentData.faculty && studentData.faculty.name : '-'}</Col>
               </Row>
               <Row>
-                <Col>ພາກວິຊາ</Col>
+                <Col>Department</Col>
                 <Col>{(studentData && studentData.department && studentData.department.name) ? studentData && studentData.department && studentData.department.name : '-'}</Col>
               </Row>
               <Row>
-                <Col>ປີຮຽນ</Col>
+                <Col>Year level</Col>
                 <Col>{studentData && (studentData.yearLevel ? studentData.yearLevel : '-')}</Col>
               </Row>
             </div>
@@ -170,40 +167,40 @@ function StudentDetail() {
 
           {/* -------- ຂໍ້ມູນນັກຮຽນ -------- */}
           <div style={{ padding: 20, paddingBottom: 0 }}>
-            <div style={{ fontWeight: "bold" }}><FontAwesomeIcon icon='caret-down' style={{ marginRight: 16, marginLeft: -24, fontSize: 24, color: Consts.PRIMARY_COLOR }} />ຂໍ້ມູນນັກຮຽນ</div>
+            <div style={{ fontWeight: "bold" }}><FontAwesomeIcon icon='caret-down' style={{ marginRight: 16, marginLeft: -24, fontSize: 24, color: Consts.PRIMARY_COLOR }} />Student</div>
             <div style={{ paddingLeft: 20, fontSize: 14 }}>
               <Row>
-                <Col>ຊື່</Col>
+                <Col>First name</Col>
                 <Col>{studentData && (studentData.firstname ? studentData.firstname : '-')}</Col>
               </Row>
               <Row>
-                <Col>ນາມສະກຸນ</Col>
+                <Col>Last name</Col>
                 <Col>{studentData && (studentData.lastname ? studentData.lastname : '-')}</Col>
               </Row>
               <Row>
-                <Col>ວັນເດືອນປີເກີດ</Col>
+                <Col>Birthday</Col>
                 <Col>
                   {studentData && (studentData.birthday ? new Date(studentData.birthday).toLocaleDateString() : '-')}
                 </Col>
               </Row>
               <Row>
-                <Col>ເພດ</Col>
+                <Col>Gender</Col>
                 <Col>
                   {studentData && (studentData.gender ? _onConvertGenter(studentData.gender) : '-')}
                 </Col>
               </Row>
               <Row>
-                <Col>ສະຖານະ</Col>
+                <Col>Status</Col>
                 <Col>
                   {studentData && (studentData.maritualStatus ? _onConvertMaritualStatus(studentData.maritualStatus) : '-')}
                 </Col>
               </Row>
               <Row>
-                <Col>ເບີໂທ</Col>
+                <Col>Phone number</Col>
                 <Col>{studentData && (studentData.phone ? studentData.phone : '-')}</Col>
               </Row>
               <Row>
-                <Col>ອີເມວ</Col>
+                <Col>E-Mail</Col>
                 <Col>{studentData && (studentData.email ? studentData.email : '-')}</Col>
               </Row>
             </div>
@@ -211,14 +208,14 @@ function StudentDetail() {
 
           {/* -------- ໄອດີແລະລະຫັດຜ່ານ -------- */}
           <div style={{ padding: 20, paddingBottom: 0 }}>
-            <div style={{ fontWeight: "bold" }}><FontAwesomeIcon icon='caret-down' style={{ marginRight: 16, marginLeft: -24, fontSize: 24, color: Consts.PRIMARY_COLOR }} />ໄອດີ ແລະ ລະຫັດຜ່ານ</div>
+            <div style={{ fontWeight: "bold" }}><FontAwesomeIcon icon='caret-down' style={{ marginRight: 16, marginLeft: -24, fontSize: 24, color: Consts.PRIMARY_COLOR }} />User ID and Password</div>
             <div style={{ paddingLeft: 20, fontSize: 14 }}>
               <Row>
-                <Col>ໄອດີ</Col>
+                <Col>User ID</Col>
                 <Col>{studentData && (studentData.userId ? studentData.userId : '-')}</Col>
               </Row>
               <Row>
-                <Col>ລະຫັດຜ່ານ</Col>
+                <Col>Password</Col>
                 <Col>********</Col>
               </Row>
             </div>
@@ -229,11 +226,11 @@ function StudentDetail() {
             <div style={{ fontWeight: "bold" }}><FontAwesomeIcon icon='caret-down' style={{ marginRight: 16, marginLeft: -24, fontSize: 24, color: Consts.PRIMARY_COLOR }} />ອື່ນໆ</div>
             <div style={{ paddingLeft: 20, fontSize: 14 }}>
               <Row>
-                <Col>ລາຍລະອຽດ</Col>
+                <Col>Description</Col>
                 <Col>{studentData && (studentData.description ? studentData.description : '-')}</Col>
               </Row>
               <Row>
-                <Col>ໝາຍເຫດ</Col>
+                <Col>Note</Col>
                 <Col>{studentData && (studentData.note ? studentData.note : '-')}</Col>
               </Row>
             </div>

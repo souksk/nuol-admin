@@ -45,7 +45,7 @@ const DocumentUpload = ({ showUploadView, _handleUploadViewClose }) => {
 
     const _fileUploaded = acceptedFiles.map(file => (
         <li key={file.path}>
-            {file.path} ຂະຫນາດ: {file.size} bytes
+            {file.path} size: {file.size} bytes
         </li>
     ));
 
@@ -83,7 +83,7 @@ const DocumentUpload = ({ showUploadView, _handleUploadViewClose }) => {
                     }
                 };
                 // //console.log("paramQL: ", paramQL)
-                createFile({ variables: paramQL }).then((x) => {
+                createFile({ variables: paramQL }).then(() => {
                     _handleUploadViewClose();
                     window.location.reload(true)
                 }).catch((err) => {
@@ -92,7 +92,7 @@ const DocumentUpload = ({ showUploadView, _handleUploadViewClose }) => {
                 })
 
             }
-        }else{
+        } else {
             setErrFile('ກະລຸນາຕື່ມໄຟລ!')
         }
 
@@ -104,7 +104,7 @@ const DocumentUpload = ({ showUploadView, _handleUploadViewClose }) => {
     return (
         <Modal show={showUploadView} onHide={_handleUploadViewClose} size='lg'>
             <Modal.Title style={{ textAlign: 'center', paddingTop: 20 }}>
-                ອັບໂຫລດເອກະສານ
+                UPLOAD NEW DOCUMENT
             </Modal.Title>
 
             <Modal.Body style={{ marginLeft: 50, marginRight: 50, padding: 50 }}>
@@ -112,6 +112,7 @@ const DocumentUpload = ({ showUploadView, _handleUploadViewClose }) => {
                     initialValues={{
                         keyword: '',
                         title: '',
+                        description: '',
                         cate: 'RESEARCH',
                         type: "PUBLIC_FILE"
                     }}
@@ -132,6 +133,7 @@ const DocumentUpload = ({ showUploadView, _handleUploadViewClose }) => {
                                 },
                                 cate: values.cate,
                                 type: values.type,
+                                description: values.description
                             }
                         }
                         // //console.log("paramQL: ", paramQL)
@@ -154,19 +156,18 @@ const DocumentUpload = ({ showUploadView, _handleUploadViewClose }) => {
 
                                     <Form.Group
                                         as={Row}
-                                        controlId='formPlaintextEmail'
                                         style={{ margin: 0, marginBottom: 10 }}
                                     >
                                         <Form.Label column sm='4' className='text-left'>
-                                            ປະເພດເອກະສານ</Form.Label>
+                                        File type</Form.Label>
                                         <Col sm='8'>
                                             <Form.Control as='select' name="cate"
                                                 value={values.cate}
                                                 onChange={handleChange}
                                                 isInvalid={!!errors.cate}>
-                                                <option value="RESEARCH">ບົດຄົ້ນຄ້ວາ</option>
-                                                <option value="SPECIFIC">ວິຊາສະເພາະ</option>
-                                                <option value="GENERAL">ຄວາມຮູ້ທົ່ວໄປ</option>
+                                                <option value="RESEARCH">Research</option>
+                                                <option value="SPECIFIC">Specific</option>
+                                                <option value="GENERAL">General</option>
                                             </Form.Control>
                                         </Col>
                                     </Form.Group>
@@ -174,13 +175,12 @@ const DocumentUpload = ({ showUploadView, _handleUploadViewClose }) => {
 
                                     <Form.Group
                                         as={Row}
-                                        controlId='formPlaintextEmail'
                                         style={{ margin: 0, marginBottom: 10 }}
                                     >
                                         <Form.Label column sm='4' className='text-left'>
-                                            ຊື່ເອກະສານ</Form.Label>
+                                            File name</Form.Label>
                                         <Col sm='8'>
-                                            <Form.Control type='text' placeholder='ກະລຸນາປ້ອນ' name="title"
+                                            <Form.Control type='text' placeholder='please input...' name="title"
                                                 value={values.title}
                                                 onChange={handleChange}
                                                 isInvalid={!!errors.title} />
@@ -190,16 +190,34 @@ const DocumentUpload = ({ showUploadView, _handleUploadViewClose }) => {
 
                                     <Form.Group
                                         as={Row}
-                                        controlId='formPlaintextEmail'
                                         style={{ margin: 0, marginBottom: 10 }}
                                     >
                                         <Form.Label column sm='4' className='text-left'>
                                             keyword</Form.Label>
                                         <Col sm='8'>
-                                            <Form.Control type='text' placeholder='ກະລຸນາປ້ອນ (ຂັ້ນດ້ວຍ",")' name="keyword"
+                                            <Form.Control type='text' placeholder='please input... (Step by ",")' name="keyword"
                                                 value={values.keyword}
                                                 onChange={handleChange}
                                                 isInvalid={!!errors.keyword} />
+                                        </Col>
+                                    </Form.Group>
+
+                                    <Form.Group
+                                        as={Row}
+                                        style={{ margin: 0, marginBottom: 10 }}
+                                    >
+                                        <Form.Label column sm='4' className='text-left'>
+                                            Description
+                                        </Form.Label>
+                                        <Col sm='8'>
+                                            <Form.Control
+                                                as='textarea' rows='3'
+                                                name='description'
+                                                value={values.description}
+                                                onChange={handleChange}
+                                                placeholder="please input..."
+                                                isInvalid={!!errors.description}
+                                            />
                                         </Col>
                                     </Form.Group>
 
@@ -211,7 +229,7 @@ const DocumentUpload = ({ showUploadView, _handleUploadViewClose }) => {
                                         }}
                                     >
                                         <Form.Label column sm='4' className='text-left'>
-                                            ອັບໂຫລດໄຟລ</Form.Label>
+                                            File upload</Form.Label>
                                         <Col sm='8'>
                                             <div
                                                 {...getRootProps()}
@@ -239,18 +257,18 @@ const DocumentUpload = ({ showUploadView, _handleUploadViewClose }) => {
                                                         src='/assets/download.png'
                                                     />
                                                 </div>
-                                                <span>ໂຍນໄຟລທີ່ຕ້ອງການອັບໂຫລດໃສ່ນີ້</span>
+                                                <span>Drag or import file to here</span>
                                                 {(acceptedFiles.length == 0 && errFile) ? <p style={{ color: 'red', fontSize: 14, marginTop: 10 }}>{errFile}</p> : ''}
                                             </div>
                                             {acceptedFiles.length > 0 && <aside>
-                                                <h4>ໄຟລທີ່ຈະອັບໂຫລດ</h4>
+                                                <h4>File to upload</h4>
                                                 <ul>{_fileUploaded}</ul>
                                             </aside>}
                                         </Col>
                                     </Form.Group>
 
                                     {fileUploadProgress > 0 && fileUploadProgress < 100 && <div>
-                                        <h3>ກໍາລັງອັບໂຫລດໄຟລເອກະສານ....</h3>
+                                        <h3>File loading....</h3>
                                         <ProgressBar animated now={fileUploadProgress} label={`${fileUploadProgress}%`} />
                                     </div>
                                     }
@@ -268,7 +286,7 @@ const DocumentUpload = ({ showUploadView, _handleUploadViewClose }) => {
                                                 borderColor: Consts.SECONDARY_COLOR
                                             }}
                                         >
-                                            ຍົກເລີກ
+                                            Cancel
                                         </Button>
                                     </div>
                                     <div style={{ padding: 15 }} className='col'>
@@ -281,7 +299,7 @@ const DocumentUpload = ({ showUploadView, _handleUploadViewClose }) => {
                                             }}
                                             onClick={handleSubmit}
                                         >
-                                            ອັບໂຫລດ
+                                            Upload
                                         </Button>
                                     </div>
                                 </div>

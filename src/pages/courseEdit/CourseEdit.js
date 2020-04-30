@@ -169,13 +169,13 @@ function CourseEdit() {
       {/* Breadcrumb */}
       <Breadcrumb>
         <Breadcrumb.Item href='' onClick={() => history.push('/course-list')}>
-          ຈັດການວິຊາ
+          Course Management
         </Breadcrumb.Item>
-        <Breadcrumb.Item active>ແກ້ໃຂວິຊາ</Breadcrumb.Item>
+        <Breadcrumb.Item active>Edit Course</Breadcrumb.Item>
       </Breadcrumb>
 
       <CustomContainer>
-        <Title text='ແກ້ໃຂວິຊາ' />
+        <Title text='EDIT COURSE' />
 
         {courseData && <Formik
           initialValues={{
@@ -248,7 +248,7 @@ function CourseEdit() {
                           aria-hidden='true'
                           style={{ marginRight: 5, color: Consts.SECONDARY_COLOR }}
                         />
-                      ຄະນະແລະພາກວິຊາ
+                      Faculty and Department
                     </div>
                       {/* ຄະນະ */}
                       {FACULTY && <Form.Group
@@ -261,7 +261,7 @@ function CourseEdit() {
                         }}
                       >
                         <Form.Label column sm='4' className='text-left'>
-                          ຄະນະ</Form.Label>
+                        Faculty</Form.Label>
                         <Col sm='8'>
                           <Form.Control as='select' name="faculty"
                             onChange={(e) => {
@@ -270,7 +270,7 @@ function CourseEdit() {
                             }}
                             value={values.faculty}
                             isInvalid={!!errors.faculty}>
-                            <option disabled={true} value="">---ກະລຸນາເລືອກຄະນະ---</option>
+                            <option disabled={true} value="">---Select faculty---</option>
                             {FACULTY.map((x, index) => <option key={"faculty" + index} value={x.name}>{x.name}</option>)}
                           </Form.Control>
                         </Col>
@@ -287,13 +287,13 @@ function CourseEdit() {
                         }}
                       >
                         <Form.Label column sm='4' className='text-left'>
-                          ພາກວິຊາ</Form.Label>
+                        Department</Form.Label>
                         <Col sm='8'>
                           <Form.Control as='select' name="department"
                             value={values.department}
                             onChange={handleChange}
                             isInvalid={!!errors.department}>
-                            <option disabled={true} value="">---ກະລຸນາເລືອກພາກວິຊາ---</option>
+                            <option disabled={true} value="">---Select Department---</option>
                             {selectFacultyIndex > -1 && FACULTY[selectFacultyIndex].departments.map((x, index) => <option key={"faculty" + index}>{x.name}</option>)}
                           </Form.Control>
                         </Col>
@@ -308,7 +308,7 @@ function CourseEdit() {
                           aria-hidden='true'
                           style={{ marginRight: 5, color: Consts.SECONDARY_COLOR }}
                         />
-                      ຂໍ້ມູນວິຊາ
+                      Course
                     </div>
                       {/* ຊື່ວິຊາ */}
                       <Form.Group
@@ -321,7 +321,7 @@ function CourseEdit() {
                         }}
                       >
                         <Form.Label column sm='4' className='text-left'>
-                          ຊື່ວິຊາ</Form.Label>
+                          Course name</Form.Label>
                         <Col sm='8'>
                           <Form.Control type='text' placeholder='ກະລຸນາປ້ອນ' name="title"
                             value={values.title}
@@ -344,9 +344,9 @@ function CourseEdit() {
                         }}
                       >
                         <Form.Label column sm='4' className='text-left'>
-                          ລະຫັດວິຊາ</Form.Label>
+                          Course ID</Form.Label>
                         <Col sm='8'>
-                          <Form.Control type='text' placeholder='ກະລຸນາປ້ອນ' name="courseCode"
+                          <Form.Control disabled={true} type='text' placeholder='ກະລຸນາປ້ອນ' name="courseCode"
                             value={values.courseCode}
                             onChange={handleChange}
                             isInvalid={!!errors.courseCode} />
@@ -367,12 +367,12 @@ function CourseEdit() {
                         }}
                       >
                         <Form.Label column sm='4' className='text-left'>
-                          ຈໍານວນຫນ່ວຍກິດ</Form.Label>
+                          Unit</Form.Label>
                         <Col sm='8'>
                           <Form.Control as='select' name="unit"
                             value={values.unit}
                             onChange={handleChange}>
-                            <option disabled={true} value="0">---ກະລຸນາເລືອກຈໍານວນຫນ່ວຍກິດ---</option>
+                            <option disabled={true} value="0">---Select unit---</option>
                             <option>1</option>
                             <option>2</option>
                             <option>3</option>
@@ -392,7 +392,7 @@ function CourseEdit() {
                           aria-hidden='true'
                           style={{ marginRight: 5, color: Consts.SECONDARY_COLOR }}
                         />
-                      ຄໍາອະທິບາຍ
+                      Description
                     </div>
                       {/* ເນື້ອໃນຂອງວິຊາ */}
                       <Form.Group
@@ -405,7 +405,7 @@ function CourseEdit() {
                         }}
                       >
                         <Form.Label column sm='4' className='text-left'>
-                          ເນື້ອໃນຂອງວິຊາ
+                        Description
                       </Form.Label>
                         <Col sm='8'>
                           <Form.Control as='textarea' rows='3' name="description"
@@ -423,7 +423,7 @@ function CourseEdit() {
                           aria-hidden='true'
                           style={{ marginRight: 5, color: Consts.SECONDARY_COLOR }}
                         />
-                      ອັບໂຫລດ
+                      File
                     </div>
                       {/* ອັບໂຫລດໄຟລ */}
                       <Form.Group
@@ -436,7 +436,7 @@ function CourseEdit() {
                         }}
                       >
                         <Form.Label column sm='4' className='text-left'>
-                          ອັບໂຫລດໄຟລ
+                          File upload
                       </Form.Label>
                         <Col sm='8'>
                           <div
@@ -467,10 +467,10 @@ function CourseEdit() {
                                 :
                                 <p style={{ height: 40, paddingTop: 10 }}>{courseData.syllabusFile.title}</p>}
                             </div>
-                            <span>ໂຍນໄຟລທີ່ຕ້ອງການອັບໂຫລດໃສ່ນີ້</span>
+                            <span>Drag or select file to here</span>
                           </div>
                           {acceptedFiles.length > 0 && <aside>
-                            <h4>ໄຟລທີ່ຈະອັບໂຫລດ</h4>
+                            <h4>File to upload</h4>
                             <ul>{fileUploaded}</ul>
                           </aside>}
                         </Col>
@@ -484,7 +484,7 @@ function CourseEdit() {
 
 
                     {fileUploadProgress > 0 && fileUploadProgress < 100 && <div>
-                      <h3>ກໍາລັງອັບໂຫລດໄຟລເອກະສານ....</h3>
+                      <h3>File uploading....</h3>
                       <ProgressBar animated now={fileUploadProgress} label={`${fileUploadProgress}%`} />
                     </div>
                     }
@@ -502,10 +502,10 @@ function CourseEdit() {
                     }}
                   >
                     <div style={{ marginRight: 80 }}>
-                      <CustomButton title='ຍົກເລີກ' onClick={() => _cancel()} />
+                      <CustomButton title='Cancel' onClick={() => _cancel()} />
                     </div>
 
-                    <CustomButton confirm title='ແກ້ໄຂວິຊາ' onClick={handleSubmit} />
+                    <CustomButton confirm title='Edit' onClick={handleSubmit} />
                   </div>
 
                 </div>

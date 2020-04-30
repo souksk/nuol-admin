@@ -87,7 +87,7 @@ function Login() {
 						}}
 					>
 						<h2>
-							<b>ກະລຸນາລ໋ອກອິນເພື່ອເຂົ້າໃຊ້ລະບົບ</b>
+							<b>LOGIN TO ADMIN SITE</b>
 						</h2>
 						<Form noValidate style={{ width: '100%', paddingTop: 32 }}>
 							<Form.Group as={Row} controlId="formPlaintextEmail">
@@ -99,9 +99,9 @@ function Login() {
 										type="text"
 										value={userId}
 										onChange={(e) => _handleChangeUserId(e)}
-										placeholder="ໄອດີ"
+										placeholder="User ID"
 									/>
-									{!userIdStatus ? <p style={{ color: 'red', fontSize: 14 }}>ກະລຸນາປ້ອນໄອດີ</p> : ''}
+									{!userIdStatus ? <p style={{ color: 'red', fontSize: 14 }}>please input your user ID</p> : ''}
 								</Col>
 							</Form.Group>
 
@@ -114,10 +114,10 @@ function Login() {
 										type="password"
 										onChange={(e) => _handleChangePassword(e)}
 										value={password}
-										placeholder="ລະຫັດຜ່ານ"
+										placeholder="Password"
 									/>
 									{!passwordStatus ? (
-										<p style={{ color: 'red', fontSize: 14 }}>ກະລຸນາປ້ອນລະຫັດຜ່ານ</p>
+										<p style={{ color: 'red', fontSize: 14 }}>please input your password</p>
 									) : (
 										''
 									)}
@@ -129,7 +129,7 @@ function Login() {
 								<Form.Label column sm="10">
 									{!loginStatus ? (
 										<p style={{ color: 'red', fontSize: 14, marginLeft: 24 }}>
-											* ໄອດີ ຫຼື ລະຫັດຜ່ານບໍ່ຖືກຕ້ອງ, ກະລຸນາລອງໃໝ່ອີກຄັ້ງ
+											* User ID or password is wrong, please try again
 										</p>
 									) : (
 										''
@@ -156,7 +156,7 @@ function Login() {
 										fontSize: 20
 									}}
 								>
-									ລ໊ອກອິນ
+									LOGIN
 								</div>
 								<div
 									style={{

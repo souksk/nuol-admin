@@ -14,6 +14,14 @@ import {
     InputGroup,
     FormControl
 } from 'react-bootstrap'
+import 'date-fns';
+import Grid from '@material-ui/core/Grid';
+import DateFnsUtils from '@date-io/date-fns';
+import {
+    MuiPickersUtilsProvider,
+    KeyboardTimePicker,
+    KeyboardDatePicker,
+} from '@material-ui/pickers';
 import * as yup from 'yup';
 import { Formik } from 'formik';
 import Consts from '../../consts'
@@ -31,13 +39,18 @@ function ProfileEdit() {
     const [showAddConfirmModal, setShowAddConfirmModal] = useState(false)
     const [formParam, setFormParam] = useState({})
     const [userData, setUserData] = useState(null)
-    var [days, setDays] = useState([])
-    var [months, setMonths] = useState([])
-    var [years, setYears] = useState([])
+
+    const [sDate, setSDate] = useState(null);
 
     useEffect(() => {
-        dataBirthday()
-    }, [])
+        if (data.user && data.user.birthday) {
+            handleStartDateChange(new Date(data.user.birthday))
+        }
+    }, [data])
+
+    const handleStartDateChange = (date) => {
+        setSDate(date);
+    };
 
     // Set states
     const _handleShowAddConfirmModalClose = () => setShowAddConfirmModal(false)
@@ -55,28 +68,6 @@ function ProfileEdit() {
         _handleShowAddConfirmModalShow()
     }
 
-    const dataBirthday = () => {
-        var day = []
-        var month = []
-        var year = []
-        for (var i = 1; i <= 31; i++) {
-            day.push(i)
-        }
-        for (var i = 1; i <= 12; i++) {
-            month.push(i)
-        }
-        for (var i = parseInt(new Date().getFullYear()); i >= parseInt(new Date().getFullYear()) - 99; i--) {
-            year.push(i)
-        }
-        setDays(day)
-        setMonths(month)
-        setYears(year)
-    }
-    if (loading) return <p>Loading...</p>
-    var _day = data.user.birthday ? new Date(data.user.birthday).getDate() : ''
-    var _month = data.user.birthday ? (new Date(data.user.birthday).getMonth() + 1) : ''
-    var _year = data.user.birthday ? new Date(data.user.birthday).getFullYear() : ''
-
     return (
         <div>
             {/* Breadcrumb */}
@@ -86,13 +77,13 @@ function ProfileEdit() {
                     window.location.reload(true)
                 }
                 }>
-                    ລາຍລະອຽດສ່ວນຕົວ
+                    My Profile
                 </Breadcrumb.Item>
-                <Breadcrumb.Item active>ແກ້ໄຂຂໍ້ມູນ</Breadcrumb.Item>
+                <Breadcrumb.Item active>Edit profile</Breadcrumb.Item>
             </Breadcrumb>
 
             <CustomContainer>
-                <Title text='ແກ້ໄຂຂໍ້ມູນ' />
+                <Title text='EDIT MY PROFILE' />
                 {userData && <Formik
                     initialValues={{
                         firstname: userData.firstname || "",
@@ -104,25 +95,26 @@ function ProfileEdit() {
                         userId: userData.userId || "",
                         password: userData.password || "",
                         note: userData.note || "",
-                        day: _day ? _day : 0,
-                        month: _month ? _month : 0,
-                        year: _year ? _year : 0,
                     }}
                     validate={values => {
                     }}
                     onSubmit={(values, { setSubmitting }) => {
-                        let birthday = ''
-                        if (values.day != 0 && values.month != 0 && values.year != 0) {
-                            birthday = values.year + '-' + values.month + '-' + values.day
-                        } else {
-                            delete values.day
-                            delete values.month
-                            delete values.year
+                        let birthday
+                        if (sDate) {
+                            birthday = (new Date(sDate).getFullYear()) + '-' + (new Date(sDate).getMonth() + 1) + '-' + (new Date(sDate).getDate())
+                            values = {
+                                ...values, birthday
+                            }
                         }
                         if (!values.password) {
                             delete values.password
                         }
-
+                        if (userData.phone == values.phone) {
+                            delete values.phone
+                        }
+                        if (userData.email == values.email) {
+                            delete values.email
+                        }
                         let data = {
                             ...values, birthday
                         }
@@ -160,7 +152,7 @@ function ProfileEdit() {
                                                 aria-hidden='true'
                                                 style={{ marginRight: 5 }}
                                             />
-                                                ຂໍ້ມູນທົ່ວໄປ
+                                                General
                                             </div>
                                         {/* ຊື່ */}
                                         <Form.Group
@@ -173,10 +165,10 @@ function ProfileEdit() {
                                             }}
                                         >
                                             <Form.Label column sm='4' className='text-left'>
-                                                ຊື່
+                                                First name
                                             </Form.Label>
                                             <Col sm='8'>
-                                                <Form.Control type='text' placeholder='ກະລຸນາປ້ອນ'
+                                                <Form.Control type='text' placeholder='please input...'
                                                     name="firstname"
                                                     value={values.firstname}
                                                     onChange={handleChange}
@@ -195,9 +187,9 @@ function ProfileEdit() {
                                             }}
                                         >
                                             <Form.Label column sm='4' className='text-left'>
-                                                ນາມສະກຸນ</Form.Label>
+                                                Last name</Form.Label>
                                             <Col sm='8'>
-                                                <Form.Control type='text' placeholder='ກະລຸນາປ້ອນ' name="lastname"
+                                                <Form.Control type='text' placeholder='please input...' name="lastname"
                                                     value={values.lastname}
                                                     onChange={handleChange}
                                                     isInvalid={!!errors.lastname} />
@@ -215,37 +207,21 @@ function ProfileEdit() {
                                             }}
                                         >
                                             <Form.Label column sm='4' className='text-left'>
-                                                ວັນເດືອນປີເກີດ</Form.Label>
-                                            <Col sm='8'>
-                                                <div style={{ display: 'flex', flexDirection: 'row', width: '100%' }}>
-                                                    <Form.Control as='select' name="day"
-                                                        value={values.day}
-                                                        onChange={handleChange}>
-                                                        <option disabled={true} value={0}>ເລືອກວັນທີ</option>
-                                                        {days.map((d, index) => (
-                                                            <option value={parseInt(d)} key={index}>{d}</option>
-                                                        ))
-                                                        }
-                                                    </Form.Control>
-                                                    <Form.Control as='select' name="month"
-                                                        value={values.month}
-                                                        onChange={handleChange}>
-                                                        <option disabled={true} value={0}>ເລືອກເດືອນ</option>
-                                                        {months.map((m, index) => (
-                                                            <option value={parseInt(m)} key={index}>{m}</option>
-                                                        ))
-                                                        }
-                                                    </Form.Control>
-                                                    <Form.Control as='select' name="year"
-                                                        value={values.year}
-                                                        onChange={handleChange}>
-                                                        <option disabled={true} value={0}>ເລືອກປີ</option>
-                                                        {years.map((y, index) => (
-                                                            <option value={parseInt(y)} key={index}>{y}</option>
-                                                        ))
-                                                        }
-                                                    </Form.Control>
-                                                </div>
+                                                Birthday</Form.Label>
+                                            <Col sm='3'>
+                                                <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                                                    <Grid style={{ marginTop: -15 }} container justify="space-around">
+                                                        <KeyboardDatePicker
+                                                            disableToolbar
+                                                            variant="inline"
+                                                            format="dd/MM/yyyy"
+                                                            margin="normal"
+                                                            id="sDate"
+                                                            value={sDate}
+                                                            onChange={handleStartDateChange}
+                                                        />
+                                                    </Grid>
+                                                </MuiPickersUtilsProvider>
                                             </Col>
                                         </Form.Group>
 
@@ -260,9 +236,9 @@ function ProfileEdit() {
                                             }}
                                         >
                                             <Form.Label column sm='4' className='text-left'>
-                                                ເບີໂທ</Form.Label>
+                                                Phone number</Form.Label>
                                             <Col sm='8'>
-                                                <Form.Control type='text' placeholder='ກະລຸນາປ້ອນ' name="phone"
+                                                <Form.Control type='text' placeholder='please input...' name="phone"
                                                     value={values.phone}
                                                     onChange={handleChange}
                                                     isInvalid={!!errors.phone} />
@@ -280,9 +256,9 @@ function ProfileEdit() {
                                             }}
                                         >
                                             <Form.Label column sm='4' className='text-left'>
-                                                ອີເມວ</Form.Label>
+                                                E-Mail</Form.Label>
                                             <Col sm='8'>
-                                                <Form.Control type='text' placeholder='ກະລຸນາປ້ອນ' name="email"
+                                                <Form.Control type='text' placeholder='please input...' name="email"
                                                     value={values.email}
                                                     onChange={handleChange}
                                                     isInvalid={!!errors.email} />
@@ -298,7 +274,7 @@ function ProfileEdit() {
                                                 aria-hidden='true'
                                                 style={{ marginRight: 5 }}
                                             />
-                                        ໄອດີ ແລະ ລະຫັດຜ່ານ</div>
+                                        User Id and Password</div>
                                         {/* ໄອດີ */}
                                         <Form.Group
                                             as={Row}
@@ -310,9 +286,9 @@ function ProfileEdit() {
                                             }}
                                         >
                                             <Form.Label column sm='4' className='text-left'>
-                                                ໄອດີ</Form.Label>
+                                                User ID</Form.Label>
                                             <Col sm='8'>
-                                                <Form.Control type='text' disabled={true} placeholder='ກະລຸນາປ້ອນ' name="userId"
+                                                <Form.Control type='text' disabled={true} placeholder='please input...' name="userId"
                                                     value={values.userId}
                                                     onChange={handleChange}
                                                     isInvalid={!!errors.userId} />
@@ -330,9 +306,9 @@ function ProfileEdit() {
                                             }}
                                         >
                                             <Form.Label column sm='4' className='text-left'>
-                                                ລະຫັດຜ່ານ</Form.Label>
+                                                Password</Form.Label>
                                             <Col sm='8'>
-                                                <Form.Control type='text' placeholder='ປ້ອນເພື່ອປ່ຽນລະຫັດຜ່ານ' name="password"
+                                                <Form.Control type='text' placeholder='input to change...' name="password"
                                                     value={values.password}
                                                     onChange={handleChange}
                                                     isInvalid={!!errors.password} />
@@ -349,7 +325,7 @@ function ProfileEdit() {
                                                 aria-hidden='true'
                                                 style={{ marginRight: 5 }}
                                             />
-                                                ອື່ນໆ
+                                                Other
                                         </div>
 
                                         {/* ລາຍລະອຽດ */}
@@ -363,10 +339,10 @@ function ProfileEdit() {
                                             }}
                                         >
                                             <Form.Label column sm='4' className='text-left'>
-                                                ລາຍລະອຽດ
+                                                Description
                                             </Form.Label>
                                             <Col sm='8'>
-                                                <Form.Control type='text' placeholder='ກະລຸນາປ້ອນ' name="description"
+                                                <Form.Control type='text' placeholder='please input...' name="description"
                                                     value={values.description}
                                                     onChange={handleChange}
                                                     isInvalid={!!errors.description} />
@@ -384,10 +360,10 @@ function ProfileEdit() {
                                             }}
                                         >
                                             <Form.Label column sm='4' className='text-left'>
-                                                ໝາຍເຫດ
+                                                Note
                                             </Form.Label>
                                             <Col sm='8'>
-                                                <Form.Control type='text' placeholder='ກະລຸນາປ້ອນ' name="note"
+                                                <Form.Control type='text' placeholder='please input...' name="note"
                                                     value={values.note}
                                                     onChange={handleChange}
                                                     isInvalid={!!errors.note} />
@@ -408,10 +384,10 @@ function ProfileEdit() {
                                         }}
                                     >
                                         <div style={{ marginRight: 80 }}>
-                                            <CustomButton title='ຍົກເລີກ' onClick={() => _cancel()} />
+                                            <CustomButton title='Cancel' onClick={() => _cancel()} />
                                         </div>
 
-                                        <CustomButton confirm title='ບັນທຶກການແກ້ໄຂ' onClick={handleSubmit} type="submit" />
+                                        <CustomButton confirm title='Edit' onClick={handleSubmit} type="submit" />
                                     </div>
                                 </div>
 

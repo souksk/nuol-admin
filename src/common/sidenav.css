@@ -1,41 +1,43 @@
 #sidenav-block{
-    position: fixed;
-    display: block;
-    margin-left: 200px;
+  position: fixed;
+  display: block;
+  margin-left: 200px;
 }
-
-/* .sidenav---sidenav-toggle---1KRjR .sidenav---icon-bar---u1f02{
-    background-color:#057CAE !important;
-}
-.sc-ifAKCX .iAgGBH .sidenav-navitem---3r9ER .selected---91VwC .highlighted---1vG8Y{
-    background-color: #fff;
-} */
 
 .colorItems {
-    color: "#4F6520";
-  }
-  .sidenav---sidenav-toggle---1KRjR .sidenav---icon-bar---u1f02 {
-    background-color: #057CAE !important;
-  }
-  .sidenav---selected---1EK3y{
-    background-color: #057CAE !important;
-  }
-  .sidenav---selected---1EK3y .sidenav---navtext---1AE_f{
-    background-color: #057CAE !important;
-    color: white !important;
-  }
-  /* .sidenav---navtext---1AE_f{
-    color: white !important;
-  } */
-  .sidenav---selected---1EK3y .sidenav---navicon---3gCRo svg{
-    color: rgb(255, 255, 255) !important;
-  }
-  .sidenav---navicon---3gCRo svg{
-    color: rgb(5, 124, 174) !important;
-
-  }
-
-  .sidenav---sidenav-nav---3tvij > .sidenav---sidenav-navitem---uwIJ- > .sidenav---navitem---9uL5T .sidenav---navicon---3gCRo,
+  background-color: #057CAE !important;
+  /* color: white !important; */
+}
+.sidenav---navitem---9uL5T{
+  background-color: white !important;
+  margin-bottom: 5px;
+  /* border-left: 6px solid #7BB500; */
+}
+.sidenav---sidenav-toggle---1KRjR .sidenav---icon-bar---u1f02 {
+  background-color: #057CAE !important;
+  /* color: white !important; */
+}
+.sidenav---selected---1EK3y .sidenav---navitem---9uL5T{
+  background-color: #057CAE !important;
+  /* color: white !important; */
+}
+.sidenav---selected---1EK3y .sidenav---navtext---1AE_f{
+  background-color: #057CAE !important;
+  color: white !important;
+}
+/* .sidenav---navtext---1AE_f{
+  color: white !important;
+} */
+.sidenav---selected---1EK3y .sidenav---navicon---3gCRo svg{
+  color: rgb(255, 255, 255) !important;
+}
+.sidenav---navicon---3gCRo svg{
+  color: rgb(5, 124, 174) !important;
+}
+/* .sidenav---selected---1EK3y .sidenav---navicon---3gCRo{
+  border-left: 6px solid #7BB500;
+} */
+.sidenav---sidenav-nav---3tvij > .sidenav---sidenav-navitem---uwIJ- > .sidenav---navitem---9uL5T .sidenav---navicon---3gCRo,
 .sidenav---sidenav-nav---3tvij > .sidenav---sidenav-navitem---uwIJ-.sidenav---highlighted---oUx9u > .sidenav---navitem---9uL5T .sidenav---navicon---3gCRo{
-    opacity: 1;
+  opacity: 1;
 }

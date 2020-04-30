@@ -56,13 +56,13 @@ function DocumentDetail() {
         let result;
         switch (cate) {
             case 'RESEARCH':
-                result = 'ບົດຄົ້ນຄ້ວາ'
+                result = 'Research'
                 break;
             case 'SPECIFIC':
-                result = 'ວິຊາສະເພາະ'
+                result = 'Specific'
                 break;
             default:
-                result = 'ຄວາມຮູ້ທົ່ວໄປ'
+                result = 'General'
         }
         return result;
     }
@@ -72,12 +72,12 @@ function DocumentDetail() {
             {/* Breadcrumb */}
             <Breadcrumb>
                 <Breadcrumb.Item onClick={() => history.push('/document-list')}>
-                    ຈັດການເອກະສານ
+                    Document Management
                 </Breadcrumb.Item>
                 <Breadcrumb.Item onClick={() => history.push('/document-list')}>
-                    ເອກະສານທັງຫມົດ
+                    All Documents
                 </Breadcrumb.Item>
-                <Breadcrumb.Item active>ລາຍລະອຽດ</Breadcrumb.Item>
+                <Breadcrumb.Item active>Document Detail</Breadcrumb.Item>
             </Breadcrumb>
 
             <CustomContainer>
@@ -89,7 +89,7 @@ function DocumentDetail() {
                         alignItems: 'center'
                     }}
                 >
-                    <Title text='ລາຍລະອຽດ' />
+                    <Title text='DOCUMENT DETAIL' />
 
                     {/* Button group */}
                     <div>
@@ -107,7 +107,7 @@ function DocumentDetail() {
                             }}
                             onClick={() => _edit()}
                         >
-                            <FontAwesomeIcon icon='edit' style={{ fontSize: 16 }} /> ແກ້ໃຂ
+                            <FontAwesomeIcon icon='edit' style={{ fontSize: 16 }} /> Edit
                         </button>
 
                         {/* ລຶບ */}
@@ -122,7 +122,7 @@ function DocumentDetail() {
                             }}
                             onClick={() => _delete()}
                         >
-                            <i className='fa fa-trash' /> ລຶບ
+                            <i className='fa fa-trash' /> Delete
                         </button>
                     </div>
                 </div>
@@ -139,48 +139,52 @@ function DocumentDetail() {
 
                     {/* File Information */}
                     <div style={{ padding: 20, paddingBottom: 0 }}>
-                        <div style={{ fontWeight: "bold" }}><FontAwesomeIcon icon='caret-down' style={{ marginRight: 16, marginLeft: -24, fontSize: 24, color: Consts.PRIMARY_COLOR }} />ຂໍ້ມູນເອກະສານ</div>
+                        <div style={{ fontWeight: "bold" }}><FontAwesomeIcon icon='caret-down' style={{ marginRight: 16, marginLeft: -24, fontSize: 24, color: Consts.PRIMARY_COLOR }} />Document Detail</div>
                         <div style={{ paddingLeft: 20, fontSize: 14 }}>
                             {/* <Row>
                                 <Col>ໝວດ</Col>
                                 <Col>{fileData && fileData.type}</Col>
                             </Row> */}
                             <Row>
-                                <Col>ປະເພດເອກະສານ</Col>
+                                <Col>File type</Col>
                                 <Col>{fileData && _onConvertCate(fileData.cate)}</Col>
                             </Row>
                             <Row>
-                                <Col>ຊື່ເອກະສານ</Col>
+                                <Col>File name</Col>
                                 <Col>{fileData && fileData.title}</Col>
                             </Row>
                             <Row>
                                 <Col>keyword</Col>
-                                <Col>{fileData &&
+                                <Col>[ {fileData &&
                                     fileData.keyword &&
                                     fileData.keyword.length > 0 &&
                                     fileData.keyword.map((x, index) => (
                                         <span key={index}>{x + (((index + 1) >= fileData.keyword.length) ? '' : ', ')}</span>
                                     ))
-                                }
+                                } ]
                                 </Col>
+                            </Row>
+                            <Row>
+                                <Col>Description</Col>
+                                <Col>{fileData && fileData.description}</Col>
                             </Row>
                         </div>
                     </div>
 
                     {/* File Upload Information */}
                     <div style={{ padding: 20, paddingBottom: 0 }}>
-                        <div style={{ fontWeight: "bold" }}><FontAwesomeIcon icon='caret-down' style={{ marginRight: 16, marginLeft: -24, fontSize: 24, color: Consts.PRIMARY_COLOR }} />ອັບໂຫລດເອກະສານ</div>
+                        <div style={{ fontWeight: "bold" }}><FontAwesomeIcon icon='caret-down' style={{ marginRight: 16, marginLeft: -24, fontSize: 24, color: Consts.PRIMARY_COLOR }} />Upload Document</div>
                         <div style={{ paddingLeft: 20, fontSize: 14 }}>
                             <Row>
-                                <Col>ວັນທີອັບໂຫລດ</Col>
+                                <Col>Upload date</Col>
                                 <Col>{fileData && fileData.createdAt && new Date(fileData.createdAt).toLocaleString('la-LA', { hour12: false })}</Col>
                             </Row>
                             <Row>
-                                <Col>ແກ້ໄຂລ່າສຸດ</Col>
+                                <Col>Edit date</Col>
                                 <Col>{fileData && fileData.updatedAt && new Date(fileData.updatedAt).toLocaleString('la-LA', { hour12: false })}</Col>
                             </Row>
                             <Row>
-                                <Col>ເອກະສານ</Col>
+                                <Col>File</Col>
                                 <Col><a href={fileData && fileData.file} download>{fileData && fileData.title}</a></Col>
                             </Row>
                         </div>

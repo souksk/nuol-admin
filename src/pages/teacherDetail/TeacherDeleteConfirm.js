@@ -33,7 +33,7 @@ const CourseDeleteConfirm = ({
 						fontWeight: 'bold'
 					}}
 				>
-					ຕ້ອງການລຶບອາຈານທ່ານນີ້ອອກຈາກລະບົບຫຼືບໍ?
+					Do you want to delete?
 				</Modal.Title>
 
         <p className='text-center'>{teacherData && teacherData.firstname} {teacherData && teacherData.lastname}</p>
@@ -50,7 +50,7 @@ const CourseDeleteConfirm = ({
                 borderColor: Consts.DELETE_COLOR_BUTTON
               }}
             >
-              ຍົກເລີກ
+              Cancel
             </Button>
           </div>
           <div style={{ padding: 15 }} className='col'>
@@ -63,7 +63,7 @@ const CourseDeleteConfirm = ({
               }}
               onClick={_deleteConfirm}
             >
-              ລຶບ
+              Delete
             </Button>
           </div>
         </div>

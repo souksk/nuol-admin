@@ -107,7 +107,7 @@ const CalendaTimeAdd = ({ showTimeAddView, _handleTimeAddViewClose, data }) => {
 						fontWeight: 'bold'
 					}}
 				>
-					ເພີ່ມເວລາສອນ
+					ADD NEW STUDY TIME
 				</Modal.Title>
 
 				<div>
@@ -119,7 +119,7 @@ const CalendaTimeAdd = ({ showTimeAddView, _handleTimeAddViewClose, data }) => {
 								aria-hidden='true'
 								style={{ marginRight: 5, color: Consts.SECONDARY_COLOR }}
 							/>
-                      ຕາຕະລາງມື້ສອນ
+                      Study calenda
                     </div>
 						{/* ວັນ */}
 						<Form.Group
@@ -132,13 +132,13 @@ const CalendaTimeAdd = ({ showTimeAddView, _handleTimeAddViewClose, data }) => {
 							}}
 						>
 							<Form.Label column sm='4' className='text-left'>
-								ວັນ</Form.Label>
+								Day</Form.Label>
 							<Col sm='8'>
 								<Form.Control as='select' name="selectDay"
 									value={selectDay}
 									onChange={(e) => onChangeDay(e)}
 								>
-									<option id="" disabled={true} value="">---ກະລຸນາເລືອກວັນ---</option>
+									<option id="" disabled={true} value="">---Select day---</option>
 									<option id={0} value="ຈັນ">ຈັນ</option>
 									<option id={1} value="ອັງຄານ">ອັງຄານ</option>
 									<option id={2} value="ພຸດ">ພຸດ</option>
@@ -161,7 +161,7 @@ const CalendaTimeAdd = ({ showTimeAddView, _handleTimeAddViewClose, data }) => {
 							}}
 						>
 							<Form.Label column sm='4' className='text-left'>
-								ຊົ່ວໂມງ</Form.Label>
+								Times</Form.Label>
 							<Col sm='8'>
 
 								<RenderButton />
@@ -183,7 +183,7 @@ const CalendaTimeAdd = ({ showTimeAddView, _handleTimeAddViewClose, data }) => {
 								borderColor: Consts.PRIMARY_COLOR
 							}}
 						>
-							ຍົກເລີກ
+							Cancel
 						</Button>
 					</div>
 					<div style={{ padding: 15 }} className="col">
@@ -196,7 +196,7 @@ const CalendaTimeAdd = ({ showTimeAddView, _handleTimeAddViewClose, data }) => {
 							}}
 							onClick={() => _addCalendaTime()}
 						>
-							ລຶບ
+							Add
 						</Button>
 					</div>
 				</div>

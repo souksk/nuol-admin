@@ -31,7 +31,7 @@ const DocumentDeleteConfirm = ({ showDeleteConfirmView, _handleDeleteConfirmView
 						fontWeight: 'bold'
 					}}
 				>
-					ຕ້ອງການລຶບ?
+					Do you want to delete?
 				</Modal.Title>
 
 				<p className="text-center">{data && data.title}</p>
@@ -48,7 +48,7 @@ const DocumentDeleteConfirm = ({ showDeleteConfirmView, _handleDeleteConfirmView
 								borderColor: Consts.DELETE_COLOR_BUTTON
 							}}
 						>
-							ຍົກເລີກ
+							Cancel
 						</Button>
 					</div>
 					<div style={{ padding: 15 }} className="col">
@@ -61,7 +61,7 @@ const DocumentDeleteConfirm = ({ showDeleteConfirmView, _handleDeleteConfirmView
 							}}
 							onClick={() => _deleteFile()}
 						>
-							ລຶບ
+							Delete
 						</Button>
 					</div>
 				</div>

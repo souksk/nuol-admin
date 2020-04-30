@@ -27,7 +27,7 @@ const CourseDeleteConfirm = ({ showDeleteConfirmView, _handleDeleteConfirmViewCl
 						fontWeight: 'bold'
 					}}
 				>
-					ຕ້ອງການລຶບ?
+					Do you want to delete this course?
 				</Modal.Title>
 
 				<p className="text-center">{data ? data.title : ''}</p>
@@ -44,7 +44,7 @@ const CourseDeleteConfirm = ({ showDeleteConfirmView, _handleDeleteConfirmViewCl
 								borderColor: Consts.DELETE_COLOR_BUTTON
 							}}
 						>
-							ຍົກເລີກ
+							Cancel
 						</Button>
 					</div>
 					<div style={{ padding: 15 }} className="col">
@@ -57,7 +57,7 @@ const CourseDeleteConfirm = ({ showDeleteConfirmView, _handleDeleteConfirmViewCl
 							}}
 							onClick={() => _deleteCourse()}
 						>
-							ລຶບ
+							Delete
 						</Button>
 					</div>
 				</div>

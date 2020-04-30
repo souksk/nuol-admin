@@ -15,7 +15,7 @@ function CustomSideNav({ location, history }) {
 				const to = '/' + selected;
 				if (location.pathname !== to) {
 					await history.push(to);
-					if(to == '/calenda-list'){
+					if(to == '/calenda-list' || to == '/course-list'){
 						window.location.reload(true)
 					}
 				}
@@ -37,139 +37,99 @@ function CustomSideNav({ location, history }) {
 				</div>:''} */}
 				<NavItem
 					eventKey="calenda-list"
-					style={
-						selectStatus == 'calenda' ? (
-							{ backgroundColor: Consts.PRIMARY_COLOR, borderLeft: '6px solid #7BB500', marginTop: 5 }
-						) : (
-								{ backgroundColor: '#fff', borderLeft: '6px solid #fff', marginTop: 5 }
-							)
-					}
+					active={selectStatus === "calenda" ? true : false}
+					style={{ borderLeft: (selectStatus === "calenda") ? '6px solid #7BB500' : '6px solid #fff' }}
 				>
 					<NavIcon>
 						<i className="fa fa-calendar-alt" style={{ fontSize: '1.75em' }} />
 					</NavIcon>
 					<NavText style={{ color: Consts.PRIMARY_COLOR }}>
-						ຈັດການຕາຕະລາງການຮຽນ
+					Study Calenda Management
 					</NavText>
 				</NavItem>
 				<NavItem
 					eventKey="registration-list"
-					style={
-						selectStatus == 'registration' ? (
-							{ backgroundColor: Consts.PRIMARY_COLOR, borderLeft: '6px solid #7BB500', marginTop: 5 }
-						) : (
-								{ backgroundColor: '#fff', borderLeft: '6px solid #fff', marginTop: 5 }
-							)
-					}
+					active={selectStatus === "registration" ? true : false}
+					style={{ borderLeft: (selectStatus === "registration") ? '6px solid #7BB500' : '6px solid #fff' }}
 				>
 					<NavIcon>
 						<i className="fa fa-plus-square" aria-hidden="true" style={{ fontSize: '1.75em' }} />
 					</NavIcon>
 					<NavText style={{ color: Consts.PRIMARY_COLOR }}>
-						ລົງທະບຽນວິຊາຮຽນ
+						Registration Management
 					</NavText>
 				</NavItem>
 				<NavItem
 					eventKey="teacher-list"
-					style={
-						selectStatus == 'teacher' ? (
-							{ backgroundColor: Consts.PRIMARY_COLOR, borderLeft: '6px solid #7BB500', marginTop: 5 }
-						) : (
-								{ backgroundColor: '#fff', borderLeft: '6px solid #fff', marginTop: 5 }
-							)
-					}
+					active={selectStatus === "teacher" ? true : false}
+					style={{ borderLeft: (selectStatus === "teacher") ? '6px solid #7BB500' : '6px solid #fff' }}
 				>
 					<NavIcon>
 						<i className="fa fa-fw fa-user-friends" style={{ fontSize: '1.75em' }} />
 					</NavIcon>
 					<NavText style={{ color: Consts.PRIMARY_COLOR }}>
-						ຈັດການອາຈານ
+						Teacher Management
 					</NavText>
 				</NavItem>
 				<NavItem
 					eventKey="student-list"
-					style={
-						selectStatus == 'student' ? (
-							{ backgroundColor: Consts.PRIMARY_COLOR, borderLeft: '6px solid #7BB500', marginTop: 5 }
-						) : (
-								{ backgroundColor: '#fff', borderLeft: '6px solid #fff', marginTop: 5 }
-							)
-					}
+					active={selectStatus === "student" ? true : false}
+					style={{ borderLeft: (selectStatus === "student") ? '6px solid #7BB500' : '6px solid #fff' }}
 				>
 					<NavIcon>
 						<i className="fa fa-male" style={{ fontSize: '1.75em' }} />
 						<i className="fa fa-female" style={{ fontSize: '1.75em' }} />
 					</NavIcon>
 					<NavText style={{ color: Consts.PRIMARY_COLOR }}>
-						ຈັດການນັກຮຽນ
+						Student Management
 					</NavText>
 				</NavItem>
 				<NavItem
 					eventKey="faculty-list"
-					style={
-						selectStatus == 'faculty' ? (
-							{ backgroundColor: Consts.PRIMARY_COLOR, borderLeft: '6px solid #7BB500', marginTop: 5 }
-						) : (
-								{ backgroundColor: '#fff', borderLeft: '6px solid #fff', marginTop: 5 }
-							)
-					}
+					active={selectStatus === "faculty" ? true : false}
+					style={{ borderLeft: (selectStatus === "faculty") ? '6px solid #7BB500' : '6px solid #fff' }}
 				>
 					<NavIcon>
 						<i className="fa fa-archive" aria-hidden="true" style={{ fontSize: '1.75em' }} />
 					</NavIcon>
 					<NavText style={{ color: Consts.PRIMARY_COLOR }}>
-						ຄະນະ
+						Faculty Management
 					</NavText>
 				</NavItem>
 				<NavItem
 					eventKey="department-list"
-					style={
-						selectStatus == 'department' ? (
-							{ backgroundColor: Consts.PRIMARY_COLOR, borderLeft: '6px solid #7BB500', marginTop: 5 }
-						) : (
-								{ backgroundColor: '#fff', borderLeft: '6px solid #fff', marginTop: 5 }
-							)
-					}
+					active={selectStatus === "department" ? true : false}
+					style={{ borderLeft: (selectStatus === "department") ? '6px solid #7BB500' : '6px solid #fff' }}
 				>
 					<NavIcon>
 						<i className="fa fa-book" aria-hidden="true" style={{ fontSize: '1.75em' }} />
 					</NavIcon>
 					<NavText style={{ color: Consts.PRIMARY_COLOR }}>
-						ພາກວິຊາ
+						Department Management
 					</NavText>
 				</NavItem>
 				<NavItem
 					eventKey="course-list"
-					style={
-						selectStatus == 'course' ? (
-							{ backgroundColor: Consts.PRIMARY_COLOR, borderLeft: '6px solid #7BB500', marginTop: 5 }
-						) : (
-								{ backgroundColor: '#fff', borderLeft: '6px solid #fff', marginTop: 5 }
-							)
-					}
+					active={selectStatus === "course" ? true : false}
+					style={{ borderLeft: (selectStatus === "course") ? '6px solid #7BB500' : '6px solid #fff' }}
 				>
 					<NavIcon>
 						<i className="fa fa-bookmark" style={{ fontSize: '1.75em' }} />
 					</NavIcon>
 					<NavText style={{ color: Consts.PRIMARY_COLOR }}>
-						ຈັດການວິຊາຮຽນ
+						Course Management
 					</NavText>
 				</NavItem>
 				<NavItem
 					eventKey="document-list"
-					style={
-						selectStatus == 'document' ? (
-							{ backgroundColor: Consts.PRIMARY_COLOR, borderLeft: '6px solid #7BB500', marginTop: 5 }
-						) : (
-								{ backgroundColor: '#fff', borderLeft: '6px solid #fff', marginTop: 5 }
-							)
-					}
+					active={selectStatus === "document" ? true : false}
+					style={{ borderLeft: (selectStatus === "document") ? '6px solid #7BB500' : '6px solid #fff' }}
 				>
 					<NavIcon>
 						<i className="fa fa-fw fa-folder" style={{ fontSize: '1.75em' }} />
 					</NavIcon>
 					<NavText style={{ color: Consts.PRIMARY_COLOR }}>
-						ຈັດການໄຟລ
+						Document Management
 					</NavText>
 				</NavItem>
 			</SideNav.Nav>

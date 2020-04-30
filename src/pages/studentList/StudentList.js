@@ -31,7 +31,7 @@ function StudentList() {
 	const [ selectedFaculty, setselectedFaculty ] = useState('');
 	const [ selectedDepartment, setselectedDepartment ] = useState('');
 	const [ selectedYearLevel, setselectedYearLevel ] = useState(null);
-	const [ title, setTitle ] = useState('ວິຊາທັງຫມົດ');
+	const [ title, setTitle ] = useState('ALL STUDENTS');
 
 	// on first load
 	useEffect(() => {
@@ -104,7 +104,7 @@ function StudentList() {
 		});
 
 		// set title
-		setTitle('ຜົນການຄົ້ນຫາ');
+		setTitle('Search result');
 	};
 
 	// if (studentLoading || facultyLoading) return <p>loading...</p>
@@ -114,20 +114,20 @@ function StudentList() {
 			{/* Breadcrumb */}
 			<Breadcrumb>
 				<Breadcrumb.Item href="" onClick={() => history.push('/student-list')}>
-					ຈັດການນັກຮຽນ
+					Student Management
 				</Breadcrumb.Item>
-				<Breadcrumb.Item active>ລາຍຊື່ນັກຮຽນທັງໝົດ</Breadcrumb.Item>
+				<Breadcrumb.Item active>All Students</Breadcrumb.Item>
 			</Breadcrumb>
 
 			<CustomContainer>
-				<Title text={'ລາຍຊື່ນັກຮຽນ'} />
+				<Title text={'ALL STUDENT'} />
 				<div style={{ textAlign: 'right' }}>
-					<CustomButton confirm addIcon title="ເພີ່ມນັກຮຽນ" onClick={() => _studentAdd()} />
+					<CustomButton confirm addIcon title="Add Student" onClick={() => _studentAdd()} />
 				</div>
 
 				{/* custom search button */}
 				<SearchBar
-					title="ຄະນະວິທະຍາສາດທໍາມະຊາດ,ພາກວິຊາວິທະຍາສາດຄອມພິວເຕີ,ປີຮຽນທີ່1"
+					title="Faculty, department, year level"
 					onClick={() => _handleSearchViewShow()}
 				/>
 
@@ -140,7 +140,7 @@ function StudentList() {
 						color: Consts.FONT_COLOR_SECONDARY
 					}}
 				>
-					ທັງຫມົດ {studentData && studentData.users && studentData.users.length} ຄົນ
+					All {studentData && studentData.users && studentData.users.length} students
 				</div>
 
 				{/* Table list */}
@@ -148,13 +148,13 @@ function StudentList() {
 					<table border="1" bordercolor="#fff" style={{ width: '100%' }}>
 						<thead>
 							<TableHeader>
-								<th>ລຳດັບ</th>
-								<th>ລະຫັດນັກຮຽນ</th>
-								<th>ຊື່</th>
-								<th>ຄະນະ</th>
-								<th>ພາກວິຊາ</th>
-								<th>ປີຮຽນ</th>
-								<th style={{ width: 180 }}>ຈັດການ</th>
+								<th>#</th>
+								<th>USER ID</th>
+								<th>FIRST NAME</th>
+								<th>FACULTY</th>
+								<th>DEPARTMENT</th>
+								<th>YEAR LEVEL</th>
+								<th style={{ width: 180 }}>ACTIONS</th>
 							</TableHeader>
 						</thead>
 						<tbody>
@@ -211,7 +211,7 @@ function StudentList() {
 														}}
 													>
 														<FontAwesomeIcon
-															icon={[ 'fas', 'external-link-alt' ]}
+															icon={[ 'fas', 'eye' ]}
 															color={Consts.BORDER_COLOR}
 														/>{' '}
 													</div>

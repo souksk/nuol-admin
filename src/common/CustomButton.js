@@ -14,16 +14,17 @@ function CustomButton({
   addIcon,
   downloadIcon,
   width,
-  style
+  style,
+  deleteType
 }) {
   return (
     <button
       style={{
-        backgroundColor: confirm ? Consts.SECONDARY_COLOR : '#fff',
-        color: confirm ? '#fff' : '#000',
+        backgroundColor: confirm ? Consts.SECONDARY_COLOR : (deleteType ? Consts.BORDER_COLOR_DELETE : '#fff'),
+        color: (confirm || deleteType) ? '#fff' : '#000',
         width: width || 140,
         height: 40,
-        border: '1px solid ' + Consts.SECONDARY_COLOR,
+        border: (deleteType) ? Consts.BORDER_COLOR_DELETE : '1px solid ' + Consts.SECONDARY_COLOR,
         outline: 'none',
         ...style
       }}

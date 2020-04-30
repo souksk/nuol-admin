@@ -81,12 +81,12 @@ function CalendaDetail() {
       {/* Breadcrumb */}
       <Breadcrumb>
         <Breadcrumb.Item onClick={() => history.push('/course-list')}>
-          ຈັດການຕາຕະລາງຮຽນ
+          Study Calenda Management
         </Breadcrumb.Item>
         <Breadcrumb.Item onClick={() => history.push('/course-list')}>
-          ຕາຕະລາງຮຽນທັງຫມົດ
+          All Study Calendas
         </Breadcrumb.Item>
-        <Breadcrumb.Item active>ລາຍລະອຽດຕາຕະລາງຮຽນ</Breadcrumb.Item>
+        <Breadcrumb.Item active>Study Calenda Detail</Breadcrumb.Item>
       </Breadcrumb>
 
       <CustomContainer>
@@ -98,7 +98,7 @@ function CalendaDetail() {
             alignItems: 'center'
           }}
         >
-          <Title text='ລາຍລະອຽດຕາຕະລາງຮຽນ' />
+          <Title text='STUDY CALENDA DETAIL' />
 
           {/* Button group */}
           <div>
@@ -116,7 +116,7 @@ function CalendaDetail() {
               }}
               onClick={() => _timeAdd()}
             >
-              <i className='fa fa-clock' /> ເພີ່ມເວລາສອນ
+              <i className='fa fa-clock' /> Add study time
             </button>
 
             {/* ແກ້ໃຂ */}
@@ -132,7 +132,7 @@ function CalendaDetail() {
               }}
               onClick={() => _edit(studyCalendaData)}
             >
-              <FontAwesomeIcon icon='edit' style={{ fontSize: 16 }} /> ແກ້ໃຂ
+              <FontAwesomeIcon icon='edit' style={{ fontSize: 16 }} /> Edit
             </button>
 
             {/* ລຶບ */}
@@ -147,7 +147,7 @@ function CalendaDetail() {
               }}
               onClick={() => _delete()}
             >
-              <i className='fa fa-trash' /> ລຶບ
+              <i className='fa fa-trash' /> Delete
             </button>
 
           </div>
@@ -173,7 +173,7 @@ function CalendaDetail() {
             }}
           >
             <Row>
-              <Col>ຊື່ວິຊາ</Col>
+              <Col>Course name</Col>
               <Col
                 style={{ color: Consts.FONT_COLOR_PRIMARY, fontWeight: 'bold' }}
               >
@@ -182,7 +182,7 @@ function CalendaDetail() {
             </Row>
             <div style={{ height: 10 }} />
             <Row>
-              <Col>ລະຫັດຕາຕະລາງ</Col>
+              <Col>Calenda ID</Col>
               <Col
                 style={{ color: Consts.FONT_COLOR_PRIMARY, fontWeight: 'bold' }}
               >
@@ -191,7 +191,7 @@ function CalendaDetail() {
             </Row>
             <div style={{ height: 10 }} />
             <Row>
-              <Col>ຈໍານວນຫນ່ວຍກິດ</Col>
+              <Col>Unit</Col>
               <Col
                 style={{ color: Consts.FONT_COLOR_PRIMARY, fontWeight: 'bold' }}
               >
@@ -202,14 +202,14 @@ function CalendaDetail() {
 
           {/* -------- ຄະນະແລະພາກວິຊາ -------- */}
           <div style={{ padding: 20, paddingBottom: 0 }}>
-            <div style={{ fontWeight: "bold" }} style={{ fontWeight: "bold" }} ><FontAwesomeIcon icon='caret-down' style={{ marginRight: 16, marginLeft: -24, fontSize: 24, color: Consts.PRIMARY_COLOR }} />ປິຮຽນ ແລະ ພາກຮຽນ</div>
+            <div style={{ fontWeight: "bold" }} style={{ fontWeight: "bold" }} ><FontAwesomeIcon icon='caret-down' style={{ marginRight: 16, marginLeft: -24, fontSize: 24, color: Consts.PRIMARY_COLOR }} />Year level and Semester</div>
             <div style={{ paddingLeft: 20, fontSize: 14 }}>
               <Row>
-                <Col>ປິຮຽນ</Col>
+                <Col>Year Level</Col>
                 <Col>{studyCalendaData && studyCalendaData.yearLevel}</Col>
               </Row>
               <Row>
-                <Col>ພາກຮຽນ</Col>
+                <Col>Semester</Col>
                 <Col>{studyCalendaData && studyCalendaData.semester}</Col>
               </Row>
             </div>
@@ -217,16 +217,16 @@ function CalendaDetail() {
 
           {/* -------- ຕາຕະລາງມື້ສອນ -------- */}
           <div style={{ padding: 20, paddingBottom: 0 }}>
-            <div style={{ fontWeight: "bold" }} ><FontAwesomeIcon icon='caret-down' style={{ marginRight: 16, marginLeft: -24, fontSize: 24, color: Consts.PRIMARY_COLOR }} />ຕາຕະລາງມື້ສອນ</div>
+            <div style={{ fontWeight: "bold" }} ><FontAwesomeIcon icon='caret-down' style={{ marginRight: 16, marginLeft: -24, fontSize: 24, color: Consts.PRIMARY_COLOR }} />Study calenda</div>
             <div style={{ paddingLeft: 20, fontSize: 14 }}>
               <Row>
                 <table border='1' bordercolor='#fff' style={{ width: '100%' }}>
                   <thead>
                     <TableHeader>
-                      <th style={{ width: 60 }}>ລຳດັບ</th>
-                      <th style={{ width: 120 }}>ວັນ</th>
-                      <th style={{ width: 120 }}>ຊົ່ວໂມງ</th>
-                      <th style={{ width: 60 }}>ລຶບ</th>
+                      <th style={{ width: 60 }}>#</th>
+                      <th style={{ width: 120 }}>Day</th>
+                      <th style={{ width: 120 }}>Time</th>
+                      <th style={{ width: 60 }}>Action</th>
                     </TableHeader>
                   </thead>
                   <tbody>
@@ -282,14 +282,14 @@ function CalendaDetail() {
 
           {/* -------- ວັນເລີ່ມສອນ ແລະ ວັນສິ້ນສຸດການສອນ -------- */}
           <div style={{ padding: 20, paddingBottom: 0 }}>
-            <div style={{ fontWeight: "bold" }} ><FontAwesomeIcon icon='caret-down' style={{ marginRight: 16, marginLeft: -24, fontSize: 24, color: Consts.PRIMARY_COLOR }} />ວັນເລີ່ມສອນ ແລະ ວັນສິ້ນສຸດການສອນ</div>
+            <div style={{ fontWeight: "bold" }} ><FontAwesomeIcon icon='caret-down' style={{ marginRight: 16, marginLeft: -24, fontSize: 24, color: Consts.PRIMARY_COLOR }} />Start date and End date</div>
             <div style={{ paddingLeft: 20, fontSize: 14 }}>
               <Row>
-                <Col>ວັນເລີ່ມສອນ</Col>
+                <Col>Start date</Col>
                 <Col>{studyCalendaData && new Date(studyCalendaData.startDate).toLocaleDateString('la')}</Col>
               </Row>
               <Row>
-                <Col>ວັນສິ້ນສຸດການສອນ</Col>
+                <Col>End date</Col>
                 <Col>{studyCalendaData && new Date(studyCalendaData.endDate).toLocaleDateString('la')}</Col>
               </Row>
             </div>
@@ -297,10 +297,10 @@ function CalendaDetail() {
 
           {/* -------- ອາຈານສິດສອນ -------- */}
           <div style={{ padding: 20, paddingBottom: 0 }}>
-            <div style={{ fontWeight: "bold" }} ><FontAwesomeIcon icon='caret-down' style={{ marginRight: 16, marginLeft: -24, fontSize: 24, color: Consts.PRIMARY_COLOR }} />ອາຈານສິດສອນ</div>
+            <div style={{ fontWeight: "bold" }} ><FontAwesomeIcon icon='caret-down' style={{ marginRight: 16, marginLeft: -24, fontSize: 24, color: Consts.PRIMARY_COLOR }} />Teacher</div>
             <div style={{ paddingLeft: 20, fontSize: 14 }}>
               <Row>
-                <Col>ຊື່ອາຈານສອນ</Col>
+                <Col>Teacher name</Col>
                 <Col>{studyCalendaData && (studyCalendaData.teacher ? (studyCalendaData.teacher.firstname) + ' ' + (studyCalendaData.teacher.lastname ? studyCalendaData.teacher.lastname : '') : '')}</Col>
               </Row>
             </div>

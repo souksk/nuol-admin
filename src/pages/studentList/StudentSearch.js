@@ -32,7 +32,7 @@ const StudentSearch = ({
   return (
     <Modal show={showSearchView} onHide={_handleSearchViewClose} size='lg'>
       <Modal.Title style={{ textAlign: 'center', paddingTop: 20 }}>
-        <b>ຄົ້ນຫານັກຮຽນ</b>
+        <b>STUDENT SEARCH</b>
       </Modal.Title>
 
       <Modal.Body style={{ marginLeft: 50, marginRight: 50, padding: 50 }}>
@@ -64,7 +64,7 @@ const StudentSearch = ({
                 style={{ margin: 0, marginBottom: 10 }}
               >
                 <Form.Label column sm='4' className='text-left'>
-                  ຄະນະ
+                  Faculty
                 </Form.Label>
                 <Col sm='8'>
                   <Form.Control
@@ -77,7 +77,7 @@ const StudentSearch = ({
                     }}
                     isInvalid={!!errors.faculty}
                   >
-                    <option value=''>-----ທຸກຄະນະ-----</option>
+                    <option value=''>-----All faculty-----</option>
                     {facultyData &&
                       facultyData.map((faculty, index) => {
                         return (
@@ -96,7 +96,7 @@ const StudentSearch = ({
                 style={{ margin: 0, marginBottom: 10 }}
               >
                 <Form.Label column sm='4' className='text-left'>
-                  ພາກວິຊາ
+                  Department
                 </Form.Label>
                 <Col sm='8'>
                   <Form.Control
@@ -106,7 +106,7 @@ const StudentSearch = ({
                     onChange={handleChange}
                     isInvalid={!!errors.department}
                   >
-                    <option value=''>-----ທຸກພາກວິຊາ-----</option>
+                    <option value=''>-----All department-----</option>
                     {facultyData[selectedFacultyIndex - 1] &&
                       facultyData[
                         selectedFacultyIndex - 1
@@ -127,7 +127,7 @@ const StudentSearch = ({
                 style={{ margin: 0, marginBottom: 10 }}
               >
                 <Form.Label column sm='4' className='text-left'>
-                  ປີຮຽນ
+                  Year level
                 </Form.Label>
                 <Col sm='8'>
                   <Form.Control
@@ -137,7 +137,7 @@ const StudentSearch = ({
                     onChange={handleChange}
                     isInvalid={!!errors.yearLevel}
                   >
-                    <option value='0'>-----ທຸກປີຮຽນ-----</option>
+                    <option value='0'>-----All year level-----</option>
                     <option>1</option>
                     <option>2</option>
                     <option>3</option>
@@ -155,12 +155,12 @@ const StudentSearch = ({
                 style={{ margin: 0, marginBottom: 10 }}
               >
                 <Form.Label column sm='4' className='text-left'>
-                  ລະຫັດນັກຮຽນ
+                  User ID
                 </Form.Label>
                 <Col sm='8'>
                   <Form.Control
                     type='text'
-                    placeholder='ກະລຸນາປ້ອນ'
+                    placeholder='please input...'
                     name='userId'
                     value={values.userId}
                     onChange={handleChange}
@@ -176,7 +176,7 @@ const StudentSearch = ({
                     confirm
                     onClick={handleSubmit}
                     width='100%'
-                    title='ຄົ້ນຫາ'
+                    title='Search'
                   />
                 </div>
               </div>

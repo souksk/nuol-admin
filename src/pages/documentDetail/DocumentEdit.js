@@ -49,7 +49,7 @@ const DocumentEdit = ({
 
   const _fileUploaded = acceptedFiles.map(file => (
     <li key={file.path}>
-      {file.path} ຂະຫນາດ: {file.size} bytes
+      {file.path} size: {file.size} bytes
     </li>
   ));
 
@@ -121,7 +121,7 @@ const DocumentEdit = ({
   return (
     <Modal show={showEditView} onHide={_handleEditViewClose} size='lg'>
       <Modal.Title style={{ textAlign: 'center', paddingTop: 20 }}>
-        <b>ແກ້ໄຂເອກະສານ</b>
+        <b>EDIT DOCUMENT</b>
       </Modal.Title>
 
       {fileData && <Modal.Body style={{ marginLeft: 50, marginRight: 50, padding: 50 }}>
@@ -130,6 +130,7 @@ const DocumentEdit = ({
             keyword: fileData.keyword || '',
             title: fileData.title || '',
             cate: fileData.cate ? fileData.cate : '',
+            description: fileData.description || '',
             type: "PUBLIC_FILE"
           }}
           validate={values => {
@@ -171,19 +172,18 @@ const DocumentEdit = ({
                     style={{ margin: 0, marginBottom: 10 }}
                   >
                     <Form.Label column sm='4' className='text-left'>
-                      ປະເພດເອກະສານ</Form.Label>
+                    File type</Form.Label>
                     <Col sm='8'>
                       <Form.Control as='select' name="cate"
                         value={values.cate}
                         onChange={handleChange}
                         isInvalid={!!errors.cate}>
-                        <option value="RESEARCH">ບົດຄົ້ນຄ້ວາ</option>
-                        <option value="SPECIFIC">ວິຊາສະເພາະ</option>
-                        <option value="GENERAL">ຄວາມຮູ້ທົ່ວໄປ</option>
+                        <option value="RESEARCH">Research</option>
+                        <option value="SPECIFIC">Specific</option>
+                        <option value="GENERAL">General</option>
                       </Form.Control>
                     </Col>
                   </Form.Group>
-
 
                   <Form.Group
                     as={Row}
@@ -191,7 +191,7 @@ const DocumentEdit = ({
                     style={{ margin: 0, marginBottom: 10 }}
                   >
                     <Form.Label column sm='4' className='text-left'>
-                      ຊື່ເອກະສານ</Form.Label>
+                    File name</Form.Label>
                     <Col sm='8'>
                       <Form.Control type='text' placeholder='ກະລຸນາປ້ອນ' name="title"
                         value={values.title}
@@ -199,7 +199,6 @@ const DocumentEdit = ({
                         isInvalid={!!errors.title} />
                     </Col>
                   </Form.Group>
-
 
                   <Form.Group
                     as={Row}
@@ -216,6 +215,25 @@ const DocumentEdit = ({
                     </Col>
                   </Form.Group>
 
+                  <Form.Group
+                    as={Row}
+                    style={{ margin: 0, marginBottom: 10 }}
+                  >
+                    <Form.Label column sm='4' className='text-left'>
+                      Description
+                    </Form.Label>
+                    <Col sm='8'>
+                      <Form.Control
+                        as='textarea' rows='3'
+                        name='description'
+                        value={values.description}
+                        onChange={handleChange}
+                        placeholder="please input..."
+                        isInvalid={!!errors.description}
+                      />
+                    </Col>
+                  </Form.Group>
+
                   {/* ອັບໂຫລດໄຟລ */}
                   <Form.Group
                     as={Row}
@@ -224,7 +242,7 @@ const DocumentEdit = ({
                     }}
                   >
                     <Form.Label column sm='4' className='text-left'>
-                      ອັບໂຫລດໄຟລໃໝ່ເພື່ອປ່ຽນ</Form.Label>
+                    Upload new file to change</Form.Label>
                     <Col sm='8'>
                       <div
                         {...getRootProps()}
@@ -251,19 +269,19 @@ const DocumentEdit = ({
                             style={{ width: 50, height: 50 }}
                             src='/assets/download.png'
                           /> :
-                            <span style={{color: Consts.SECONDARY_COLOR}}>{fileData && fileData.file.split('/')[4]}</span>}
+                            <span style={{ color: Consts.SECONDARY_COLOR }}>{fileData && fileData.file.split('/')[4]}</span>}
                         </div>
-                        <span>ໂຍນໄຟລທີ່ຕ້ອງການອັບໂຫລດໃສ່ນີ້</span>
+                        <span>Drag or import file to here</span>
                       </div>
                       {acceptedFiles.length > 0 && <aside>
-                        <h4>ໄຟລທີ່ຈະອັບໂຫລດ</h4>
+                        <h4>File to upload</h4>
                         <ul>{_fileUploaded}</ul>
                       </aside>}
                     </Col>
                   </Form.Group>
 
                   {fileUploadProgress > 0 && fileUploadProgress < 100 && <div>
-                    <h3>ກໍາລັງອັບໂຫລດໄຟລເອກະສານ....</h3>
+                    <h3>File loading....</h3>
                     <ProgressBar animated now={fileUploadProgress} label={`${fileUploadProgress}%`} />
                   </div>
                   }
@@ -281,7 +299,7 @@ const DocumentEdit = ({
                         borderColor: Consts.SECONDARY_COLOR
                       }}
                     >
-                      ຍົກເລີກ
+                      Cancel
                     </Button>
                   </div>
                   <div style={{ padding: 15 }} className='col'>
@@ -294,7 +312,7 @@ const DocumentEdit = ({
                       }}
                       onClick={handleSubmit}
                     >
-                      ອັບໂຫລດ
+                      Edit
                     </Button>
                   </div>
                 </div>

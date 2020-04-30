@@ -33,11 +33,11 @@ const CalendaTimeDelete = ({ showTimeDeleteView, _handleTimeDeleteViewClose, dat
 						fontWeight: 'bold'
 					}}
 				>
-					ຕ້ອງການລຶບ?
+					Do you want delete this time?
 				</Modal.Title>
 
-				<p className="text-center">{dataTime ? 'ວັນ ' + dataTime.dayString : ''}</p>
-				<p className="text-center">{dataTime ? 'ຊົ່ວໂມງ ' + dataTime.timeIndexes : ''}</p>
+				<p className="text-center">{dataTime ? 'Day : ' + dataTime.dayString : ''}</p>
+				<p className="text-center">{dataTime ? 'Times : ' + dataTime.timeIndexes : ''}</p>
 
 				<div style={{ height: 20 }} />
 				<div className="row">
@@ -51,7 +51,7 @@ const CalendaTimeDelete = ({ showTimeDeleteView, _handleTimeDeleteViewClose, dat
 								borderColor: Consts.DELETE_COLOR_BUTTON
 							}}
 						>
-							ຍົກເລີກ
+							Cancel
 						</Button>
 					</div>
 					<div style={{ padding: 15 }} className="col">
@@ -64,7 +64,7 @@ const CalendaTimeDelete = ({ showTimeDeleteView, _handleTimeDeleteViewClose, dat
 							}}
 							onClick={() => _deleteCourse()}
 						>
-							ລຶບ
+							Delete
 						</Button>
 					</div>
 				</div>

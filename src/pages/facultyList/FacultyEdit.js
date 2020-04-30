@@ -22,44 +22,46 @@ import {
   TableCell
 } from '../../common'
 import { useQuery, useMutation } from '@apollo/react-hooks';
-import { CREATE_FACULTY } from '../../apollo/faculty'
+import { UPDATE_FACULTY } from '../../apollo/faculty'
 
-const FacultyAdd = ({
-  showAddView,
-  _handleAddViewClose,
+const FacultyEdit = ({
+  showEditView,
+  _handleEditViewClose,
+  dataForEdit
 }) => {
-  const [createFaculty] = useMutation(CREATE_FACULTY);
-
-  const _onAdd = (values) => {
+  const [updateFaculty] = useMutation(UPDATE_FACULTY);
+  // console.log("dataForEdit: ", dataForEdit)
+  const _onEdit = (values) => {
     let paramQL = {
       data: {
         ...values
-      }
+      },
+      where: { id: dataForEdit.id }
     };
-    createFaculty({ variables: paramQL }).then(async () => {
-      _handleAddViewClose()
+    updateFaculty({ variables: paramQL }).then(async () => {
+      _handleEditViewClose()
       window.location.reload(true)
     }).catch((err) => {
-      _handleAddViewClose()
+      _handleEditViewClose()
     });
   }
 
   return (
-    <Modal show={showAddView} onHide={_handleAddViewClose} size='lg'>
+    <Modal show={showEditView} onHide={_handleEditViewClose} size='lg'>
       <Modal.Title style={{ textAlign: 'center', paddingTop: 20 }}>
-        Add New Faculty
+        Edit Faculty
       </Modal.Title>
 
       <Modal.Body style={{ marginLeft: 50, marginRight: 50, padding: 50 }}>
-        <Formik
+        {dataForEdit && <Formik
           initialValues={{
-            name: '',
-            description: '',
-            note: ''
+            name: dataForEdit.name || '',
+            description: dataForEdit.description || '',
+            note: dataForEdit.note || ''
           }}
           onSubmit={values => {
             // console.log("values: ", values)
-            _onAdd(values)
+            _onEdit(values)
           }}
         >
           {({
@@ -117,7 +119,7 @@ const FacultyAdd = ({
                   style={{ margin: 0, marginBottom: 10 }}
                 >
                   <Form.Label column sm='4' className='text-left'>
-                    Note
+                  Note
                   </Form.Label>
                   <Col sm='8'>
                     <Form.Control
@@ -135,7 +137,7 @@ const FacultyAdd = ({
               <div className='row'>
                 <div style={{ padding: 15 }} className='col'>
                   <CustomButton
-                    onClick={_handleAddViewClose}
+                    onClick={_handleEditViewClose}
                     width='100%'
                     title='Cancel'
                   />
@@ -145,15 +147,15 @@ const FacultyAdd = ({
                     confirm
                     onClick={handleSubmit}
                     width='100%'
-                    title='Add'
+                    title='Edit'
                   />
                 </div>
               </div>
             </div>}
-        </Formik>
+        </Formik>}
       </Modal.Body>
     </Modal>
   )
 }
 
-export default FacultyAdd
+export default FacultyEdit

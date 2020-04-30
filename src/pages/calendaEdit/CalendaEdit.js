@@ -95,7 +95,6 @@ function CalendaEdit() {
 
   useEffect(() => {
     loadTeachers()
-    // dataBirthday()
   }, [])
 
   const handleStartDateChange = (date) => {
@@ -124,24 +123,6 @@ function CalendaEdit() {
       .required('Required'),
   });
 
-  // const dataBirthday = () => {
-  //   var day = []
-  //   var month = []
-  //   var year = []
-  //   for (var i = 1; i <= 31; i++) {
-  //     day.push(i)
-  //   }
-  //   for (var i = 1; i <= 12; i++) {
-  //     month.push(i)
-  //   }
-  //   for (var i = parseInt(new Date().getFullYear()); i >= parseInt(new Date().getFullYear()) - 99; i--) {
-  //     year.push(i)
-  //   }
-  //   setDays(day)
-  //   setMonths(month)
-  //   setYears(year)
-  // }
-
   if (teacherLoading || apolloLoading) return <p>loading...</p>
   // console.log("studyCalendaData: ", studyCalendaData)
 
@@ -150,13 +131,13 @@ function CalendaEdit() {
       {/* Breadcrumb */}
       <Breadcrumb>
         <Breadcrumb.Item href='' onClick={() => history.push('/calenda-list')}>
-          ຈັດການຕາຕະລາງຮຽນ
+          Study Calenda Management
         </Breadcrumb.Item>
-        <Breadcrumb.Item active>ແກ້ໄຂຕາຕະລາງຮຽນ</Breadcrumb.Item>
+        <Breadcrumb.Item active>Edit Study Calenda</Breadcrumb.Item>
       </Breadcrumb>
 
       <CustomContainer>
-        <Title text='ແກ້ໄຂຕາຕະລາງຮຽນ' />
+        <Title text='EDIT STUDY CALENDA' />
 
         {studyCalendaData && <Formik
           initialValues={{
@@ -165,12 +146,6 @@ function CalendaEdit() {
             yearLevel: studyCalendaData.yearLevel ? studyCalendaData.yearLevel : '0',
             semester: studyCalendaData.semester ? studyCalendaData.semester : '0',
             teacher: studyCalendaData.teacher ? studyCalendaData.teacher.id : '',
-            // dayStart: studyCalendaData.startDate ? parseInt(new Date(studyCalendaData.startDate).getDate()) : 0,
-            // monthStart: studyCalendaData.startDate ? parseInt(new Date(studyCalendaData.startDate).getMonth()) + 1 : 0,
-            // yearStart: studyCalendaData.startDate ? parseInt(new Date(studyCalendaData.startDate).getFullYear()) : 0,
-            // dayEnd: studyCalendaData.endDate ? parseInt(new Date(studyCalendaData.endDate).getDate()) : 0,
-            // monthEnd: studyCalendaData.endDate ? parseInt(new Date(studyCalendaData.endDate).getMonth()) + 1 : 0,
-            // yearEnd: studyCalendaData.endDate ? parseInt(new Date(studyCalendaData.endDate).getFullYear()) : 0
           }}
           validationSchema={calendaEditValidation}
           onSubmit={(values, { setSubmitting }) => {
@@ -207,40 +182,6 @@ function CalendaEdit() {
                 }
               }
             }
-
-            // let startDate = ''
-            // if (values.dayStart && values.monthStart && values.yearStart) {
-            //   startDate = values.yearStart + '-' + values.monthStart + '-' + values.dayStart
-            //   paramQL = {
-            //     data: {
-            //       ...paramQL.data, startDate
-            //     }
-            //   }
-            //   delete values.dayStart
-            //   delete values.monthStart
-            //   delete values.yearStart
-            // } else {
-            //   delete values.dayStart
-            //   delete values.monthStart
-            //   delete values.yearStart
-            // }
-
-            // let endDate = ''
-            // if (values.dayEnd && values.monthEnd && values.yearEnd) {
-            //   endDate = values.yearEnd + '-' + values.monthEnd + '-' + values.dayEnd
-            //   paramQL = {
-            //     data: {
-            //       ...paramQL.data, endDate
-            //     }
-            //   }
-            //   delete values.dayStart
-            //   delete values.monthStart
-            //   delete values.yearStart
-            // } else {
-            //   delete values.dayEnd
-            //   delete values.monthEnd
-            //   delete values.yearEnd
-            // }
 
             // // //Check if there is teacher 
             if (values.teacher) {
@@ -288,7 +229,7 @@ function CalendaEdit() {
                         aria-hidden='true'
                         style={{ marginRight: 5 }}
                       />
-                      ວິຊາ ແລະ ອາຈານສອນ
+                      Course and Teacher
                   </div>
                     {/* ຄະນະ */}
                     <Form.Group
@@ -301,7 +242,7 @@ function CalendaEdit() {
                       }}
                     >
                       <Form.Label column sm='4' className='text-left'>
-                        ວິຊາ
+                        Course
                       </Form.Label>
                       <Col sm='8'>
                         {COURSE && <Form.Control as='select' name="course"
@@ -310,7 +251,7 @@ function CalendaEdit() {
                           isInvalid={!!errors.course}
                           required={true}
                         >
-                          <option disabled={true} value="">---ກະລຸນາເລືອກວິຊາ---</option>
+                          <option disabled={true} value="">---Select course---</option>
                           {COURSE.map((x, index) => <option key={index} value={x.id}>{x.title}</option>)}
                         </Form.Control>}
                       </Col>
@@ -326,7 +267,7 @@ function CalendaEdit() {
                       }}
                     >
                       <Form.Label column sm='4' className='text-left'>
-                        ອາຈານ
+                        Teacher
                       </Form.Label>
                       <Col sm='8'>
                         <Form.Control as="select" name="teacher"
@@ -334,7 +275,7 @@ function CalendaEdit() {
                           onChange={handleChange}
                           isInvalid={!!errors.teacher}
                           required={true}>
-                          <option disabled={true} value="">---ກະລຸນາເລືອກອາຈານ---</option>
+                          <option disabled={true} value="">---Select teacher---</option>
                           {teacherData &&
                             teacherData.users.map((teacher, index) => (
                               <option key={index} value={teacher.id}>{(teacher.firstname) + ' ' + (teacher.lastname ? teacher.lastname : '')}</option>
@@ -353,7 +294,7 @@ function CalendaEdit() {
                         aria-hidden='true'
                         style={{ marginRight: 5 }}
                       />
-                      ຂໍ້ມູນຕາຕະລາງການສອນ
+                      Study calenda
                     </div>
 
                     <Form.Group
@@ -366,7 +307,7 @@ function CalendaEdit() {
                       }}
                     >
                       <Form.Label column sm='4' className='text-left'>
-                        ລະຫັດຕາຕະລາງ
+                        calenda ID
                       </Form.Label>
                       <Col sm='8'>
                         <Form.Control disabled={true} type='text' placeholder='ກະລຸນາປ້ອນ' name="calendaCode"
@@ -386,13 +327,13 @@ function CalendaEdit() {
                       }}
                     >
                       <Form.Label column sm='4' className='text-left'>
-                        ປີຮຽນ
+                        Year level
                       </Form.Label>
                       <Col sm='8'>
                         <Form.Control as='select' name="yearLevel"
                           value={values.yearLevel}
                           onChange={handleChange}>
-                          <option disabled={true} value={'0'}>---ກະລຸນາເລືອກປີຮຽນ---</option>
+                          <option disabled={true} value={'0'}>---Select year level---</option>
                           <option value={'1'}>1</option>
                           <option value={'2'}>2</option>
                           <option value={'3'}>3</option>
@@ -411,13 +352,13 @@ function CalendaEdit() {
                       }}
                     >
                       <Form.Label column sm='4' className='text-left'>
-                        ພາກຮຽນ
+                        Semester
                       </Form.Label>
                       <Col sm='8'>
                         <Form.Control as='select' name="semester"
                           value={values.semester}
                           onChange={handleChange}>
-                          <option disabled={true} value="0">---ກະລຸນາເລືອກພາກຮຽນ---</option>
+                          <option disabled={true} value="0">---Select semester---</option>
                           <option value={'1'}>1</option>
                           <option value={'2'}>2</option>
                         </Form.Control>
@@ -433,7 +374,7 @@ function CalendaEdit() {
                         aria-hidden='true'
                         style={{ marginRight: 5 }}
                       />
-                      ວັນເລີ່ມ ແລະ ວັນສິ້ນສຸດການສອນ
+                      Start date and End date
                     </div>
 
                     <Form.Group
@@ -446,7 +387,7 @@ function CalendaEdit() {
                       }}
                     >
                       <Form.Label column sm='4' className='text-left'>
-                        ວັນເລີ່ມສອນ
+                        Start date
                       </Form.Label>
                       <Col sm='3'>
                         <MuiPickersUtilsProvider utils={DateFnsUtils}>
@@ -462,35 +403,6 @@ function CalendaEdit() {
                             />
                           </Grid>
                         </MuiPickersUtilsProvider>
-                        {/* <div style={{ display: 'flex', flexDirection: 'row', width: '100%' }}>
-                          <Form.Control as='select' name="dayStart"
-                            value={values.dayStart}
-                            onChange={handleChange}>
-                            <option disabled={true} value={0}>ເລືອກວັນທີ</option>
-                            {days.map((d, index) => (
-                              <option value={parseInt(d)} key={index}>{d}</option>
-                            ))
-                            }
-                          </Form.Control>
-                          <Form.Control as='select' name="monthStart"
-                            value={values.monthStart}
-                            onChange={handleChange}>
-                            <option disabled={true} value={0}>ເລືອກເດືອນ</option>
-                            {months.map((m, index) => (
-                              <option value={parseInt(m)} key={index}>{m}</option>
-                            ))
-                            }
-                          </Form.Control>
-                          <Form.Control as='select' name="yearStart"
-                            value={values.yearStart}
-                            onChange={handleChange}>
-                            <option disabled={true} value={0}>ເລືອກປີ</option>
-                            {years.map((y, index) => (
-                              <option value={parseInt(y)} key={index}>{y}</option>
-                            ))
-                            }
-                          </Form.Control>
-                        </div> */}
                       </Col>
                     </Form.Group>
 
@@ -504,7 +416,7 @@ function CalendaEdit() {
                       }}
                     >
                       <Form.Label column sm='4' className='text-left'>
-                        ວັນສິ້ນສຸດການສອນ
+                        End date
                       </Form.Label>
                       <Col sm='3'>
                         <MuiPickersUtilsProvider utils={DateFnsUtils}>
@@ -520,35 +432,6 @@ function CalendaEdit() {
                             />
                           </Grid>
                         </MuiPickersUtilsProvider>
-                        {/* <div style={{ display: 'flex', flexDirection: 'row', width: '100%' }}>
-                          <Form.Control as='select' name="dayEnd"
-                            value={values.dayEnd}
-                            onChange={handleChange}>
-                            <option disabled={true} value={0}>ເລືອກວັນທີ</option>
-                            {days.map((d, index) => (
-                              <option value={parseInt(d)} key={index}>{d}</option>
-                            ))
-                            }
-                          </Form.Control>
-                          <Form.Control as='select' name="monthEnd"
-                            value={values.monthEnd}
-                            onChange={handleChange}>
-                            <option disabled={true} value={0}>ເລືອກເດືອນ</option>
-                            {months.map((m, index) => (
-                              <option value={parseInt(m)} key={index}>{m}</option>
-                            ))
-                            }
-                          </Form.Control>
-                          <Form.Control as='select' name="yearEnd"
-                            value={values.yearEnd}
-                            onChange={handleChange}>
-                            <option disabled={true} value={0}>ເລືອກປີ</option>
-                            {years.map((y, index) => (
-                              <option value={parseInt(y)} key={index}>{y}</option>
-                            ))
-                            }
-                          </Form.Control>
-                        </div> */}
                       </Col>
                     </Form.Group>
                   </div>
@@ -565,10 +448,10 @@ function CalendaEdit() {
                     }}
                   >
                     <div style={{ marginRight: 80 }}>
-                      <CustomButton title='ຍົກເລີກ' onClick={() => _cancel()} />
+                      <CustomButton title='Cancel' onClick={() => _cancel()} />
                     </div>
 
-                    <CustomButton confirm title='ແກ້ໄຂຕາຕະລາງຮຽນ' onClick={handleSubmit} />
+                    <CustomButton confirm title='Edit' onClick={handleSubmit} />
                   </div>
                 </div>
 

@@ -99,13 +99,13 @@ function StudentAdd() {
           history.push('/student-list')
           window.location.reload(true)
         }}>
-          ຈັດການນັກຮຽນ
+          Student Management
         </Breadcrumb.Item>
-        <Breadcrumb.Item active>ເພີ່ມນັກຮຽນ</Breadcrumb.Item>
+        <Breadcrumb.Item active>Add Student</Breadcrumb.Item>
       </Breadcrumb>
 
       <CustomContainer>
-        <Title text='ເພີ່ມນັກຮຽນ' />
+        <Title text='ADD STUDENT' />
         <Formik
           initialValues={{
             firstname: '',
@@ -214,7 +214,7 @@ function StudentAdd() {
                       aria-hidden='true'
                       style={{ marginRight: 5, color: Consts.SECONDARY_COLOR, color: Consts.SECONDARY_COLOR }}
                     />
-                    ຄະນະແລະພາກວິຊາ
+                    Faculty and Department
                   </div>
                   {/* ຄະນະ */}
                   <Form.Group
@@ -227,7 +227,7 @@ function StudentAdd() {
                     }}
                   >
                     <Form.Label column sm='4' className='text-left'>
-                      ຄະນະ
+                      Faculty
                     </Form.Label>
                     <Col sm='8'>
                       {FACULTY && <Form.Control as='select'
@@ -237,7 +237,7 @@ function StudentAdd() {
                         }}
                         name="facalty"
                         value={values.facalty}>
-                        <option disabled={true} value="">---ກະລຸນາເລືອກຄະນະ---</option>
+                        <option disabled={true} value="">---Select faculty---</option>
                         {FACULTY.map((x, index) => <option key={"faculty" + index} value={x.name}>{x.name}</option>)}
                       </Form.Control>}
                     </Col>
@@ -254,7 +254,7 @@ function StudentAdd() {
                     }}
                   >
                     <Form.Label column sm='4' className='text-left'>
-                      ພາກວິຊາ
+                      Department
                     </Form.Label>
                     <Col sm='8'>
                       <Form.Control as='select' name="department"
@@ -263,7 +263,7 @@ function StudentAdd() {
                           handleChange(e)
                           _selectDepartment(e)
                         }}>
-                        <option disabled={true} value="">---ກະລຸນາເລືອກພາກວິຊາ---</option>
+                        <option disabled={true} value="">---Select department---</option>
                         {selectFacaltyIndex > -1 && FACULTY[selectFacaltyIndex].departments.map((x, index) => <option key={"department" + index}>{x.name}</option>)}
                       </Form.Control>
                     </Col>
@@ -280,11 +280,11 @@ function StudentAdd() {
                     }}
                   >
                     <Form.Label column sm='4' className='text-left'>
-                      ປີຮຽນ
+                      Year level
                     </Form.Label>
                     <Col sm='8'>
                       <Form.Control as='select' name="yearLevel" value={values.yearLevel} onChange={handleChange} >
-                        <option disabled={true} value="">---ກະລຸນາເລືອກປີຮຽນ---</option>
+                        <option disabled={true} value="">---Select year level---</option>
                         <option value={1}>1</option>
                         <option value={2}>2</option>
                         <option value={3}>3</option>
@@ -303,7 +303,7 @@ function StudentAdd() {
                       aria-hidden='true'
                       style={{ marginRight: 5, color: Consts.SECONDARY_COLOR }}
                     />
-                    ຂໍ້ມູນນັກຮຽນ
+                    Student
                   </div>
                   {/* ຊື່ */}
                   <Form.Group
@@ -316,12 +316,12 @@ function StudentAdd() {
                     }}
                   >
                     <Form.Label column sm='4' className='text-left'>
-                      ຊື່
+                      First name
                     </Form.Label>
                     <Col sm='8'>
                       <Form.Control
                         type='text'
-                        placeholder='ກະລຸນາປ້ອນ'
+                        placeholder='please input...'
                         name='firstname'
                         value={values.firstname}
                         onChange={handleChange}
@@ -341,12 +341,12 @@ function StudentAdd() {
                     }}
                   >
                     <Form.Label column sm='4' className='text-left'>
-                      ນາມສະກຸນ
+                      Last name
                     </Form.Label>
                     <Col sm='8'>
                       <Form.Control
                         type='text'
-                        placeholder='ກະລຸນາປ້ອນ'
+                        placeholder='please input...'
                         name='lastname'
                         value={values.lastname}
                         onChange={handleChange}
@@ -365,7 +365,7 @@ function StudentAdd() {
                     }}
                   >
                     <Form.Label column sm='4' className='text-left'>
-                      ວັນເດືອນປີເກີດ</Form.Label>
+                      Birthday</Form.Label>
                     <Col sm='3'>
                       <MuiPickersUtilsProvider utils={DateFnsUtils}>
                         <Grid style={{ marginTop: -15 }} container justify="space-around">
@@ -396,7 +396,7 @@ function StudentAdd() {
                     onChange={handleChange}
                   >
                     <Form.Label column sm='4' className='text-left'>
-                      ເພດ
+                      Gender
                       </Form.Label>
                     <Col sm='8'>
                       <div style={{ display: 'flex', flexDirection: 'row', width: '100%' }}>
@@ -408,7 +408,7 @@ function StudentAdd() {
                             checked={values.gender == 'MALE' ? true : false}
                             type="radio"
                           />{'\t'}
-                          <label htmlFor="male">ຊາຍ</label>
+                          <label htmlFor="male">Male</label>
                         </Col>
                         <Col sm={4}>
                           <input
@@ -418,17 +418,7 @@ function StudentAdd() {
                             checked={values.gender == 'FEMALE' ? true : false}
                             type="radio"
                           />{'\t'}
-                          <label htmlFor="female">ຍິງ</label>
-                        </Col>
-                        <Col sm={4}>
-                          <input
-                            id="other"
-                            value="OTHER"
-                            name="gender"
-                            checked={values.gender == 'OTHER' ? true : false}
-                            type="radio"
-                          />{'\t'}
-                          <label htmlFor="other">ອື່ນໆ</label>
+                          <label htmlFor="female">Famale</label>
                         </Col>
                       </div>
                     </Col>
@@ -447,7 +437,7 @@ function StudentAdd() {
                     onChange={handleChange}
                   >
                     <Form.Label column sm='4' className='text-left'>
-                      ສະຖານະ
+                      Status
                       </Form.Label>
                     <Col sm='8'>
                       <div style={{ display: 'flex', flexDirection: 'row', width: '100%' }}>
@@ -459,7 +449,7 @@ function StudentAdd() {
                             checked={values.maritualStatus == 'SINGLE' ? true : false}
                             type="radio"
                           />{'\t'}
-                          <label htmlFor="single">ໂສດ</label>
+                          <label htmlFor="single">Single</label>
                         </Col>
                         <Col sm={4}>
                           <input
@@ -469,7 +459,7 @@ function StudentAdd() {
                             checked={values.maritualStatus == 'MARRIAGE' ? true : false}
                             type="radio"
                           />{'\t'}
-                          <label htmlFor="marriage">ແຕ່ງງານ</label>
+                          <label htmlFor="marriage">Marriage</label>
                         </Col>
                       </div>
                     </Col>
@@ -486,12 +476,12 @@ function StudentAdd() {
                     }}
                   >
                     <Form.Label column sm='4' className='text-left'>
-                      ເບີໂທ
+                      Phone number
                     </Form.Label>
                     <Col sm='8'>
                       <Form.Control
                         type='text'
-                        placeholder='ກະລຸນາປ້ອນ'
+                        placeholder='please input...'
                         name='phone'
                         value={values.phone}
                         onChange={handleChange}
@@ -510,12 +500,12 @@ function StudentAdd() {
                     }}
                   >
                     <Form.Label column sm='4' className='text-left'>
-                      ອີເມວ
+                      E-Mail
                     </Form.Label>
                     <Col sm='8'>
                       <Form.Control
                         type='text'
-                        placeholder='ກະລຸນາປ້ອນ'
+                        placeholder='please input...'
                         name='email'
                         value={values.email}
                         onChange={handleChange}
@@ -532,7 +522,7 @@ function StudentAdd() {
                       aria-hidden='true'
                       style={{ marginRight: 5, color: Consts.SECONDARY_COLOR }}
                     />
-                    ໄອດີແລະລະຫັດຜ່ານ
+                    User ID and Password
                   </div>
                   {/* ໄອດີ */}
                   <Form.Group
@@ -545,12 +535,12 @@ function StudentAdd() {
                     }}
                   >
                     <Form.Label column sm='4' className='text-left'>
-                      ໄອດີ
+                      User ID
                     </Form.Label>
                     <Col sm='8'>
                       <Form.Control
                         type='text'
-                        placeholder='ກະລຸນາປ້ອນ'
+                        placeholder='please input...'
                         name='userId'
                         value={values.userId}
                         onChange={handleChange}
@@ -569,12 +559,12 @@ function StudentAdd() {
                     }}
                   >
                     <Form.Label column sm='4' className='text-left'>
-                      ລະຫັດຜ່ານ
+                      Password
                     </Form.Label>
                     <Col sm='8'>
                       <Form.Control
                         type='text'
-                        placeholder='ກະລຸນາປ້ອນ'
+                        placeholder='please input...'
                         name='password'
                         value={values.password}
                         onChange={handleChange}
@@ -592,7 +582,7 @@ function StudentAdd() {
                       aria-hidden='true'
                       style={{ marginRight: 5, color: Consts.SECONDARY_COLOR }}
                     />
-                    ອື່ນໆ
+                    Other
                   </div>
                   {/* ລາຍລະອຽດ */}
                   <Form.Group
@@ -605,14 +595,14 @@ function StudentAdd() {
                     }}
                   >
                     <Form.Label column sm='4' className='text-left'>
-                      ລາຍລະອຽດ
+                      Decription
                     </Form.Label>
                     <Col sm='8'>
                       <Form.Control
                         as='textarea'
                         rows='3'
                         name='description'
-                        placeholder='ກະລຸນາປ້ອນ'
+                        placeholder='please input...'
                         value={values.description}
                         onChange={handleChange}
                         isInvalid={!!errors.description}
@@ -631,14 +621,14 @@ function StudentAdd() {
                     }}
                   >
                     <Form.Label column sm='4' className='text-left'>
-                      ໝາຍເຫດ
+                      Note
                     </Form.Label>
                     <Col sm='8'>
                       <Form.Control
                         as='textarea'
                         rows='3'
                         name='note'
-                        placeholder='ກະລຸນາປ້ອນ'
+                        placeholder='please input...'
                         value={values.note}
                         onChange={handleChange}
                         isInvalid={!!errors.note}
@@ -659,12 +649,12 @@ function StudentAdd() {
                   }}
                 >
                   <div style={{ marginRight: 80 }}>
-                    <CustomButton title='ຍົກເລີກ' onClick={() => _cancel()} />
+                    <CustomButton title='Cancel' onClick={() => _cancel()} />
                   </div>
 
                   <CustomButton
                     confirm
-                    title='ເພີ່ມນັກຮຽນ'
+                    title='Add'
                     onClick={handleSubmit}
                   />
                 </div>

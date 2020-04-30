@@ -47,7 +47,7 @@ function CalendaList() {
   const [selectedFaculty, setselectedFaculty] = useState('')
   const [selectedDepartment, setselectedDepartment] = useState('')
   const [selectedYearLevel, setselectedYearLevel] = useState(null)
-  const [title, setTitle] = useState('ຕາຕະລາງຮຽນທັງຫມົດ')
+  const [title, setTitle] = useState('ALL STUDY CALENDAS')
 
   // on first load
   useEffect(() => {
@@ -132,10 +132,10 @@ function CalendaList() {
           window.location.reload(true)
         }
         }>
-          ຈັດການຕາຕະລາງຮຽນ
+          Study Calenda Management
         </Breadcrumb.Item>
         <Breadcrumb.Item active>
-          {title}
+          All Study Calendas
         </Breadcrumb.Item>
       </Breadcrumb>
 
@@ -145,7 +145,7 @@ function CalendaList() {
           <CustomButton
             confirm
             addIcon
-            title='ເພີ່ມຕາຕະລາງ'
+            title='Add New'
             onClick={() => _studyCalendaAdd()}
           />
         </div>
@@ -165,7 +165,7 @@ function CalendaList() {
             color: Consts.FONT_COLOR_SECONDARY
           }}
         >
-          ທັງຫມົດ {studyCalendaData.length} ຕາຕະລາງ
+          All {studyCalendaData.length} calendas
         </div>
 
         {/* Table list */}
@@ -173,15 +173,15 @@ function CalendaList() {
           <table border='1' bordercolor='#fff' style={{ width: '100%' }}>
             <thead>
               <TableHeader>
-                <th style={{ width: 60 }}>ລຳດັບ</th>
-                <th style={{ width: 100 }}>ລະຫັດຕາຕະລາງ</th>
-                <th style={{ width: 250 }}>ຊື່ວິຊາ</th>
-                <th style={{ width: 250 }}>ອາຈານ</th>
-                <th style={{ width: 100 }}>ປິຮຽນ</th>
-                <th style={{ width: 100 }}>ພາກຮຽນ</th>
-                <th style={{ width: 100 }}>ວັນ</th>
-                <th style={{ width: 100 }}>ຊົ່ວໂມງ</th>
-                <th style={{ width: 180 }}>ຈັດການ</th>
+                <th style={{ width: 60 }}>#</th>
+                <th style={{ width: 120 }}>CALENDA ID</th>
+                <th style={{ width: 250 }}>COURSE NAME</th>
+                <th style={{ width: 230 }}>TEACHER NAEM</th>
+                <th style={{ width: 100 }}>YEAR LEVEL</th>
+                <th style={{ width: 100 }}>SEMESTER</th>
+                <th style={{ width: 100 }}>DAY</th>
+                <th style={{ width: 100 }}>TIMES</th>
+                <th style={{ width: 180 }}>ACTIONS</th>
               </TableHeader>
             </thead>
             <tbody>
@@ -252,7 +252,7 @@ function CalendaList() {
                             style={{ cursor: 'pointer', backgroundColor: '#FFFFFF', padding: 3, width: 64, borderRadius: 4 }}
                           >
                             <FontAwesomeIcon
-                              icon={['fas', 'external-link-alt']}
+                              icon={['fas', 'eye']}
                               color={Consts.BORDER_COLOR}
                             />{' '}
                           </div>

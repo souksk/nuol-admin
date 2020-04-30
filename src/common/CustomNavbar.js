@@ -31,9 +31,9 @@ function CustomNavbar() {
             {dataUser && <div style={{ display: 'flex', flexDirection: 'row', width: '30%', height: 50, alignItems: 'flex-end', justifyContent: 'flex-end' }}>
                 <Nav className="mr-auto" style={{ display: 'flex', flexDirection: 'column', width: '100%', alignItems: 'flex-end', justifyContent: 'flex-end' }}>
                     <NavDropdown alignRight title={dataUser.firstname + ' ' + ((dataUser.lastname) ? dataUser.lastname : '')} id="basic-nav-dropdown">
-                        <NavDropdown.Item onClick={() => _onOpenProfile()}><FontAwesomeIcon icon={faUser} style={{ color: Consts.PRIMARY_COLOR }} />{'\t'}ຂໍ້ມູນຜູ້ໃຊ້</NavDropdown.Item>
+                        <NavDropdown.Item onClick={() => _onOpenProfile()}><FontAwesomeIcon icon={faUser} style={{ color: Consts.PRIMARY_COLOR }} />{'\t'}Profile</NavDropdown.Item>
                         <NavDropdown.Divider />
-                        <NavDropdown.Item onClick={() => _onLogout()}><FontAwesomeIcon icon={faSignOutAlt} style={{ color: Consts.PRIMARY_COLOR }} />{'\t'}ອອກຈາກລະບົບ</NavDropdown.Item>
+                        <NavDropdown.Item onClick={() => _onLogout()}><FontAwesomeIcon icon={faSignOutAlt} style={{ color: Consts.PRIMARY_COLOR }} />{'\t'}Logout</NavDropdown.Item>
                     </NavDropdown>
                 </Nav>
             </div>}

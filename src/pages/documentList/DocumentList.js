@@ -65,7 +65,7 @@ function DocumentList() {
   // States
   const [showSearchView, setShowSearchView] = useState(false)
   const [showUploadView, setShowUploadView] = useState(false)
-  const [title, setTitle] = useState("ເອກະສານທັງຫມົດ")
+  const [title, setTitle] = useState("ALL DOCUMENTS")
   const [keywordInput, setKeywordInput] = useState(null)
 
   // Set states
@@ -88,10 +88,10 @@ function DocumentList() {
         variables: { keyword: value.keyword }
       })
       setKeywordInput(value.keyword)
-      setTitle("ຜົນການຄົ້ນຫາ")
+      setTitle("SEARCH RESULT")
     } else {
       setFilesData(normalFilesData.files)
-      setTitle("ເອກະສານທັງຫມົດ")
+      setTitle("ALL DOCUMENTS")
       setKeywordInput('')
     }
   }
@@ -123,14 +123,14 @@ function DocumentList() {
             confirm
             downloadIcon
             width={200}
-            title='ອັບໂຫລດເອກະສານ'
+            title='Upload Document'
             onClick={() => _handleUploadViewShow()}
           />
         </div>
 
         {/* custom search button */}
         <SearchBar
-          title='ຄະນະວິທະຍາສາດທໍາມະຊາດ,ພາກວິຊາວິທະຍາສາດຄອມພິວເຕີ,ປີຮຽນທີ່1'
+          title='Keyword . . .'
           onClick={() => _handleSearchViewShow()}
         />
 
@@ -143,30 +143,30 @@ function DocumentList() {
             marginTop: 30
           }}
         >
-          <div style={{ width: 80 }}>ຫມວດ</div>
+          <div style={{ width: 100 }}>Category</div>
           <div
             onClick={() => showBorder(0)}
             style={{
-              width: 80,
+              width: 100,
               marginRight: 30,
               textAlign: 'center',
               cursor: 'pointer',
               borderBottom: isClicked == 0 ? '5px solid #7BB500' : 'none'
             }}
           >
-            ທັງຫມົດ
+            All Files
           </div>
           <div
             onClick={() => showBorder(1)}
             style={{
-              width: 80,
+              width: 100,
               marginRight: 40,
               textAlign: 'center',
               cursor: 'pointer',
               borderBottom: isClicked == 1 ? '5px solid #7BB500' : 'none'
             }}
           >
-            ບົດຄົ້ນຄ້ວາ
+            Research
           </div>
           <div
             onClick={() => showBorder(2)}
@@ -178,17 +178,17 @@ function DocumentList() {
               borderBottom: isClicked == 2 ? '5px solid #7BB500' : 'none'
             }}
           >
-            ຄວາມຮູ້ທົ່ວໄປ
+            Specific
           </div>
           <div
             onClick={() => showBorder(3)}
             style={{
-              width: 140,
+              width: 100,
               cursor: 'pointer',
               borderBottom: isClicked == 3 ? '5px solid #7BB500' : 'none'
             }}
           >
-            ເອກະສານວິຊາສະເພາະ
+            General
           </div>
         </div>
 
@@ -201,7 +201,7 @@ function DocumentList() {
             color: Consts.FONT_COLOR_SECONDARY
           }}
         >
-          ທັງຫມົດ {filesData.length}
+          All {filesData.length} documents
         </div>
 
         {/* Table list */}
@@ -209,11 +209,11 @@ function DocumentList() {
           <table border='1' bordercolor='#fff' style={{ width: '100%' }}>
             <thead>
               <TableHeader>
-                <th>ລຳດັບ</th>
-                <th>ຊື່ເອກະສານ</th>
-                {/* <th>ໄຟລ</th> */}
-                <th>ອັບເດດ</th>
-                <th style={{width: 200}}>ຈັດການ</th>
+                <th>#</th>
+                <th>FILE NAME</th>
+                <th>DESCRIPTION</th>
+                <th>UPLOAD DATE</th>
+                <th style={{ width: 200 }}>ACTIONS</th>
               </TableHeader>
             </thead>
             <tbody>
@@ -233,9 +233,9 @@ function DocumentList() {
                       <TableCell>
                         {x.title}
                       </TableCell>
-                      {/* <TableCell>
-                        {x.file && x.file.split('/')[4]}
-                      </TableCell> */}
+                      <TableCell>
+                        {(x.description ? x.description : '-')}
+                      </TableCell>
                       <TableCell style={{ width: 200 }}>
                         {new Date(x.updatedAt).toLocaleString('la-LA', { hour12: false })}
                       </TableCell>
@@ -249,16 +249,16 @@ function DocumentList() {
                           }}
                         >
                           <a href={x.file} download>
-                            <div style={{ cursor: 'pointer', backgroundColor:'#FFFFFF', padding: 3, width: 64, borderRadius: 4 }}>
-                              <i className='fa fa-download' style={{color: Consts.BORDER_COLOR}} />
+                            <div style={{ cursor: 'pointer', backgroundColor: '#FFFFFF', padding: 3, width: 64, borderRadius: 4 }}>
+                              <i className='fa fa-download' style={{ color: Consts.BORDER_COLOR }} />
                             </div>
                           </a>
 
-                          <div 
-                            onClick={() => _documentDetail(x)} 
-                            style={{ cursor: 'pointer', backgroundColor:'#FFFFFF', padding: 3, width: 64, borderRadius: 4 }}>
+                          <div
+                            onClick={() => _documentDetail(x)}
+                            style={{ cursor: 'pointer', backgroundColor: '#FFFFFF', padding: 3, width: 64, borderRadius: 4 }}>
                             <FontAwesomeIcon
-                              icon={['fas', 'external-link-alt']}
+                              icon={['fas', 'eye']}
                               color={Consts.BORDER_COLOR}
                             />
                           </div>

@@ -30,7 +30,7 @@ function ProfileDetail() {
         <div>
             {/* Breadcrumb */}
             <Breadcrumb>
-                <Breadcrumb.Item active>ຂໍ້ມູນສ່ວນຕົວ</Breadcrumb.Item>
+                <Breadcrumb.Item active>My Profile</Breadcrumb.Item>
             </Breadcrumb>
 
             <CustomContainer>
@@ -42,7 +42,7 @@ function ProfileDetail() {
                         alignItems: 'center'
                     }}
                     >
-                    <Title text={'ລາຍລະອຽດສ່ວນຕົວ'} />
+                    <Title text={'MY PROFILE'} />
 
                     {/* Button group */}
                     <div>
@@ -59,7 +59,7 @@ function ProfileDetail() {
                             }}
                             onClick={() => _edit()}
                         >
-                            <FontAwesomeIcon icon='edit' style={{ fontSize: 16 }} /> ແກ້ໃຂ
+                            <FontAwesomeIcon icon='edit' style={{ fontSize: 16 }} /> Edit
                         </button>
 
                     </div>
@@ -77,34 +77,34 @@ function ProfileDetail() {
 
                     {/* -------- ຂໍ້ມູນອາຈານ -------- */}
                     <div style={{ padding: 20, paddingBottom: 0 }}>
-                        <div style={{ fontWeight: "bold" }}><FontAwesomeIcon icon='caret-down' style={{ marginRight: 16, marginLeft: -24, fontSize: 24, color: Consts.PRIMARY_COLOR }} />ຂໍ້ມູນ {userData.role}</div>
+                        <div style={{ fontWeight: "bold" }}><FontAwesomeIcon icon='caret-down' style={{ marginRight: 16, marginLeft: -24, fontSize: 24, color: Consts.PRIMARY_COLOR }} />{userData.role} Detail</div>
                         <div style={{ paddingLeft: 20, fontSize: 14 }}>
                             <Row>
-                                <Col>ຊື່</Col>
+                                <Col>First name</Col>
                                 <Col>
                                     {userData.firstname ? userData.firstname : '-'}
                                 </Col>
                             </Row>
                             <Row>
-                                <Col>ນາມສະກຸນ</Col>
+                                <Col>Last name</Col>
                                 <Col>
                                     {userData.lastname ? userData.lastname : '-'}
                                 </Col>
                             </Row>
                             <Row>
-                                <Col>ວັນເດືອນປີເກີດ</Col>
+                                <Col>Birthday</Col>
                                 <Col>
                                     {userData.birthday ? new Date(userData.birthday).toLocaleDateString() : '-'}
                                 </Col>
                             </Row>
                             <Row>
-                                <Col>ເບີໂທ</Col>
+                                <Col>Phone number</Col>
                                 <Col>
                                     {userData.phone ? userData.phone : '-'}
                                 </Col>
                             </Row>
                             <Row>
-                                <Col>ອີເມວ</Col>
+                                <Col>E-Mail</Col>
                                 <Col>
                                     {userData.email ? userData.email : '-'}
                                 </Col>
@@ -120,16 +120,16 @@ function ProfileDetail() {
 
                     {/* -------- ໄອດີ ແລະ ລະຫັດຜ່ານ -------- */}
                     <div style={{ padding: 20, paddingBottom: 0 }}>
-                        <div style={{ fontWeight: "bold" }}><FontAwesomeIcon icon='caret-down' style={{ marginRight: 16, marginLeft: -24, fontSize: 24, color: Consts.PRIMARY_COLOR }} />ໄອດີ ແລະ ລະຫັດຜ່ານ</div>
+                        <div style={{ fontWeight: "bold" }}><FontAwesomeIcon icon='caret-down' style={{ marginRight: 16, marginLeft: -24, fontSize: 24, color: Consts.PRIMARY_COLOR }} />User ID and Password</div>
                         <div style={{ paddingLeft: 20, fontSize: 14 }}>
                             <Row>
-                                <Col>ໄອດີ</Col>
+                                <Col>User ID</Col>
                                 <Col>
                                     {userData.userId ? userData.userId : '-'}
                                 </Col>
                             </Row>
                             <Row>
-                                <Col>ລະຫັດຜ່ານ</Col>
+                                <Col>Password</Col>
                                 <Col>
                                     ********
                                 </Col>
@@ -138,28 +138,28 @@ function ProfileDetail() {
                     </div>
                     {/* -------- ຄໍາອະທິບາຍ -------- */}
                     <div style={{ padding: 20, paddingBottom: 0 }}>
-                        <div style={{ fontWeight: "bold" }}><FontAwesomeIcon icon='caret-down' style={{ marginRight: 16, marginLeft: -24, fontSize: 24, color: Consts.PRIMARY_COLOR }} />ອື່ນໆ</div>
+                        <div style={{ fontWeight: "bold" }}><FontAwesomeIcon icon='caret-down' style={{ marginRight: 16, marginLeft: -24, fontSize: 24, color: Consts.PRIMARY_COLOR }} />Other</div>
                         <div style={{ paddingLeft: 20, fontSize: 14 }}>
                             <Row>
-                                <Col>ລາຍລະອຽດ</Col>
+                                <Col>Description</Col>
                                 <Col>
                                     {userData.description ? userData.description : '-'}
                                 </Col>
                             </Row>
                             <Row>
-                                <Col>ໝາຍເຫດ</Col>
+                                <Col>Note</Col>
                                 <Col>
                                     {userData.note ? userData.note : '-'}
                                 </Col>
                             </Row>
                             <Row>
-                                <Col>ວັນສ້າງ</Col>
+                                <Col>Create at date</Col>
                                 <Col>
                                     {userData.createdAt ? new Date(userData.createdAt).toLocaleString('la-LA', { hour12: false }) : '-'}
                                 </Col>
                             </Row>
                             <Row>
-                                <Col>ວັນແກ້ໄຂ</Col>
+                                <Col>Update at date</Col>
                                 <Col>
                                     {userData.updatedAt ? new Date(userData.updatedAt).toLocaleString('la-LA', { hour12: false }) : '-'}
                                 </Col>

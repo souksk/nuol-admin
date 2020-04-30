@@ -71,7 +71,7 @@ function CourseEditConfirm({
         size='lg'
       >
         <Modal.Title style={{ textAlign: 'center', paddingTop: 20 }}>
-          ຢືນຢັນການເພີ່ມວິຊາ
+          CONFIRM TO EDIT COURSE
       </Modal.Title>
         <Modal.Body
           style={{
@@ -98,7 +98,7 @@ function CourseEditConfirm({
                     aria-hidden='true'
                     style={{ marginRight: 5, color: Consts.SECONDARY_COLOR }}
                   />
-                  ຄະນະແລະພາກວິຊາ
+                  Faculty and Department
               </div>
                 {/* ຄະນະ */}
                 <Form.Group
@@ -111,7 +111,7 @@ function CourseEditConfirm({
                   }}
                 >
                   <Form.Label column sm='4' className='text-left'>
-                    ຄະນະ
+                  Faculty
                 </Form.Label>
                   <Col sm='8' style={{marginTop:8}}>
                     <span>{param.data && _renderFaculty(param.data.faculty.connect.id)}</span>
@@ -129,7 +129,7 @@ function CourseEditConfirm({
                   }}
                 >
                   <Form.Label column sm='4' className='text-left'>
-                    ພາກວິຊາ
+                  Department
                 </Form.Label>
                   <Col sm='8' style={{marginTop:8}}>
                     <span>{param.data && _renderDepartment(param.data.faculty.connect.id, param.data.department.connect.id)}</span>
@@ -145,7 +145,7 @@ function CourseEditConfirm({
                     aria-hidden='true'
                     style={{ marginRight: 5, color: Consts.SECONDARY_COLOR }}
                   />
-                  ຂໍ້ມູນວິຊາ
+                  Course
               </div>
                 {/* ຊື່ວິຊາ */}
                 <Form.Group
@@ -158,7 +158,7 @@ function CourseEditConfirm({
                   }}
                 >
                   <Form.Label column sm='4' className='text-left'>
-                    ຊື່ວິຊາ
+                    Course name
                 </Form.Label>
                   <Col sm='8' style={{marginTop:8}}>
                     <span>{param.data && param.data.title}</span>
@@ -176,7 +176,7 @@ function CourseEditConfirm({
                   }}
                 >
                   <Form.Label column sm='4' className='text-left'>
-                    ລະຫັດວິຊາ
+                  Course ID
                 </Form.Label>
                   <Col sm='8' style={{marginTop:8}}>
                     <span>{param.data && param.data.courseCode}</span>
@@ -194,7 +194,7 @@ function CourseEditConfirm({
                   }}
                 >
                   <Form.Label column sm='4' className='text-left'>
-                    ຈໍານວນຫນ່ວຍກິດ
+                    Unit
                 </Form.Label>
                   <Col sm='8' style={{marginTop:8}}>
                     <span>{param.data && (param.data.unit != 0 ? param.data.unit : '')}</span>
@@ -210,7 +210,7 @@ function CourseEditConfirm({
                     aria-hidden='true'
                     style={{ marginRight: 5, color: Consts.SECONDARY_COLOR }}
                   />
-                  ຄໍາອະທິບາຍ
+                  Description
               </div>
                 {/* ເນື້ອໃນຂອງວິຊາ */}
                 <Form.Group
@@ -223,7 +223,7 @@ function CourseEditConfirm({
                   }}
                 >
                   <Form.Label column sm='4' className='text-left'>
-                    ເນື້ອໃນຂອງວິຊາ
+                  Description
                 </Form.Label>
                   <Col sm='8' style={{marginTop:8}}>
                     <span>{param.data && param.data.description}</span>
@@ -239,7 +239,7 @@ function CourseEditConfirm({
                     aria-hidden='true'
                     style={{ marginRight: 5, color: Consts.SECONDARY_COLOR }}
                   />
-                  ອັບໂຫລດ
+                  File
               </div>
                 {/* ອັບໂຫລດໄຟລ */}
                 <Form.Group
@@ -252,7 +252,7 @@ function CourseEditConfirm({
                   }}
                 >
                   <Form.Label column sm='4' className='text-left'>
-                    ອັບໂຫລດໄຟລ
+                    File upload
                 </Form.Label>
                   <Col sm='8' style={{marginTop:8}}>
                     <span>{param.data && param.data.syllabusFile && param.data.syllabusFile.create.title}</span>
@@ -274,7 +274,7 @@ function CourseEditConfirm({
                   borderColor: Consts.SECONDARY_COLOR
                 }}
               >
-                ຍົກເລີກ
+                Cancel
             </Button>
             </div>
             <div style={{ padding: 15 }} className='col'>
@@ -287,7 +287,7 @@ function CourseEditConfirm({
                 }}
                 onClick={() => _confirmCourseEdit()}
               >
-                ຕົກລົງ
+                Edit
             </Button>
             </div>
           </div>

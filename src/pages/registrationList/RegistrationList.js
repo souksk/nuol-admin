@@ -57,7 +57,7 @@ function RegistrationList() {
   const [selectedFaculty, setselectedFaculty] = useState('')
   const [selectedDepartment, setselectedDepartment] = useState('')
   const [selectedYearLevel, setselectedYearLevel] = useState(null)
-  const [title, setTitle] = useState('ວິຊາທັງຫມົດ')
+  const [title, setTitle] = useState('ALL COURSES')
   const [showEditView, setShowEditView] = useState(false)
   const [dataEdit, setDataEdit] = useState({})
 
@@ -105,10 +105,10 @@ function RegistrationList() {
     setselectedYearLevel(value.yearLevel)
 
     let where = {}
-    if (!_.isEmpty(value.studentId)) {
+    if (!_.isEmpty(value.userId)) {
       where = {
         student: {
-          userId_contains: value.studentId
+          userId_contains: value.userId
         }
       }
     } else {
@@ -143,7 +143,7 @@ function RegistrationList() {
     })
 
     // set title
-    setTitle('ຜົນການຄົ້ນຫາ')
+    setTitle('Search result')
   }
 
   return (
@@ -151,18 +151,18 @@ function RegistrationList() {
       {/* Breadcrumb */}
       <Breadcrumb>
         <Breadcrumb.Item href='' onClick={() => history.push('/registration-list')}>
-          ລົງທະບຽນວິຊາ
+          Registration Management
         </Breadcrumb.Item>
-        <Breadcrumb.Item active>ລາຍການລົງທະບຽນທັງຫມົດ</Breadcrumb.Item>
+        <Breadcrumb.Item active>All Registrations</Breadcrumb.Item>
       </Breadcrumb>
 
       <CustomContainer>
-        <Title text={'ລາຍການລົງທະບຽນທັງຫມົດ '} />
+        <Title text={'ALL REGISTRATIONS '} />
         <div style={{ textAlign: 'right' }}>
           <CustomButton
             confirm
             addIcon
-            title='ລົງທະບຽນ'
+            title='Registration'
             onClick={() => {
               _handleShowAddModalShow()
             }}
@@ -171,7 +171,7 @@ function RegistrationList() {
 
         {/* custom search button */}
         <SearchBar
-          title='ຄະນະວິທະຍາສາດທໍາມະຊາດ,ພາກວິຊາວິທະຍາສາດຄອມພິວເຕີ,ປີຮຽນທີ່1'
+          title='Faculty, Department, Student ID, ...'
           onClick={() => _handleSearchViewShow()}
         />
 
@@ -184,11 +184,11 @@ function RegistrationList() {
             color: Consts.FONT_COLOR_SECONDARY
           }}
         >
-          ທັງຫມົດ{' '}
+          All {' '}
           {registrationData &&
             registrationData.registrations &&
             registrationData.registrations.length}{' '}
-          ລາຍການ
+          registereds
         </div>
 
         {/* Table list */}
@@ -196,13 +196,13 @@ function RegistrationList() {
           <table border='1' bordercolor='#fff' style={{ width: '100%' }}>
             <thead>
               <TableHeader>
-                <th>ລຳດັບ</th>
-                <th>ລະຫັດນັກຮຽນ</th>
-                <th>ຊື່ນັກຮຽນ</th>
-                <th>ລະຫັດວິຊາ</th>
-                <th>ຊື່ວິຊາ</th>
-                <th>ວັນທີລົງທະບຽນ</th>
-                <th style={{width: 180}}>ຈັດການ</th>
+                <th style={{width: 60}}>#</th>
+                <th style={{width: 200}}>STUDENT ID</th>
+                <th style={{width: 250}}>STUDENT NAME</th>
+                <th style={{width: 200}}>COURSE ID</th>
+                <th style={{width: 250}}>COURSE NAME</th>
+                <th style={{width: 200}}>REGISTRATION DATE</th>
+                <th style={{width: 180}}>ACTIONS</th>
               </TableHeader>
             </thead>
             <tbody>
@@ -227,10 +227,10 @@ function RegistrationList() {
                         {x.student && x.student.firstname}  {x.student && x.student.lastname}
                       </TableCell>
                       <TableCell>
-                        {x.student && x.course ? (x.course.courseCode ? x.course.courseCode : '') : ''}
+                        {x.course && x.course ? (x.course.courseCode ? x.course.courseCode : '') : ''}
                       </TableCell>
                       <TableCell>
-                        {x.student && x.course ? (x.course.title ? x.course.title : '') : ''}
+                        {x.course && x.course ? (x.course.title ? x.course.title : '') : ''}
                       </TableCell>
                       <TableCell>
                         {x.student && new Date(x.createdAt).toLocaleString('la-LA', { hour12: false })}
@@ -257,7 +257,7 @@ function RegistrationList() {
                             style={{ cursor: 'pointer', backgroundColor:'#FFFFFF', padding: 3, width: 64, borderRadius: 4 }}
                           >
                             <FontAwesomeIcon
-                              icon={['fas', 'external-link-alt']}
+                              icon={['fas', 'eye']}
                               color={Consts.BORDER_COLOR}
                             />{' '}
                           </div>

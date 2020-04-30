@@ -53,7 +53,7 @@ const CourseDocDeleteConfirm = ({
         size='lg'
       >
         <Modal.Title style={{ textAlign: 'center', paddingTop: 20, color: Consts.BORDER_COLOR_DELETE, fontWeight: 'bold' }}>
-          ຕ້ອງການລຶບເອກະສານ?
+          Do you want to delete this file?
         </Modal.Title>
         <Modal.Body style={{ marginLeft: 50, marginRight: 50, padding: 50 }}>
           <p className='text-center'>{dataDelete && dataDelete.dataDelete && dataDelete.dataDelete.title}</p>
@@ -71,7 +71,7 @@ const CourseDocDeleteConfirm = ({
                   borderRadius: 0
                 }}
               >
-                ຍົກເລີກ
+                Cancel
               </Button>
             </div>
             <div style={{ padding: 15 }} className='col'>
@@ -85,7 +85,7 @@ const CourseDocDeleteConfirm = ({
                 }}
                 onClick={() => _confirmDelete()}
               >
-                ລົບ
+                Delete
               </Button>
             </div>
           </div>

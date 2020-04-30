@@ -70,7 +70,7 @@ function CourseAddConfirm({
         size='lg'
       >
         <Modal.Title style={{ textAlign: 'center', paddingTop: 20 }}>
-          ຢືນຢັນການເພີ່ມວິຊາ
+          CONFIRM ADD NEW FILE
       </Modal.Title>
         <Modal.Body
           style={{
@@ -97,7 +97,7 @@ function CourseAddConfirm({
                     aria-hidden='true'
                     style={{ marginRight: 5 }}
                   />
-                  ຄະນະແລະພາກວິຊາ
+                  Faculty and Department
               </div>
                 {/* ຄະນະ */}
                 <Form.Group
@@ -110,7 +110,7 @@ function CourseAddConfirm({
                   }}
                 >
                   <Form.Label column sm='4' className='text-left'>
-                    ຄະນະ
+                  Faculty
                 </Form.Label>
                   <Col sm='8'>
                     <span>{param.data && _renderFaculty(param.data.faculty.connect.id)}</span>
@@ -128,7 +128,7 @@ function CourseAddConfirm({
                   }}
                 >
                   <Form.Label column sm='4' className='text-left'>
-                    ພາກວິຊາ
+                  Department
                 </Form.Label>
                   <Col sm='8'>
                     <span>{param.data && _renderDepartment(param.data.faculty.connect.id, param.data.department.connect.id)}</span>
@@ -144,7 +144,7 @@ function CourseAddConfirm({
                     aria-hidden='true'
                     style={{ marginRight: 5 }}
                   />
-                  ຂໍ້ມູນວິຊາ
+                  Course
               </div>
                 {/* ຊື່ວິຊາ */}
                 <Form.Group
@@ -157,7 +157,7 @@ function CourseAddConfirm({
                   }}
                 >
                   <Form.Label column sm='4' className='text-left'>
-                    ຊື່ວິຊາ
+                    Course naem
                 </Form.Label>
                   <Col sm='8'>
                     <span>{param.data && (param.data.title ? param.data.title : '')}</span>
@@ -175,7 +175,7 @@ function CourseAddConfirm({
                   }}
                 >
                   <Form.Label column sm='4' className='text-left'>
-                    ລະຫັດວິຊາ
+                  Course ID
                 </Form.Label>
                   <Col sm='8'>
                     <span>{param.data && (param.data.courseCode ? param.data.courseCode : '')}</span>
@@ -193,7 +193,7 @@ function CourseAddConfirm({
                   }}
                 >
                   <Form.Label column sm='4' className='text-left'>
-                    ຈໍານວນຫນ່ວຍກິດ
+                    Unit
                 </Form.Label>
                   <Col sm='8'>
                     <span>{param.data && ((param.data.unit != 0) ? param.data.unit : '')}</span>
@@ -209,7 +209,7 @@ function CourseAddConfirm({
                     aria-hidden='true'
                     style={{ marginRight: 5 }}
                   />
-                  ຄໍາອະທິບາຍ
+                  Description
               </div>
                 {/* ເນື້ອໃນຂອງວິຊາ */}
                 <Form.Group
@@ -222,7 +222,7 @@ function CourseAddConfirm({
                   }}
                 >
                   <Form.Label column sm='4' className='text-left'>
-                    ເນື້ອໃນຂອງວິຊາ
+                  Description
                 </Form.Label>
                   <Col sm='8'>
                     <span>{param.data && param.data.description}</span>
@@ -238,7 +238,7 @@ function CourseAddConfirm({
                     aria-hidden='true'
                     style={{ marginRight: 5 }}
                   />
-                  ອັບໂຫລດ
+                  File
               </div>
                 {/* ອັບໂຫລດໄຟລ */}
                 <Form.Group
@@ -251,7 +251,7 @@ function CourseAddConfirm({
                   }}
                 >
                   <Form.Label column sm='4' className='text-left'>
-                    ອັບໂຫລດໄຟລ
+                    File upload
                 </Form.Label>
                   <Col sm='8'>
                     <span>{param.data && param.data.syllabusFile && param.data.syllabusFile.create.title}</span>
@@ -273,7 +273,7 @@ function CourseAddConfirm({
                   borderColor: '#6f6f6f'
                 }}
               >
-                ຍົກເລີກ
+                Cancel
             </Button>
             </div>
             <div style={{ padding: 15 }} className='col'>
@@ -286,7 +286,7 @@ function CourseAddConfirm({
                 }}
                 onClick={() => _confirmCourseAdd()}
               >
-                ຕົກລົງ
+                Add
             </Button>
             </div>
           </div>

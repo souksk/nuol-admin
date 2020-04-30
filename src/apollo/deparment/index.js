@@ -93,7 +93,7 @@ export const DEPARTMENT = gql`
 `
 
 export const CREATE_DEPARTMENT = gql`
-  query CreateDepartment(
+  mutation CreateDepartment(
     $data: DepartmentCreateInput!
   ) {
     createDepartment(
@@ -105,7 +105,7 @@ export const CREATE_DEPARTMENT = gql`
 `
 
 export const UPDATE_DEPARTMENT = gql`
-  query UpdateDepartment(
+  mutation UpdateDepartment(
     $data: DepartmentUpdateInput!
     $where: DepartmentWhereUniqueInput!
   ) {
@@ -119,7 +119,7 @@ export const UPDATE_DEPARTMENT = gql`
 `
 
 export const DELETE_DEPARTMENT = gql`
-  query DeleteDepartment(
+  mutation DeleteDepartment(
     $where: DepartmentWhereUniqueInput!
   ) {
     deleteDepartment(

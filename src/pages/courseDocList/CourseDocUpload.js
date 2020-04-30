@@ -52,7 +52,7 @@ const CourseDocUpload = ({
      *   */
   const fileUploaded = acceptedFiles.map(file => (
     <li key={file.path}>
-      {file.path} ຂະຫນາດ: {file.size} bytes
+      {file.path} size: {file.size} bytes
     </li>
   ));
 
@@ -128,10 +128,9 @@ const CourseDocUpload = ({
         size='lg'
       >
         <Modal.Title style={{ textAlign: 'center', paddingTop: 20 }}>
-          ອັບໂຫລດບົດສອນ
+          UPLOAD NEW DOCUMENT
         </Modal.Title>
         <Modal.Body style={{ marginLeft: 50, marginRight: 50, padding: 50 }}>
-          <p className='text-center'>ວິຊາຖານຂໍ້ມູນ</p>
 
           {/* file updload box */}
           <div style={{ border: '1px solid #eee', padding: 20, width: '100%' }}>
@@ -146,12 +145,12 @@ const CourseDocUpload = ({
               }}
             >
               <Form.Label column sm='4' className='text-left'>
-                ຫົວຂໍ້
+                Title
               </Form.Label>
               <Col sm='8'>
                 <Form.Control
                   type='text'
-                  placeholder='ກະລຸນາປ້ອນ'
+                  placeholder='please input...'
                   value={titleName}
                   onChange={(e) => _handleChangeTitleName(e)}
                   style={{ borderRadius: 0 }}
@@ -171,7 +170,7 @@ const CourseDocUpload = ({
               }}
             >
               <Form.Label column sm='4' className='text-left'>
-                ອັບໂຫລດໄຟລ
+                Upload file
               </Form.Label>
               <Col sm='8'>
                 <div
@@ -208,12 +207,12 @@ const CourseDocUpload = ({
           </div>
 
           {acceptedFiles.length > 0 && <aside>
-            <h4>ໄຟລທີ່ຈະອັບໂຫລດ</h4>
+            <h4>File to upload</h4>
             <ul>{fileUploaded}</ul>
           </aside>}
 
           {fileUploadProgress > 0 && fileUploadProgress < 100 && <div>
-            <h3>ກໍາລັງອັບໂຫລດໄຟລເອກະສານ....</h3>
+            <h3>File uploading....</h3>
             <ProgressBar animated now={fileUploadProgress} label={`${fileUploadProgress}%`} />
           </div>
           }
@@ -231,7 +230,7 @@ const CourseDocUpload = ({
                   borderRadius: 0
                 }}
               >
-                ຍົກເລີກ
+                Cancel
               </Button>
             </div>
             <div style={{ padding: 15 }} className='col'>
@@ -245,7 +244,7 @@ const CourseDocUpload = ({
                 }}
                 onClick={_uploadFile}
               >
-                ອັບໂຫລດບົດສອນ
+                Upload
               </Button>
             </div>
           </div>

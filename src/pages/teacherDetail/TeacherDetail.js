@@ -54,16 +54,13 @@ function TeacherDetail() {
     let result
     switch (gender) {
       case 'MALE':
-        result = 'ຊາຍ'
+        result = 'Male'
         break;
       case 'FEMALE':
-        result = 'ຍິງ'
-        break;
-      case 'OTHER':
-        result = 'ອື່ນໆ'
+        result = 'Famale'
         break;
       default:
-        result = 'ຊາຍ'
+        result = 'Male'
     }
     return result
   }
@@ -72,13 +69,13 @@ function TeacherDetail() {
     let result
     switch (maritualStatus) {
       case 'SINGLE':
-        result = 'ໂສດ'
+        result = 'Single'
         break;
       case 'MARRIAGE':
-        result = 'ແຕ່ງງານແລ້ວ'
+        result = 'Marriage'
         break;
       default:
-        result = 'ໂສດ'
+        result = 'Single'
     }
     return result
   }
@@ -88,12 +85,12 @@ function TeacherDetail() {
       {/* Breadcrumb */}
       <Breadcrumb>
         <Breadcrumb.Item onClick={() => history.push('/teacher-list')}>
-          ຈັດການອາຈານ
+          Teacher Management
         </Breadcrumb.Item>
         <Breadcrumb.Item onClick={() => history.push('/teacher-list')}>
-          ອາຈານທັງຫມົດ
+          All Teachers
         </Breadcrumb.Item>
-        <Breadcrumb.Item active>ລາຍລະອຽດ</Breadcrumb.Item>
+        <Breadcrumb.Item active>Teacher Detail</Breadcrumb.Item>
       </Breadcrumb>
 
       <CustomContainer>
@@ -105,7 +102,7 @@ function TeacherDetail() {
             alignItems: 'center'
           }}
         >
-          <Title text='ລາຍລະອຽດຂອງອາຈານ' />
+          <Title text='TEACHER DETAIL' />
 
           {/* Button group */}
           <div>
@@ -122,7 +119,7 @@ function TeacherDetail() {
               }}
               onClick={() => _edit()}
             >
-              <FontAwesomeIcon icon='edit' style={{ fontSize: 16 }} /> ແກ້ໃຂ
+              <FontAwesomeIcon icon='edit' style={{ fontSize: 16 }} /> Edit
             </button>
 
             {/* ລຶບ */}
@@ -137,7 +134,7 @@ function TeacherDetail() {
               }}
               onClick={() => _delete()}
             >
-              <i className='fa fa-trash' /> ລຶບ
+              <i className='fa fa-trash' /> Delete
             </button>
           </div>
         </div>
@@ -153,16 +150,16 @@ function TeacherDetail() {
         >
           {/* -------- ຄະນະແລະພາກວິຊາ -------- */}
           <div style={{ padding: 20, paddingBottom: 0 }}>
-            <div style={{ fontWeight: "bold" }}><FontAwesomeIcon icon='caret-down' style={{ marginRight: 16, marginLeft: -24, fontSize: 24, color: Consts.PRIMARY_COLOR }} />ຄະນະແລະພາກວິຊາ</div>
+            <div style={{ fontWeight: "bold" }}><FontAwesomeIcon icon='caret-down' style={{ marginRight: 16, marginLeft: -24, fontSize: 24, color: Consts.PRIMARY_COLOR }} />Faculty and Department</div>
             <div style={{ paddingLeft: 20, fontSize: 14 }}>
               <Row>
-                <Col>ຄະນະ</Col>
+                <Col>Faculty</Col>
                 <Col>
                   {userData && userData.faculty && (userData.faculty.name ? userData.faculty.name : '-')}
                 </Col>
               </Row>
               <Row>
-                <Col>ພາກວິຊາ</Col>
+                <Col>Department</Col>
                 <Col>
                   {userData && userData.department && (userData.department.name ? userData.department.name : '-')}
                 </Col>
@@ -172,46 +169,46 @@ function TeacherDetail() {
 
           {/* -------- ຂໍ້ມູນອາຈານ -------- */}
           <div style={{ padding: 20, paddingBottom: 0 }}>
-            <div style={{ fontWeight: "bold" }}><FontAwesomeIcon icon='caret-down' style={{ marginRight: 16, marginLeft: -24, fontSize: 24, color: Consts.PRIMARY_COLOR }} />ຂໍ້ມູນອາຈານ</div>
+            <div style={{ fontWeight: "bold" }}><FontAwesomeIcon icon='caret-down' style={{ marginRight: 16, marginLeft: -24, fontSize: 24, color: Consts.PRIMARY_COLOR }} />Teacher</div>
             <div style={{ paddingLeft: 20, fontSize: 14 }}>
               <Row>
-                <Col>ຊື່</Col>
+                <Col>First name</Col>
                 <Col>
                   {userData && (userData.firstname ? userData.firstname : '-')}
                 </Col>
               </Row>
               <Row>
-                <Col>ນາມສະກຸນ</Col>
+                <Col>Last name</Col>
                 <Col>
                   {userData && (userData.lastname ? userData.lastname : '-')}
                 </Col>
               </Row>
               <Row>
-                <Col>ວັນເດືອນປີເກີດ</Col>
+                <Col>Birthday</Col>
                 <Col>
                   {userData && (userData.birthday ? new Date(userData.birthday).toLocaleDateString() : '-')}
                 </Col>
               </Row>
               <Row>
-                <Col>ເພດ</Col>
+                <Col>Gender</Col>
                 <Col>
                   {userData && (userData.gender ? _onConvertGenter(userData.gender) : '-')}
                 </Col>
               </Row>
               <Row>
-                <Col>ສະຖານະ</Col>
+                <Col>Status</Col>
                 <Col>
                   {userData && (userData.maritualStatus ? _onConvertMaritualStatus(userData.maritualStatus) : '-')}
                 </Col>
               </Row>
               <Row>
-                <Col>ເບີໂທ</Col>
+                <Col>Phone number</Col>
                 <Col>
                   {userData && (userData.phone ? userData.phone : '-')}
                 </Col>
               </Row>
               <Row>
-                <Col>ອີເມວ</Col>
+                <Col>E-Mail</Col>
                 <Col>
                   {userData && (userData.email ? userData.email : '-')}
                 </Col>
@@ -221,16 +218,16 @@ function TeacherDetail() {
 
           {/* -------- ໄອດີ ແລະ ລະຫັດຜ່ານ -------- */}
           <div style={{ padding: 20, paddingBottom: 0 }}>
-            <div style={{ fontWeight: "bold" }}><FontAwesomeIcon icon='caret-down' style={{ marginRight: 16, marginLeft: -24, fontSize: 24, color: Consts.PRIMARY_COLOR }} />ໄອດີ ແລະ ລະຫັດຜ່ານ</div>
+            <div style={{ fontWeight: "bold" }}><FontAwesomeIcon icon='caret-down' style={{ marginRight: 16, marginLeft: -24, fontSize: 24, color: Consts.PRIMARY_COLOR }} />User ID and Password</div>
             <div style={{ paddingLeft: 20, fontSize: 14 }}>
               <Row>
-                <Col>ໄອດີ</Col>
+                <Col>User ID</Col>
                 <Col>
                   {userData && userData.userId}
                 </Col>
               </Row>
               <Row>
-                <Col>ລະຫັດຜ່ານ</Col>
+                <Col>Password</Col>
                 <Col>
                   ********
                 </Col>
@@ -239,16 +236,16 @@ function TeacherDetail() {
           </div>
           {/* -------- ຄໍາອະທິບາຍ -------- */}
           <div style={{ padding: 20, paddingBottom: 0 }}>
-            <div style={{ fontWeight: "bold" }}><FontAwesomeIcon icon='caret-down' style={{ marginRight: 16, marginLeft: -24, fontSize: 24, color: Consts.PRIMARY_COLOR }} />ອື່ນໆ</div>
+            <div style={{ fontWeight: "bold" }}><FontAwesomeIcon icon='caret-down' style={{ marginRight: 16, marginLeft: -24, fontSize: 24, color: Consts.PRIMARY_COLOR }} />Other</div>
             <div style={{ paddingLeft: 20, fontSize: 14 }}>
               <Row>
-                <Col>ລາຍລະອຽດ</Col>
+                <Col>Description</Col>
                 <Col>
                   {userData && (userData.description ? userData.description : '-')}
                 </Col>
               </Row>
               <Row>
-                <Col>ໝາຍເຫດ</Col>
+                <Col>Note</Col>
                 <Col>
                   {userData && (userData.note ? userData.note : '-')}
                 </Col>

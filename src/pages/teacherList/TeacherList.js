@@ -30,7 +30,7 @@ import { FACULTIES } from '../../apollo/faculty'
 function TeacherList() {
   const [selectedFaculty, setselectedFaculty] = useState('')
   const [selectedDepartment, setselectedDepartment] = useState('')
-  const [title, setTitle] = useState('ລາຍຊື່ອາຈານທັງຫມົດ')
+  const [title, setTitle] = useState('ALL TEACHERS')
 
   const { history, location, match } = useReactRouter()
 
@@ -114,19 +114,19 @@ function TeacherList() {
     })
 
     // set title
-    setTitle('ຜົນການຄົ້ນຫາ')
+    setTitle('Search result')
   }
 
-  if (teacherLoading) return <p>ກໍາລັງໂຫຼດຂໍ້ມູນ...</p>
+  if (teacherLoading) return <p>Loading...</p>
 
   return (
     <div>
       {/* Breadcrumb */}
       <Breadcrumb>
         <Breadcrumb.Item href='' onClick={() => history.push('/teacher-list')}>
-          ຈັດການອາຈານ
+          Teacher Management
         </Breadcrumb.Item>
-        <Breadcrumb.Item active>ອາຈານທັງຫມົດ</Breadcrumb.Item>
+        <Breadcrumb.Item active>All Teacher</Breadcrumb.Item>
       </Breadcrumb>
 
       <CustomContainer>
@@ -135,14 +135,14 @@ function TeacherList() {
           <CustomButton
             confirm
             addIcon
-            title='ເພີ່ມອາຈານ'
+            title='Add Teacher'
             onClick={() => _teacherAdd()}
           />
         </div>
 
         {/* custom search button */}
         <SearchBar
-          title='ຄະນະວິທະຍາສາດທໍາມະຊາດ,ພາກວິຊາວິທະຍາສາດຄອມພິວເຕີ,ປີຮຽນທີ່1'
+          title='Faculty, department, year level'
           onClick={() => _handleSearchViewShow()}
         />
 
@@ -155,7 +155,7 @@ function TeacherList() {
             color: Consts.FONT_COLOR_SECONDARY
           }}
         >
-          ທັງຫມົດ {teacherData && teacherData.users && teacherData.users.length} ທ່ານ
+          All {teacherData && teacherData.users && teacherData.users.length} teacher
         </div>
 
         {/* Table list */}
@@ -163,13 +163,13 @@ function TeacherList() {
           <table border='1' bordercolor='#fff' style={{ width: '100%' }}>
             <thead>
               <TableHeader>
-                <th>ລຳດັບ</th>
-                <th>ລະຫັດອາຈານ</th>
-                <th>ຊື່</th>
-                <th>ຄະນະ</th>
-                <th>ພາກວິຊາ</th>
-                <th>ເບີໂທ</th>
-                <th style={{width: 180}}>ຈັດການ</th>
+                <th>#</th>
+                <th>TEACHER ID</th>
+                <th>NAME</th>
+                <th>FACULTY</th>
+                <th>DEPARTMENT</th>
+                <th>PHONE NUMBER</th>
+                <th style={{width: 180}}>ACTIONS</th>
               </TableHeader>
             </thead>
             <tbody>
@@ -224,7 +224,7 @@ function TeacherList() {
                             style={{ cursor: 'pointer', backgroundColor:'#FFFFFF', padding: 3, width: 64, borderRadius: 4 }}
                           >
                             <FontAwesomeIcon
-                              icon={['fas', 'external-link-alt']}
+                              icon={['fas', 'eye']}
                               color={Consts.BORDER_COLOR}
                             />{' '}
                           </div>
