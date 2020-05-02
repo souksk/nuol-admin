@@ -27,6 +27,7 @@ function CalendaEditConfirm({
   showEditConfirmModal,
   _handleShowEditConfirmModalClose,
   param,
+  oldData
 }) {
   const { history, location, match } = useReactRouter()
 
@@ -52,9 +53,28 @@ function CalendaEditConfirm({
   //Set State
   const [showToast, setShowToast] = useState(false);
 
-  const _confirmCalendaEdit = () => {
+  const _confirmCalendaEdit = async () => {
 
-    // console.log(param)
+    if (oldData && oldData.dayTimeIndexes && oldData.dayTimeIndexes.length > 0) {
+      let arrDayString = []
+      for (var i = 0; i < oldData.dayTimeIndexes.length; i++) {
+        arrDayString.push(oldData.dayTimeIndexes[i].dayString)
+      }
+      await updateStudyCalenda(
+        {
+          variables: {
+            data: {
+              dayTimeIndexes: {
+                deleteMany: {
+                  dayString_in: arrDayString
+                }
+              }
+            },
+            where: param.where
+          }
+        }
+      )
+    }
 
     const aaa = updateStudyCalenda({ variables: param }).then(async () => {
       await history.push("/calenda-list")
@@ -67,7 +87,6 @@ function CalendaEditConfirm({
     // //console.log(aaa)
   }
   const _convertCourse = (course) => {
-    
     let courseName = ''
     for (var i = 0; i <= courseData.courses.length - 1; i++) {
       if (courseData.courses[i].id == course) {
@@ -78,7 +97,7 @@ function CalendaEditConfirm({
   }
 
   const _convertTeacher = (teacher) => {
-    
+
     let teacherName = ''
     for (var i = 0; i <= teacherData.users.length - 1; i++) {
       if (teacherData.users[i].id == teacher) {
@@ -86,6 +105,37 @@ function CalendaEditConfirm({
       }
     }
     return teacherName
+  }
+
+  const _convertDay = (day) => {
+    let result = ''
+    switch (day) {
+      case 'ຈັນ':
+        result = 'Monday';
+        break;
+      case 'ອັງຄານ':
+        result = 'Tuesday';
+        break;
+      case 'ພຸດ':
+        result = 'Wednesday';
+        break;
+      case 'ພະຫັດ':
+        result = 'Thursday';
+        break;
+      case 'ສຸກ':
+        result = 'Friday';
+        break;
+      case 'ເສົາ':
+        result = 'Saturday';
+        break;
+      case 'ອາທິດ':
+        result = 'Sunday';
+        break;
+      default:
+        result = 'Monday';
+        break;
+    }
+    return result;
   }
 
   return (
@@ -96,7 +146,7 @@ function CalendaEditConfirm({
         size='lg'
       >
         <Modal.Title style={{ textAlign: 'center', paddingTop: 20 }}>
-          CONFIRM EDIT STUDY CALENDA
+          CONFIRM EDIT SCHEDULE
       </Modal.Title>
         <Modal.Body
           style={{
@@ -154,7 +204,7 @@ function CalendaEditConfirm({
                   }}
                 >
                   <Form.Label column sm='4' className='text-left'>
-                  Teacher
+                    Teacher
                 </Form.Label>
                   <Col sm='8'>
                     <span>{param.data && param.data.teacher && _convertTeacher(param.data.teacher.connect.id)}</span>
@@ -170,7 +220,7 @@ function CalendaEditConfirm({
                     aria-hidden='true'
                     style={{ marginRight: 5 }}
                   />
-                  Study calenda
+                  Schedule
               </div>
                 {/* ປີຮຽນ */}
                 <Form.Group
@@ -183,7 +233,7 @@ function CalendaEditConfirm({
                   }}
                 >
                   <Form.Label column sm='4' className='text-left'>
-                  Calenda ID
+                    Calenda ID
                 </Form.Label>
                   <Col sm='8'>
                     <span>{param.data && param.data.calendaCoce}</span>
@@ -201,7 +251,7 @@ function CalendaEditConfirm({
                   }}
                 >
                   <Form.Label column sm='4' className='text-left'>
-                  Year level
+                    Year level
                 </Form.Label>
                   <Col sm='8'>
                     <span>{param.data && param.data.yearLevel}</span>
@@ -235,8 +285,32 @@ function CalendaEditConfirm({
                     aria-hidden='true'
                     style={{ marginRight: 5 }}
                   />
-                  Start date and End date
+                  Schedule Times
               </div>
+
+                {/* ວັນ */}
+                <Form.Group
+                  as={Row}
+                  style={{
+                    margin: 0,
+                    marginBottom: 10,
+                    paddingLeft: 20,
+                    fontSize: 16
+                  }}
+                >
+                  <Form.Label column sm='4' className='text-left'>
+                    Day and Times
+                </Form.Label>
+                  <Col sm='8' style={{ marginTop: 8 }}>
+                    {
+                      param.data &&
+                      param.data.dayTimeIndexes &&
+                      param.data.dayTimeIndexes.create.map((t, index) => (
+                        <p key={index}><span>{_convertDay(t.dayString)}</span> : <span>{t.timeIndexes.set.map((x, i) => ((x) + (t.timeIndexes.set.length == (i + 1) ? '' : ' - ')))}</span></p>
+                      ))
+                    }
+                  </Col>
+                </Form.Group>
 
                 {/* ວັນເລີ່ມສອນ */}
                 <Form.Group
@@ -249,7 +323,7 @@ function CalendaEditConfirm({
                   }}
                 >
                   <Form.Label column sm='4' className='text-left'>
-                  Start date
+                    Start date
                 </Form.Label>
                   <Col sm='8'>
                     <span>{param.data && param.data.startDate}</span>
@@ -267,7 +341,7 @@ function CalendaEditConfirm({
                   }}
                 >
                   <Form.Label column sm='4' className='text-left'>
-                  End date
+                    End date
                 </Form.Label>
                   <Col sm='8'>
                     <span>{param.data && param.data.endDate}</span>

@@ -65,7 +65,7 @@ function CalendaAddConfirm({
     // //console.log(aaa)
   }
   const _convertCourse = (course) => {
-    
+
     let courseName = ''
     for (var i = 0; i <= courseData.courses.length - 1; i++) {
       if (courseData.courses[i].id == course) {
@@ -76,7 +76,7 @@ function CalendaAddConfirm({
   }
 
   const _convertTeacher = (teacher) => {
-    
+
     let teacherName = ''
     for (var i = 0; i <= teacherData.users.length - 1; i++) {
       if (teacherData.users[i].id == teacher) {
@@ -84,6 +84,37 @@ function CalendaAddConfirm({
       }
     }
     return teacherName
+  }
+
+  const _convertDay = (day) => {
+    let result = ''
+    switch (day) {
+      case 'ຈັນ':
+        result = 'Monday';
+        break;
+      case 'ອັງຄານ':
+        result = 'Tuesday';
+        break;
+      case 'ພຸດ':
+        result = 'Wednesday';
+        break;
+      case 'ພະຫັດ':
+        result = 'Thursday';
+        break;
+      case 'ສຸກ':
+        result = 'Friday';
+        break;
+      case 'ເສົາ':
+        result = 'Saturday';
+        break;
+      case 'ອາທິດ':
+        result = 'Sunday';
+        break;
+      default:
+        result = 'Monday';
+        break;
+    }
+    return result;
   }
 
   return (
@@ -152,7 +183,7 @@ function CalendaAddConfirm({
                   }}
                 >
                   <Form.Label column sm='4' className='text-left'>
-                  Teacher
+                    Teacher
                 </Form.Label>
                   <Col sm='8'>
                     <span>{param.data && param.data.teacher && _convertTeacher(param.data.teacher.connect.id)}</span>
@@ -168,7 +199,7 @@ function CalendaAddConfirm({
                     aria-hidden='true'
                     style={{ marginRight: 5 }}
                   />
-                  Study calenda
+                  Schedule
               </div>
                 {/* ປີຮຽນ */}
                 <Form.Group
@@ -181,7 +212,7 @@ function CalendaAddConfirm({
                   }}
                 >
                   <Form.Label column sm='4' className='text-left'>
-                  calenda ID
+                    calenda ID
                 </Form.Label>
                   <Col sm='8'>
                     <span>{param.data && param.data.calendaCoce}</span>
@@ -199,7 +230,7 @@ function CalendaAddConfirm({
                   }}
                 >
                   <Form.Label column sm='4' className='text-left'>
-                  Year level
+                    Year level
                 </Form.Label>
                   <Col sm='8'>
                     <span>{param.data && param.data.yearLevel}</span>
@@ -233,8 +264,32 @@ function CalendaAddConfirm({
                     aria-hidden='true'
                     style={{ marginRight: 5 }}
                   />
-                  Start date and End date
+                  Schedule Times
               </div>
+
+                {/* ວັນ */}
+                <Form.Group
+                  as={Row}
+                  style={{
+                    margin: 0,
+                    marginBottom: 10,
+                    paddingLeft: 20,
+                    fontSize: 16
+                  }}
+                >
+                  <Form.Label column sm='4' className='text-left'>
+                    Day and Times
+                </Form.Label>
+                  <Col sm='8'>
+                    {
+                      param.data &&
+                      param.data.dayTimeIndexes &&
+                      param.data.dayTimeIndexes.create.map((t, index) => (
+                        <p key={index}><span>{_convertDay(t.dayString)}</span> : <span>{t.timeIndexes.set.map((x, i) => ((x) + (t.timeIndexes.set.length == (i + 1) ? '' : ' - ')))}</span></p>
+                      ))
+                    }
+                  </Col>
+                </Form.Group>
 
                 {/* ວັນເລີ່ມສອນ */}
                 <Form.Group
@@ -247,7 +302,7 @@ function CalendaAddConfirm({
                   }}
                 >
                   <Form.Label column sm='4' className='text-left'>
-                  Start date
+                    Start date
                 </Form.Label>
                   <Col sm='8'>
                     <span>{param.data && param.data.startDate}</span>
@@ -265,7 +320,7 @@ function CalendaAddConfirm({
                   }}
                 >
                   <Form.Label column sm='4' className='text-left'>
-                  End date
+                    End date
                 </Form.Label>
                   <Col sm='8'>
                     <span>{param.data && param.data.endDate}</span>

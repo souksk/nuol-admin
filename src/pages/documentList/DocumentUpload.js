@@ -159,7 +159,7 @@ const DocumentUpload = ({ showUploadView, _handleUploadViewClose }) => {
                                         style={{ margin: 0, marginBottom: 10 }}
                                     >
                                         <Form.Label column sm='4' className='text-left'>
-                                        File type</Form.Label>
+                                            File type</Form.Label>
                                         <Col sm='8'>
                                             <Form.Control as='select' name="cate"
                                                 value={values.cate}

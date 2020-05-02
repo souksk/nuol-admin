@@ -72,6 +72,37 @@ function CalendaDetail() {
     _handleTimeDeleteViewShow()
   }
 
+  const _convertDay = (day) => {
+    let result = ''
+    switch (day) {
+      case 'ຈັນ':
+        result = 'Monday';
+        break;
+      case 'ອັງຄານ':
+        result = 'Tuesday';
+        break;
+      case 'ພຸດ':
+        result = 'Wednesday';
+        break;
+      case 'ພະຫັດ':
+        result = 'Thursday';
+        break;
+      case 'ສຸກ':
+        result = 'Friday';
+        break;
+      case 'ເສົາ':
+        result = 'Saturday';
+        break;
+      case 'ອາທິດ':
+        result = 'Sunday';
+        break;
+      default:
+        result = 'Monday';
+        break;
+    }
+    return result;
+  }
+
   if (apolloLoading) return <p>Loading...</p>
   // //console.log("apolloData: ", apolloData)
   // console.log("studyCalendaData: ", studyCalendaData)
@@ -81,12 +112,12 @@ function CalendaDetail() {
       {/* Breadcrumb */}
       <Breadcrumb>
         <Breadcrumb.Item onClick={() => history.push('/course-list')}>
-          Study Calenda Management
+          Schedule Management
         </Breadcrumb.Item>
         <Breadcrumb.Item onClick={() => history.push('/course-list')}>
-          All Study Calendas
+          All Schedules
         </Breadcrumb.Item>
-        <Breadcrumb.Item active>Study Calenda Detail</Breadcrumb.Item>
+        <Breadcrumb.Item active>Schedule Detail</Breadcrumb.Item>
       </Breadcrumb>
 
       <CustomContainer>
@@ -98,7 +129,7 @@ function CalendaDetail() {
             alignItems: 'center'
           }}
         >
-          <Title text='STUDY CALENDA DETAIL' />
+          <Title text='SCHEDULE DETAIL' />
 
           {/* Button group */}
           <div>
@@ -217,7 +248,7 @@ function CalendaDetail() {
 
           {/* -------- ຕາຕະລາງມື້ສອນ -------- */}
           <div style={{ padding: 20, paddingBottom: 0 }}>
-            <div style={{ fontWeight: "bold" }} ><FontAwesomeIcon icon='caret-down' style={{ marginRight: 16, marginLeft: -24, fontSize: 24, color: Consts.PRIMARY_COLOR }} />Study calenda</div>
+            <div style={{ fontWeight: "bold" }} ><FontAwesomeIcon icon='caret-down' style={{ marginRight: 16, marginLeft: -24, fontSize: 24, color: Consts.PRIMARY_COLOR }} />Schedule</div>
             <div style={{ paddingLeft: 20, fontSize: 14 }}>
               <Row>
                 <table border='1' bordercolor='#fff' style={{ width: '100%' }}>
@@ -247,7 +278,7 @@ function CalendaDetail() {
                               {index + 1}
                             </TableCell>
                             <TableCell>
-                              {x.dayString}
+                              {_convertDay(x.dayString)}
                             </TableCell>
                             <TableCell>
                               {x.timeIndexes + ''}

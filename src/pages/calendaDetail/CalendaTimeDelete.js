@@ -20,6 +20,37 @@ const CalendaTimeDelete = ({ showTimeDeleteView, _handleTimeDeleteViewClose, dat
 		_handleTimeDeleteViewClose()
 		window.location.reload(true);
 	};
+
+	const _convertDay = (day) => {
+		let result = ''
+		switch (day) {
+		  case 'ຈັນ':
+			result = 'Monday';
+			break;
+		  case 'ອັງຄານ':
+			result = 'Tuesday';
+			break;
+		  case 'ພຸດ':
+			result = 'Wednesday';
+			break;
+		  case 'ພະຫັດ':
+			result = 'Thursday';
+			break;
+		  case 'ສຸກ':
+			result = 'Friday';
+			break;
+		  case 'ເສົາ':
+			result = 'Saturday';
+			break;
+		  case 'ອາທິດ':
+			result = 'Sunday';
+			break;
+		  default:
+			result = 'Monday';
+			break;
+		}
+		return result;
+	  }
 	//console.log(data.title);
 
 	return (
@@ -36,7 +67,7 @@ const CalendaTimeDelete = ({ showTimeDeleteView, _handleTimeDeleteViewClose, dat
 					Do you want delete this time?
 				</Modal.Title>
 
-				<p className="text-center">{dataTime ? 'Day : ' + dataTime.dayString : ''}</p>
+				<p className="text-center">{dataTime ? 'Day : ' + _convertDay(dataTime.dayString) : ''}</p>
 				<p className="text-center">{dataTime ? 'Times : ' + dataTime.timeIndexes : ''}</p>
 
 				<div style={{ height: 20 }} />

@@ -47,7 +47,7 @@ function CalendaList() {
   const [selectedFaculty, setselectedFaculty] = useState('')
   const [selectedDepartment, setselectedDepartment] = useState('')
   const [selectedYearLevel, setselectedYearLevel] = useState(null)
-  const [title, setTitle] = useState('ALL STUDY CALENDAS')
+  const [title, setTitle] = useState('ALL SCHEDULE')
 
   // on first load
   useEffect(() => {
@@ -132,10 +132,10 @@ function CalendaList() {
           window.location.reload(true)
         }
         }>
-          Study Calenda Management
+          Schedule Management
         </Breadcrumb.Item>
         <Breadcrumb.Item active>
-          All Study Calendas
+          All Schedule
         </Breadcrumb.Item>
       </Breadcrumb>
 

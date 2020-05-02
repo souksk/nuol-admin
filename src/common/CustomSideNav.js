@@ -44,7 +44,7 @@ function CustomSideNav({ location, history }) {
 						<i className="fa fa-calendar-alt" style={{ fontSize: '1.75em' }} />
 					</NavIcon>
 					<NavText style={{ color: Consts.PRIMARY_COLOR }}>
-					Study Calenda Management
+					Schedule Management
 					</NavText>
 				</NavItem>
 				<NavItem

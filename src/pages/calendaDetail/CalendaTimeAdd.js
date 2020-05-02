@@ -107,7 +107,7 @@ const CalendaTimeAdd = ({ showTimeAddView, _handleTimeAddViewClose, data }) => {
 						fontWeight: 'bold'
 					}}
 				>
-					ADD NEW STUDY TIME
+					ADD NEW SCHEDULE TIME
 				</Modal.Title>
 
 				<div>
@@ -119,7 +119,7 @@ const CalendaTimeAdd = ({ showTimeAddView, _handleTimeAddViewClose, data }) => {
 								aria-hidden='true'
 								style={{ marginRight: 5, color: Consts.SECONDARY_COLOR }}
 							/>
-                      Study calenda
+                      Schedule
                     </div>
 						{/* ວັນ */}
 						<Form.Group
@@ -139,13 +139,13 @@ const CalendaTimeAdd = ({ showTimeAddView, _handleTimeAddViewClose, data }) => {
 									onChange={(e) => onChangeDay(e)}
 								>
 									<option id="" disabled={true} value="">---Select day---</option>
-									<option id={0} value="ຈັນ">ຈັນ</option>
-									<option id={1} value="ອັງຄານ">ອັງຄານ</option>
-									<option id={2} value="ພຸດ">ພຸດ</option>
-									<option id={3} value="ພະຫັດ">ພະຫັດ</option>
-									<option id={4} value="ສຸກ">ສຸກ</option>
-									<option id={5} value="ເສົາ">ເສົາ</option>
-									<option id={6} value="ວັນທິດ">ວັນທິດ</option>
+									<option id={0} value="ຈັນ">Monday</option>
+									<option id={1} value="ອັງຄານ">Tuesday</option>
+									<option id={2} value="ພຸດ">Wednesday</option>
+									<option id={3} value="ພະຫັດ">Thursday</option>
+									<option id={4} value="ສຸກ">Friday</option>
+									<option id={5} value="ເສົາ">Saturday</option>
+									<option id={6} value="ວັນທິດ">Sunday</option>
 								</Form.Control>
 							</Col>
 						</Form.Group>
