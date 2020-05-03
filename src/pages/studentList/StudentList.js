@@ -9,6 +9,7 @@ import { CustomContainer, SearchBar, Title, CustomButton, TableHeader, TableCell
 import { useQuery, useMutation, useLazyQuery } from '@apollo/react-hooks';
 import { USERS } from './../../apollo/user';
 import { FACULTIES } from '../../apollo/faculty';
+import ExcelReader from './ExcelReader'
 
 function StudentList() {
 	const { history, location, match } = useReactRouter();
@@ -27,6 +28,7 @@ function StudentList() {
 	);
 
 	// States
+	const [showAddConfirmModal, setShowAddConfirmModal] = useState(false)
 	const [ showSearchView, setShowSearchView ] = useState(false);
 	const [ selectedFaculty, setselectedFaculty ] = useState('');
 	const [ selectedDepartment, setselectedDepartment ] = useState('');
@@ -42,6 +44,8 @@ function StudentList() {
 	// Set states
 	const _handleSearchViewClose = () => setShowSearchView(false);
 	const _handleSearchViewShow = () => setShowSearchView(true);
+	const _handleShowAddConfirmModalClose = () => setShowAddConfirmModal(false)
+  const _handleShowAddConfirmModalShow = () => setShowAddConfirmModal(true)
 
 	const _studentDetail = (event) => {
 		history.push('/student-detail', event);
@@ -54,6 +58,10 @@ function StudentList() {
 	const _studentAdd = () => {
 		history.push('/student-add');
 	};
+
+	const _onImport = () => {
+		_handleShowAddConfirmModalShow()
+	}
 
 	const _onSearch = (value) => {
 		// //console.log('value: ', value)
@@ -122,6 +130,7 @@ function StudentList() {
 			<CustomContainer>
 				<Title text={'ALL STUDENT'} />
 				<div style={{ textAlign: 'right' }}>
+					<CustomButton addIcon title="Import Student" onClick={() => _onImport()} />{'\t'}
 					<CustomButton confirm addIcon title="Add Student" onClick={() => _studentAdd()} />
 				</div>
 
@@ -232,6 +241,10 @@ function StudentList() {
 				_handleSearchViewClose={_handleSearchViewClose}
 				onSearch={(value) => _onSearch(value)}
 			/>
+			<ExcelReader
+                showAddConfirmModal={showAddConfirmModal}
+                _handleShowAddConfirmModalClose={_handleShowAddConfirmModalClose}
+              />
 		</div>
 	);
 }
