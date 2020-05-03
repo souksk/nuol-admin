@@ -130,7 +130,7 @@ function StudentList() {
 			<CustomContainer>
 				<Title text={'ALL STUDENT'} />
 				<div style={{ textAlign: 'right' }}>
-					<CustomButton addIcon title="Import Student" onClick={() => _onImport()} />{'\t'}
+					<CustomButton addIcon title="Import" onClick={() => _onImport()} />{'\t'}
 					<CustomButton confirm addIcon title="Add Student" onClick={() => _studentAdd()} />
 				</div>
 

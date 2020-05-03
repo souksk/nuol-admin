@@ -116,7 +116,8 @@ function ExcelReader({
                                         id: departmentData.departments[j].id
                                     }
                                 },
-                                password: (arrDataSheet[i].password).toString()
+                                password: (arrDataSheet[i].password).toString(),
+                                role: "STUDENT"
                             })
                         }
                     }
@@ -124,7 +125,8 @@ function ExcelReader({
                     delete arrDataSheet[i].department
                     arrDataSheet2.push({
                         ...arrDataSheet[i],
-                        password: (arrDataSheet[i].password).toString()
+                        password: (arrDataSheet[i].password).toString(),
+                        role: "STUDENT"
                     })
                 }
             }
@@ -133,7 +135,7 @@ function ExcelReader({
             }
 
             await setOnLoading(false)
-            _handleShowAddConfirmModalClose()
+            await _handleShowAddConfirmModalClose()
             window.location.reload(true)
         } catch (err) {
             // TODO: Show error
@@ -157,6 +159,7 @@ function ExcelReader({
                     (onLoading == true) ?
                         <div style={{ display: 'flex', flexDirection: 'column', flex: 1, width: '100%', height: 500, justifyContent: 'center', alignItems: 'center', textAlign: 'center', textJustify: 'center', marginTop: 100, marginBottom: 100 }}>
                             <Spinner animation="border" variant="info" />
+                            <p>Please wait...</p>
                         </div> :
                         <Modal.Body
                             style={{
@@ -168,7 +171,7 @@ function ExcelReader({
                             <input type="file" className="form-control" id="file" accept={SheetJSFT} onChange={(e) => handleChange(e)} />
                             <br />
                             <input type='submit'
-                                value="Generate Data"
+                                value="Generate and show datas"
                                 onClick={() => handleFile()} />
                             <div style={{ display: 'flex', flexDirection: 'row' }}>
                                 <table style={{ width: '100%', marginTop: 30 }}>
@@ -178,7 +181,6 @@ function ExcelReader({
                                         <th>lastname</th>
                                         <th>userId</th>
                                         <th>password</th>
-                                        <th>role</th>
                                         <th>phone</th>
                                         <th>email</th>
                                         <th>gender</th>
@@ -198,7 +200,6 @@ function ExcelReader({
                                                 <td >{item.lastname}</td>
                                                 <td>{item.userId}</td>
                                                 <td>{item.password}</td>
-                                                <td>{item.role}</td>
                                                 <td>{item.phone}</td>
                                                 <td>{item.email}</td>
                                                 <td>{item.gender}</td>
